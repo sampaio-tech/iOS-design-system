@@ -11,7 +11,22 @@ class HotReload extends StatelessWidget {
         Apple.iPhone11,
         Samsung.s21ultra,
       ],
-      categories: [],
+      categories: [
+        WidgetbookCategory(
+          name: 'category',
+          widgets: [
+            WidgetbookComponent(
+              name: 'shink',
+              useCases: [
+                WidgetbookUseCase.child(
+                  name: 'shink',
+                  child: const SizedBox.shrink(),
+                ),
+              ],
+            )
+          ],
+        ),
+      ],
       themes: [
         WidgetbookTheme(
           name: 'Light',

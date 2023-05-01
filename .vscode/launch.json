@@ -11,6 +11,7 @@
             "type": "dart",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         },
         {
@@ -21,6 +22,7 @@
             "flutterMode": "profile",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         },
         {
@@ -31,6 +33,7 @@
             "flutterMode": "release",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         },
         {
@@ -41,6 +44,7 @@
             "type": "dart",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         },
         {
@@ -52,6 +56,7 @@
             "flutterMode": "profile",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         },
         {
@@ -63,6 +68,7 @@
             "flutterMode": "release",
             "args": [
                 "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
+                "--enable-impeller",
             ]
         }
     ]
