@@ -10,7 +10,6 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
                 "--enable-impeller",
             ]
         },
@@ -21,7 +20,6 @@
             "type": "dart",
             "flutterMode": "profile",
             "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
                 "--enable-impeller",
             ]
         },
@@ -32,44 +30,8 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
                 "--enable-impeller",
             ]
         },
-        {
-            "name": "widgetbook",
-            "cwd": "example",
-            "program":"widgetbook/main.dart",
-            "request": "launch",
-            "type": "dart",
-            "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
-                "--enable-impeller",
-            ]
-        },
-        {
-            "name": "widgetbook (profile mode)",
-            "cwd": "example",
-            "program":"widgetbook/main.dart",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile",
-            "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
-                "--enable-impeller",
-            ]
-        },
-        {
-            "name": "widgetbook (release mode)",
-            "cwd": "example",
-            "program":"widgetbook/main.dart",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release",
-            "args": [
-                "--enable-experiment=sealed-class,variance,value-class,extension-types,const-functions,macros,inference-update-2,records,patterns,inline-class,sealed-class,class-modifiers",
-                "--enable-impeller",
-            ]
-        }
     ]
 }
