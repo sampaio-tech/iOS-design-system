@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/pedrohenriquedasilvasampaio/fvm/versions/3.10.0-1.5.pre"
+export "FLUTTER_ROOT=/Users/pedrohenriquedasilvasampaio/fvm/versions/3.10.0"
 export "FLUTTER_APPLICATION_PATH=/Users/pedrohenriquedasilvasampaio/Documents/side-projects/sampaio_tech/ios_design_system"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
