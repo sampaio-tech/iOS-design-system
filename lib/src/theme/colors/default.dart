@@ -43,8 +43,8 @@ final class DefaultSystemBackgroundsColors {
   const DefaultSystemBackgroundsColors._();
 
   static const primaryLight = Color(0xFFFFFFFF);
-  static const primaryDarkBase = Color(0xFF1C1C1E);
-  static const primaryDarkElevated = Color(0xFF000000);
+  static const primaryDarkBase = Color(0xFF000000);
+  static const primaryDarkElevated = Color(0xFF1C1C1E);
   static const secondaryLight = Color(0xFFF2F2F7);
   static const secondaryDarkBase = Color(0xFF1C1C1E);
   static const secondaryDarkElevated = Color(0xFF2C2C2E);
@@ -72,8 +72,8 @@ final class DefaultFillColors {
 
   static const primaryLight = Color.fromRGBO(120, 120, 128, .2);
   static const primaryDark = Color.fromRGBO(120, 120, 128, .36);
-  static const secondaryyLight = Color.fromRGBO(120, 120, 128, .16);
-  static const secondaryyDark = Color.fromRGBO(120, 120, 128, .32);
+  static const secondaryLight = Color.fromRGBO(120, 120, 128, .16);
+  static const secondaryDark = Color.fromRGBO(120, 120, 128, .32);
   static const tertiaryLight = Color.fromRGBO(120, 120, 128, .12);
   static const tertiaryDark = Color.fromRGBO(120, 120, 128, .24);
   static const quartenaryLight = Color.fromRGBO(120, 120, 128, .8);
