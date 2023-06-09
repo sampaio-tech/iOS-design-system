@@ -6,3 +6,4 @@ export 'row_widget.dart';
 export 'divider_widget.dart';
 export 'cupertino_button_widget.dart';
 export 'switch_widget.dart';
+export 'grouped_table_widget.dart';
