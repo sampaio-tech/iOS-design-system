@@ -1,3 +1,4 @@
 export 'colors/colors.dart';
-export 'typography/typography.dart';
 export 'settings/constants.dart';
+export 'settings/theme_data.dart';
+export 'typography/typography.dart';
