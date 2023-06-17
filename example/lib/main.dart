@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.dark(
-        useMaterial3: true,
-      ),
+      theme: ThemeData.light(useMaterial3: false),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -36,10 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final brightness = CupertinoTheme.brightnessOf(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      appBar: const CupertinoNavigationBar(),
       backgroundColor: switch (brightness) {
         Brightness.light => DefaultSystemGroupedBackgroundsColors.primaryLight,
         Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkBase,
@@ -52,8 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 8),
+              const CupertinoSearchTextFieldWidget(),
+              const SizedBox(height: 8),
               GroupedTableWidget(
                 rows: [
+                  const CupertinoTextFieldWidget(placeholder: 'Placeholder'),
                   RowWidget(
                     onPressed: null,
                     displayDivider: true,

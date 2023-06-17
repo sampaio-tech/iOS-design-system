@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ios_design_system/ios_design_system.dart';
+import '../../ios_design_system.dart';
 
 class GroupedTableWidget extends StatelessWidget {
   final List<Widget> rows;
