@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.light(useMaterial3: false),
+      theme: ThemeData.dark(useMaterial3: false),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -46,6 +46,20 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              ButtonWidget.icon(
+                size: ButtonSize.medium,
+                color: ButtonColor.greyTransparent,
+                onPressed: () {},
+                leftIcon: CupertinoIcons.app,
+              ),
+              const SizedBox(height: 8),
+              ButtonWidget.label(
+                size: ButtonSize.medium,
+                color: ButtonColor.greyTransparent,
+                onPressed: () {},
+                leftIcon: CupertinoIcons.app,
+                label: 'Label',
+              ),
               const SizedBox(height: 8),
               const CupertinoSearchTextFieldWidget(),
               const SizedBox(height: 8),
