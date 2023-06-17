@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import '../../ios_design_system.dart';
 
 class DescriptionWidget extends StatelessWidget {
@@ -19,10 +20,11 @@ class DescriptionWidget extends StatelessWidget {
       child: Text(
         text,
         style: AppTypography.caption1Regular.copyWith(
-            color: switch (brightness) {
-          Brightness.light => DefaultLabelColors.secondaryLight,
-          Brightness.dark => DefaultLabelColors.secondaryDark,
-        }),
+          color: switch (brightness) {
+            Brightness.light => DefaultLabelColors.secondaryLight,
+            Brightness.dark => DefaultLabelColors.secondaryDark,
+          },
+        ),
         textAlign: TextAlign.start,
         overflow: TextOverflow.visible,
       ),
