@@ -27,7 +27,6 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
         PrimaryScrollController.maybeOf(context);
     final brightness = CupertinoTheme.brightnessOf(context);
     final canPop = ModalRoute.of(context)?.canPop ?? false;
-    const kTextScaleFactor = 1.0;
     final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
       onTap: () => primaryScrollController?.animateTo(
