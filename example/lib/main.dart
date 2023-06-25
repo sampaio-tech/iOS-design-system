@@ -47,15 +47,15 @@ class _MyHomePageState extends State<MyHomePage> {
         navigationBar: CupertinoNavigatorBarWidget(
           title: 'Lorem Ipsum',
           imageFilter: NavigatorBarImageFilter.enabled,
-          leading: LabelButtonWidget.label(
-            label: 'Back',
-            iconLeft: CupertinoIcons.back,
-            onPressed: () {},
-          ),
+          leading: null,
           trailing: LabelButtonWidget.label(
-            label: 'Add',
+            label: 'Push',
             iconRight: CupertinoIcons.add,
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (context) => const MyHomePage(title: 'title'),
+              ),
+            ),
           ),
         ),
         child: CupertinoScrollbar(
