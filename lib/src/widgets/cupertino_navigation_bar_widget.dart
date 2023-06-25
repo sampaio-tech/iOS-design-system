@@ -26,6 +26,7 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
     final ScrollController? primaryScrollController =
         PrimaryScrollController.maybeOf(context);
     final brightness = CupertinoTheme.brightnessOf(context);
+    final canPop = ModalRoute.of(context)?.canPop ?? false;
     const kTextScaleFactor = 1.0;
     return GestureDetector(
       onTap: () => primaryScrollController?.animateTo(
@@ -78,20 +79,21 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
               ],
             ),
         },
-        leading: switch ((leading, backButtonWidget)) {
-          (null, _) => Row(
+        leading: switch ((leading, backButtonWidget, canPop)) {
+          (null, _, true) => Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [Center(child: backButtonWidget)],
             ),
-          (final leading, _) => Row(
+          (null, _, _) => null,
+          (final leading, _, _) => Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Center(
-                  child: leading!.copyWith(
+                  child: leading?.copyWith(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
                 ),
