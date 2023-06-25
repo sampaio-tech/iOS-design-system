@@ -1,10 +1,10 @@
 name: ios_design_system
 description: iOS Design System.
-version: 0.0.1
+version: 1.0.0
 homepage:
 
 environment:
-  sdk: '>=3.0.0-417.4.beta <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
