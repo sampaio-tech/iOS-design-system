@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CupertinoApp(
       title: 'Flutter Demo',
-      theme: CupertinoThemeData(brightness: Brightness.light),
+      theme: CupertinoThemeData(brightness: Brightness.dark),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           imageFilter: NavigatorBarImageFilter.enabled,
           leading: null,
           trailing: LabelButtonWidget.label(
-            label: 'Push',
+            label: 'Push Push',
             iconRight: CupertinoIcons.add,
             onPressed: () => Navigator.of(context).push(
               CupertinoPageRoute(

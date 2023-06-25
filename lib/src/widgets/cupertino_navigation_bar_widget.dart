@@ -28,89 +28,106 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
     final brightness = CupertinoTheme.brightnessOf(context);
     final canPop = ModalRoute.of(context)?.canPop ?? false;
     const kTextScaleFactor = 1.0;
+    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
       onTap: () => primaryScrollController?.animateTo(
         0.0,
         duration: const Duration(milliseconds: 500),
         curve: Curves.linearToEaseOut,
       ),
-      child: CupertinoNavigationBar(
-        padding: const EdgeInsetsDirectional.all(0),
-        middle: title != null
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: textScaleFactor),
+        child: CupertinoNavigationBar(
+          padding: const EdgeInsetsDirectional.all(0),
+          middle: title != null
+              ? DefaultTextStyle(
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.headlineRegular.copyWith(
+                    color: switch (brightness) {
+                      Brightness.light => DefaultLabelColors.primaryLight,
+                      Brightness.dark => DefaultLabelColors.primaryDark,
+                    },
+                  ),
+                  child: Text(
+                    title!,
+                    textScaleFactor: textScaleFactor,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                )
+              : null,
+          trailing: switch (trailing) {
+            null => null,
+            final trailing => Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(
-                    child: DefaultTextStyle(
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.headlineRegular.copyWith(
-                        color: switch (brightness) {
-                          Brightness.light => DefaultLabelColors.primaryLight,
-                          Brightness.dark => DefaultLabelColors.primaryDark,
-                        },
-                      ),
-                      child: Text(
-                        title!,
-                        textScaleFactor: kTextScaleFactor,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                    child: MediaQuery(
+                      data: MediaQuery.of(context)
+                          .copyWith(textScaleFactor: textScaleFactor),
+                      child: trailing.copyWith(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 11,
+                        ),
                       ),
                     ),
                   ),
                 ],
-              )
-            : null,
-        trailing: switch (trailing) {
-          null => null,
-          final trailing => Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: trailing.copyWith(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+          },
+          leading: switch ((leading, backButtonWidget, canPop)) {
+            (null, _, true) => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: MediaQuery(
+                      data: MediaQuery.of(context)
+                          .copyWith(textScaleFactor: textScaleFactor),
+                      child: backButtonWidget,
+                    ),
                   ),
-                ),
-              ],
-            ),
-        },
-        leading: switch ((leading, backButtonWidget, canPop)) {
-          (null, _, true) => Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [Center(child: backButtonWidget)],
-            ),
-          (null, _, _) => null,
-          (final leading, _, _) => Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: leading?.copyWith(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                ],
+              ),
+            (null, _, _) => null,
+            (final leading, _, _) => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: MediaQuery(
+                      data: MediaQuery.of(context)
+                          .copyWith(textScaleFactor: textScaleFactor),
+                      child: leading!.copyWith(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 11,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+          },
+          automaticallyImplyMiddle: false,
+          automaticallyImplyLeading: false,
+          brightness: brightness,
+          backgroundColor: imageFilter.backgroundColor(brightness: brightness),
+          border: Border(
+            bottom: BorderSide(
+              width: 1,
+              color: switch (brightness) {
+                Brightness.light => SystemColoursSeparatorColors.nonOpaqueLight,
+                Brightness.dark => SystemColoursSeparatorColors.nonOpaqueDark,
+              },
             ),
-        },
-        automaticallyImplyMiddle: false,
-        automaticallyImplyLeading: false,
-        brightness: brightness,
-        backgroundColor: imageFilter.backgroundColor(brightness: brightness),
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: switch (brightness) {
-              Brightness.light => SystemColoursSeparatorColors.nonOpaqueLight,
-              Brightness.dark => SystemColoursSeparatorColors.nonOpaqueDark,
-            },
           ),
         ),
       ),
@@ -172,7 +189,10 @@ class CupertinoNavigationBackButtonWidget extends StatelessWidget {
       label: label ?? 'Back',
       iconLeft: CupertinoIcons.back,
       onPressed: canPop ? Navigator.of(context).pop : null,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 11,
+      ),
     );
   }
 }
