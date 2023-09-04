@@ -5,33 +5,69 @@ import '../../ios_design_system.dart';
 class ButtonWidget extends StatelessWidget {
   final ButtonSize size;
   final ButtonColor color;
+  final LabelFontWeight labelFontWeight;
   final String? label;
+  final Widget? leftWidget;
+  final Widget? rigthWidget;
   final IconData? leftIcon;
+  final IconData? rigthIcon;
   final void Function()? onPressed;
+  final double spacing;
+  final BoxBorder? border;
+  final BoxShape shape;
+  final bool displayCupertinoActivityIndicator;
+  final CupertinoActivityIndicator? cupertinoActivityIndicator;
 
   const ButtonWidget._({
     Key? key,
     required this.size,
     required this.onPressed,
     required this.color,
+    this.cupertinoActivityIndicator,
+    this.labelFontWeight = LabelFontWeight.regular,
     this.leftIcon,
+    this.rigthIcon,
+    this.leftWidget,
+    this.rigthWidget,
     this.label,
+    this.spacing = 3,
+    this.border,
+    this.shape = BoxShape.rectangle,
+    this.displayCupertinoActivityIndicator = false,
   }) : super(key: key);
 
   factory ButtonWidget.label({
     required ButtonSize size,
     required ButtonColor color,
     required String label,
+    CupertinoActivityIndicator? cupertinoActivityIndicator,
+    LabelFontWeight labelFontWeight = LabelFontWeight.regular,
     IconData? leftIcon,
+    IconData? rigthIcon,
+    Widget? leftWidget,
+    Widget? rigthWidget,
     void Function()? onPressed,
+    double spacing = 3,
+    BoxBorder? border,
+    BoxShape shape = BoxShape.rectangle,
+    bool displayCupertinoActivityIndicator = false,
     Key? key,
   }) =>
       ButtonWidget._(
+        labelFontWeight: labelFontWeight,
+        cupertinoActivityIndicator: cupertinoActivityIndicator,
         size: size,
         onPressed: onPressed,
         color: color,
         leftIcon: leftIcon,
+        rigthIcon: rigthIcon,
+        leftWidget: leftWidget,
+        rigthWidget: rigthWidget,
         label: label,
+        spacing: spacing,
+        border: border,
+        shape: shape,
+        displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
         key: key,
       );
 
@@ -40,14 +76,24 @@ class ButtonWidget extends StatelessWidget {
     required ButtonColor color,
     required IconData leftIcon,
     void Function()? onPressed,
+    CupertinoActivityIndicator? cupertinoActivityIndicator,
+    double spacing = 3,
+    BoxBorder? border,
+    BoxShape shape = BoxShape.rectangle,
+    bool displayCupertinoActivityIndicator = false,
     Key? key,
   }) =>
       ButtonWidget._(
+        cupertinoActivityIndicator: cupertinoActivityIndicator,
         size: size,
         onPressed: onPressed,
         color: color,
         leftIcon: leftIcon,
         label: null,
+        spacing: spacing,
+        border: border,
+        shape: shape,
+        displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
         key: key,
       );
 
@@ -56,21 +102,49 @@ class ButtonWidget extends StatelessWidget {
     if (label == null && leftIcon == null) {
       return const SizedBox.shrink();
     }
+    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     final brightness = CupertinoTheme.brightnessOf(context);
     final enabled = onPressed != null;
+    final kLabelTextStyle = size.textStyle(
+      labelFontWeight: labelFontWeight,
+      buttonColor: color,
+      brightness: brightness,
+      enabled: enabled,
+    );
+    final kPadding = size.padding(label);
     return CupertinoButtonWidget(
       onPressed: onPressed,
+      border: border,
+      shape: shape,
+      displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
+      cupertinoActivityIndicator: cupertinoActivityIndicator ??
+          CupertinoActivityIndicator(
+            radius: switch (kLabelTextStyle.fontSize) {
+              null => 10,
+              final fontSize => (fontSize * textScaleFactor) / 2
+            },
+          ),
+      constraints: size._boxConstraints,
       borderRadius: size.borderRadius(label),
-      padding: size.padding(label),
+      padding: kPadding,
       color: color.background(brightness),
       disabledColor: color.backgroundDisabled(brightness),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         alignment: WrapAlignment.center,
         runAlignment: WrapAlignment.center,
-        spacing: 3,
-        runSpacing: 3,
+        spacing: spacing,
+        runSpacing: spacing,
         children: [
+          if (leftWidget != null)
+            AnimatedOpacity(
+              duration: kAnimationInDuration,
+              opacity: switch (enabled) {
+                true => 1,
+                false => kCupertinoButtonPressedOpacity,
+              },
+              child: leftWidget,
+            ),
           if (leftIcon != null)
             Icon(
               leftIcon,
@@ -80,13 +154,24 @@ class ButtonWidget extends StatelessWidget {
           if (label != null)
             Text(
               label!,
-              style: size.textStyle(
-                buttonColor: color,
-                brightness: brightness,
-                enabled: enabled,
-              ),
+              style: kLabelTextStyle,
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
+            ),
+          if (rigthIcon != null)
+            Icon(
+              rigthIcon,
+              color: color.label(brightness: brightness, enabled: enabled),
+              size: size.iconSize(label),
+            ),
+          if (rigthWidget != null)
+            AnimatedOpacity(
+              duration: kAnimationInDuration,
+              opacity: switch (enabled) {
+                true => 1,
+                false => kCupertinoButtonPressedOpacity,
+              },
+              child: rigthWidget,
             ),
         ],
       ),
@@ -94,25 +179,11 @@ class ButtonWidget extends StatelessWidget {
   }
 }
 
-enum ButtonColor {
-  greyTransparent(
-    backgroundLight: DefaultFillColors.secondaryLight,
-    backgroundDark: DefaultFillColors.secondaryDark,
-    labelLight: DefaultColors.systemBlueLight,
-    labelDark: DefaultColors.systemBlueDark,
-  ),
-  blue(
-    backgroundLight: DefaultColors.systemBlueLight,
-    backgroundDark: DefaultColors.systemBlueDark,
-    labelLight: DefaultLabelColors.primaryDark,
-    labelDark: DefaultLabelColors.primaryDark,
-  ),
-  blueTransparent(
-    backgroundLight: DefaultColors.systemBlueLight,
-    backgroundDark: DefaultColors.systemBlueDark,
-    labelLight: DefaultColors.systemBlueLight,
-    labelDark: DefaultColors.systemBlueDark,
-  );
+sealed class ButtonColor {
+  final Color _backgroundLight;
+  final Color _backgroundDark;
+  final Color _labelLight;
+  final Color _labelDark;
 
   const ButtonColor({
     required Color backgroundLight,
@@ -124,15 +195,10 @@ enum ButtonColor {
         _backgroundDark = backgroundDark,
         _backgroundLight = backgroundLight;
 
-  final Color _backgroundLight;
-  final Color _backgroundDark;
-  final Color _labelLight;
-  final Color _labelDark;
-
   Color background(Brightness brightness) => switch ((this, brightness)) {
-        (ButtonColor.blueTransparent, Brightness.light) =>
+        (BlueTransparentButtonColor(), Brightness.light) =>
           _backgroundLight.withOpacity(.15),
-        (ButtonColor.blueTransparent, Brightness.dark) =>
+        (BlueTransparentButtonColor(), Brightness.dark) =>
           _backgroundDark.withOpacity(.15),
         (_, Brightness.light) => _backgroundLight,
         (_, Brightness.dark) => _backgroundDark,
@@ -159,43 +225,79 @@ enum ButtonColor {
       };
 }
 
-enum ButtonSize {
-  small(
-    borderRadius: BorderRadius.all(Radius.circular(14)),
-    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    iconSize: 18,
-  ),
-  medium(
-    borderRadius: BorderRadius.all(Radius.circular(50)),
-    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-    iconSize: 18,
-  ),
-  large(
-    borderRadius: BorderRadius.all(Radius.circular(12)),
-    padding: EdgeInsets.symmetric(horizontal: 20.5, vertical: 15),
-    iconSize: 18,
-  );
+class GreyTransparentButtonColor extends ButtonColor {
+  const GreyTransparentButtonColor()
+      : super(
+          backgroundLight: DefaultFillColors.secondaryLight,
+          backgroundDark: DefaultFillColors.secondaryDark,
+          labelLight: DefaultColors.systemBlueLight,
+          labelDark: DefaultColors.systemBlueDark,
+        );
+}
+
+class BlueButtonColor extends ButtonColor {
+  const BlueButtonColor()
+      : super(
+          backgroundLight: DefaultColors.systemBlueLight,
+          backgroundDark: DefaultColors.systemBlueDark,
+          labelLight: DefaultLabelColors.primaryDark,
+          labelDark: DefaultLabelColors.primaryDark,
+        );
+}
+
+class BlueTransparentButtonColor extends ButtonColor {
+  const BlueTransparentButtonColor()
+      : super(
+          backgroundLight: DefaultColors.systemBlueLight,
+          backgroundDark: DefaultColors.systemBlueDark,
+          labelLight: DefaultColors.systemBlueLight,
+          labelDark: DefaultColors.systemBlueDark,
+        );
+}
+
+class CustomButtonColor extends ButtonColor {
+  const CustomButtonColor({
+    required Color backgroundLight,
+    required Color backgroundDark,
+    required Color labelLight,
+    required Color labelDark,
+  }) : super(
+          backgroundLight: backgroundLight,
+          backgroundDark: backgroundDark,
+          labelLight: labelLight,
+          labelDark: labelDark,
+        );
+}
+
+sealed class ButtonSize {
+  final BorderRadius _borderRadius;
+  final EdgeInsets _padding;
+  final double _iconSize;
+  final BoxConstraints? _boxConstraints;
 
   const ButtonSize({
     required BorderRadius borderRadius,
     required EdgeInsets padding,
     required double iconSize,
+    required BoxConstraints? boxConstraints,
   })  : _padding = padding,
         _borderRadius = borderRadius,
-        _iconSize = iconSize;
-
-  final BorderRadius _borderRadius;
-  final EdgeInsets _padding;
-  final double _iconSize;
+        _iconSize = iconSize,
+        _boxConstraints = boxConstraints;
 
   TextStyle textStyle({
     required ButtonColor buttonColor,
     required Brightness brightness,
     required bool enabled,
+    required LabelFontWeight labelFontWeight,
   }) =>
-      switch (this) {
-        ButtonSize.small => AppTypography.subheadlineRegular,
-        _ => AppTypography.bodyRegular,
+      switch ((this, labelFontWeight)) {
+        (SmallButtonSize(), LabelFontWeight.regular) =>
+          AppTypography.subheadlineRegular,
+        (SmallButtonSize(), LabelFontWeight.bold) =>
+          AppTypography.subheadlineBold,
+        (_, LabelFontWeight.regular) => AppTypography.bodyRegular,
+        (_, LabelFontWeight.bold) => AppTypography.bodyBold,
       }
           .copyWith(
         color: buttonColor.label(brightness: brightness, enabled: enabled),
@@ -214,8 +316,57 @@ enum ButtonSize {
       };
 
   EdgeInsets padding(String? label) => switch ((this, label)) {
-        (ButtonSize.small, null) => const EdgeInsets.all(10),
+        (SmallButtonSize(), null) => const EdgeInsets.all(10),
         (_, null) => const EdgeInsets.all(12),
         (final size, _) => size._padding,
       };
+}
+
+class SmallButtonSize extends ButtonSize {
+  const SmallButtonSize()
+      : super(
+          borderRadius: const BorderRadius.all(Radius.circular(14)),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          iconSize: 18,
+          boxConstraints: const BoxConstraints(minHeight: 28, minWidth: 28),
+        );
+}
+
+class MediumButtonSize extends ButtonSize {
+  const MediumButtonSize()
+      : super(
+          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          iconSize: 18,
+          boxConstraints: const BoxConstraints(minHeight: 34, minWidth: 34),
+        );
+}
+
+class LargeButtonSize extends ButtonSize {
+  const LargeButtonSize()
+      : super(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          padding: const EdgeInsets.symmetric(horizontal: 20.5, vertical: 15),
+          iconSize: 18,
+          boxConstraints: const BoxConstraints(minHeight: 50, minWidth: 50),
+        );
+}
+
+class CustomButtonSize extends ButtonSize {
+  const CustomButtonSize({
+    required BorderRadius borderRadius,
+    required EdgeInsets padding,
+    required double iconSize,
+    required BoxConstraints? boxConstraints,
+  }) : super(
+          borderRadius: borderRadius,
+          padding: padding,
+          iconSize: iconSize,
+          boxConstraints: boxConstraints,
+        );
+}
+
+enum LabelFontWeight {
+  regular,
+  bold,
 }
