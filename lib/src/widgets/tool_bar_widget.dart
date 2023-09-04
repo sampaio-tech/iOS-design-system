@@ -77,7 +77,7 @@ enum ToolBarImageFilter {
       };
 
   double get backgroundOpacity => switch (this) {
-        ToolBarImageFilter.enabled => .2,
+        ToolBarImageFilter.enabled => .8,
         ToolBarImageFilter.disabled => 1,
       };
 
