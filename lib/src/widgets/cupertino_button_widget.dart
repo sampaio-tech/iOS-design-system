@@ -12,17 +12,27 @@ class CupertinoButtonWidget extends StatefulWidget {
   final double pressedOpacity;
   final BorderRadius borderRadius;
   final AlignmentGeometry alignment;
+  final BoxConstraints? constraints;
+  final BoxBorder? border;
+  final BoxShape shape;
+  final bool displayCupertinoActivityIndicator;
+  final CupertinoActivityIndicator cupertinoActivityIndicator;
 
   const CupertinoButtonWidget({
     super.key,
     required this.child,
     required this.onPressed,
     this.padding = kCupertinoButtonPadding,
+    this.constraints,
     this.color,
     this.disabledColor,
     this.pressedOpacity = kCupertinoButtonPressedOpacity,
     this.borderRadius = kCupertinoButtonBorderRadius,
     this.alignment = Alignment.center,
+    this.border,
+    this.shape = BoxShape.rectangle,
+    this.displayCupertinoActivityIndicator = false,
+    this.cupertinoActivityIndicator = const CupertinoActivityIndicator(),
   }) : assert((pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
 
   bool get enabled => onPressed != null;
@@ -120,26 +130,42 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
     final backgroundColor = widget.color;
     return MouseRegion(
       cursor: enabled && kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapDown: enabled ? _handleTapDown : null,
-        onTapUp: enabled ? _handleTapUp : null,
-        onTapCancel: enabled ? _handleTapCancel : null,
-        onTap: widget.onPressed,
-        child: Semantics(
-          button: true,
-          child: FadeTransition(
-            opacity: _opacityAnimation,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: widget.borderRadius,
-                color: backgroundColor != null && !enabled
-                    ? widget.disabledColor
-                    : backgroundColor,
-              ),
-              child: Padding(
+      child: IgnorePointer(
+        ignoring: widget.displayCupertinoActivityIndicator,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTapDown: enabled ? _handleTapDown : null,
+          onTapUp: enabled ? _handleTapUp : null,
+          onTapCancel: enabled ? _handleTapCancel : null,
+          onTap: widget.onPressed,
+          child: Semantics(
+            button: true,
+            child: FadeTransition(
+              opacity: _opacityAnimation,
+              child: AnimatedContainer(
+                duration: kAnimationInDuration,
                 padding: widget.padding,
-                child: widget.child,
+                constraints: widget.constraints,
+                decoration: BoxDecoration(
+                  border: widget.border,
+                  shape: widget.shape,
+                  borderRadius: widget.borderRadius,
+                  color: backgroundColor != null && !enabled
+                      ? widget.disabledColor
+                      : backgroundColor,
+                ),
+                child: AnimatedSwitcher(
+                  duration: kAnimationInDuration,
+                  reverseDuration: kAnimationOutDuration,
+                  transitionBuilder: (child, animation) => FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  ),
+                  child: switch (widget.displayCupertinoActivityIndicator) {
+                    true => widget.cupertinoActivityIndicator,
+                    false => widget.child,
+                  },
+                ),
               ),
             ),
           ),
