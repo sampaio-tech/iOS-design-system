@@ -26,14 +26,16 @@ class IconWidget extends StatelessWidget {
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Icon(
-          iconData,
-          size: iconSize,
-          color: iconColorCallback?.call(brightness) ??
-              switch (brightness) {
-                Brightness.light => DefaultColors.systemWhiteLight,
-                Brightness.dark => DefaultColors.systemWhiteDark,
-              },
+        iconCallback: (Brightness brightness) => Builder(
+          builder: (context) => Icon(
+            iconData,
+            size: iconSize * MediaQuery.textScaleFactorOf(context),
+            color: iconColorCallback?.call(brightness) ??
+                switch (brightness) {
+                  Brightness.light => DefaultColors.systemWhiteLight,
+                  Brightness.dark => DefaultColors.systemWhiteDark,
+                },
+          ),
         ),
         borderRadius: borderRadius ?? BorderRadius.circular(7),
         backgroundColorCallback: backgroundColorCallback ??
@@ -53,14 +55,16 @@ class IconWidget extends StatelessWidget {
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Icon(
-          iconData,
-          size: iconSize,
-          color: iconColorCallback?.call(brightness) ??
-              switch (brightness) {
-                Brightness.light => DefaultColors.systemBlueLight,
-                Brightness.dark => DefaultColors.systemBlueDark,
-              },
+        iconCallback: (Brightness brightness) => Builder(
+          builder: (context) => Icon(
+            iconData,
+            size: iconSize * MediaQuery.textScaleFactorOf(context),
+            color: iconColorCallback?.call(brightness) ??
+                switch (brightness) {
+                  Brightness.light => DefaultColors.systemBlueLight,
+                  Brightness.dark => DefaultColors.systemBlueDark,
+                },
+          ),
         ),
         borderRadius: null,
         backgroundColorCallback: null,
@@ -78,14 +82,16 @@ class IconWidget extends StatelessWidget {
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Icon(
-          iconData,
-          size: iconSize,
-          color: iconColorCallback?.call(brightness) ??
-              switch (brightness) {
-                Brightness.light => DefaultColors.systemWhiteLight,
-                Brightness.dark => DefaultColors.systemWhiteDark,
-              },
+        iconCallback: (Brightness brightness) => Builder(
+          builder: (context) => Icon(
+            iconData,
+            size: iconSize * MediaQuery.textScaleFactorOf(context),
+            color: iconColorCallback?.call(brightness) ??
+                switch (brightness) {
+                  Brightness.light => DefaultColors.systemWhiteLight,
+                  Brightness.dark => DefaultColors.systemWhiteDark,
+                },
+          ),
         ),
         borderRadius: borderRadius,
         backgroundColorCallback: backgroundColorCallback ??
