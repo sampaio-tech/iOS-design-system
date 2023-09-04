@@ -74,6 +74,7 @@ class LabelButtonWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
     final brightness = CupertinoTheme.brightnessOf(context);
+    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     const kBorderRadius = BorderRadius.all(Radius.zero);
     const kColor = Colors.transparent;
     const kDisabledColor = Colors.transparent;
@@ -99,7 +100,7 @@ class LabelButtonWidget extends StatelessWidget {
             Icon(
               iconLeft,
               color: kLabelColor,
-              size: kIconSize,
+              size: kIconSize * textScaleFactor,
             ),
           if (label != null)
             Text(
@@ -112,7 +113,7 @@ class LabelButtonWidget extends StatelessWidget {
             Icon(
               iconRight,
               color: kLabelColor,
-              size: kIconSize,
+              size: kIconSize * textScaleFactor,
             ),
         ],
       ),
