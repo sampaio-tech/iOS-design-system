@@ -10,7 +10,7 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--enable-impeller",
+                "--no-enable-impeller",
             ]
         },
         {
@@ -20,7 +20,7 @@
             "type": "dart",
             "flutterMode": "profile",
             "args": [
-                "--enable-impeller",
+                "--no-enable-impeller",
             ]
         },
         {
@@ -30,7 +30,7 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--enable-impeller",
+                "--no-enable-impeller",
             ]
         },
     ]
