@@ -37,6 +37,7 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     final brightness = CupertinoTheme.brightnessOf(context);
     const kBorderRadius = BorderRadius.all(Radius.circular(10));
     const kPadding = EdgeInsets.only(left: 0, top: 7, bottom: 7, right: 0);
@@ -79,12 +80,12 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
             Brightness.light => DefaultLabelColors.secondaryLight,
             Brightness.dark => DefaultLabelColors.secondaryDark,
           },
-          size: 20,
+          size: 20 * textScaleFactor,
         ),
         suffixInsets: kSuffixInsets,
         suffixIcon: Icon(
           CupertinoIcons.xmark_circle_fill,
-          size: 18,
+          size: 18 * textScaleFactor,
           color: switch (brightness) {
             Brightness.light => DefaultColors.systemGray01Light,
             Brightness.dark => DefaultColors.systemGray01Dark,
