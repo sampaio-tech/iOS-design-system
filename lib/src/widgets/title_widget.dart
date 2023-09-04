@@ -24,22 +24,24 @@ class TitleWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            text,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.visible,
-            style: switch ((size, brightness)) {
-              (TitleSize.small, Brightness.light) => AppTypography
-                  .caption1Regular
-                  .copyWith(color: DefaultLabelColors.secondaryLight),
-              (TitleSize.small, Brightness.dark) => AppTypography
-                  .caption1Regular
-                  .copyWith(color: DefaultLabelColors.secondaryDark),
-              (TitleSize.large, Brightness.light) => AppTypography.title3Bold
-                  .copyWith(color: DefaultLabelColors.primaryLight),
-              (TitleSize.large, Brightness.dark) => AppTypography.title3Bold
-                  .copyWith(color: DefaultLabelColors.primaryDark),
-            },
+          Expanded(
+            child: Text(
+              text,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.visible,
+              style: switch ((size, brightness)) {
+                (TitleSize.small, Brightness.light) => AppTypography
+                    .caption1Regular
+                    .copyWith(color: DefaultLabelColors.secondaryLight),
+                (TitleSize.small, Brightness.dark) => AppTypography
+                    .caption1Regular
+                    .copyWith(color: DefaultLabelColors.secondaryDark),
+                (TitleSize.large, Brightness.light) => AppTypography.title3Bold
+                    .copyWith(color: DefaultLabelColors.primaryLight),
+                (TitleSize.large, Brightness.dark) => AppTypography.title3Bold
+                    .copyWith(color: DefaultLabelColors.primaryDark),
+              },
+            ),
           ),
         ],
       ),
