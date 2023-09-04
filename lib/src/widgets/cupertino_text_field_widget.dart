@@ -124,6 +124,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     final brightness = CupertinoTheme.brightnessOf(context);
     const kCursorWidth = 1.0;
     const kCursorHeight = 24.0;
@@ -200,7 +201,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
             padding: const EdgeInsets.only(right: 16, left: 8),
             child: Icon(
               CupertinoIcons.clear_thick_circled,
-              size: 18,
+              size: 18 * textScaleFactor,
               color: switch (brightness) {
                 Brightness.light => DefaultColors.systemGray01Light,
                 Brightness.dark => DefaultColors.systemGray01Dark,
