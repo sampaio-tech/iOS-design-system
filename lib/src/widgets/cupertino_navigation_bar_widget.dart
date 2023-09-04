@@ -29,11 +29,16 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
     final canPop = ModalRoute.of(context)?.canPop ?? false;
     final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
-      onTap: () => primaryScrollController?.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.linearToEaseOut,
-      ),
+      onTap: () {
+        final hasClients = primaryScrollController?.hasClients ?? false;
+        if (hasClients) {
+          primaryScrollController?.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.linearToEaseOut,
+          );
+        }
+      },
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: textScaleFactor),
         child: CupertinoNavigationBar(
@@ -157,7 +162,7 @@ enum NavigatorBarImageFilter {
       };
 
   double get backgroundOpacity => switch (this) {
-        NavigatorBarImageFilter.enabled => .2,
+        NavigatorBarImageFilter.enabled => .8,
         NavigatorBarImageFilter.disabled => 1,
       };
 
