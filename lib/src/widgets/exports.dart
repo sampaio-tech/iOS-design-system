@@ -18,3 +18,6 @@ export 'modal_title_widget.dart';
 export 'tool_bar_widget.dart';
 export 'scaffold_widget.dart';
 export 'cupertino_navigation_bar_widget.dart';
+export 'tag_widget.dart';
+export 'cupertino_picker_widget.dart';
+export 'cupertino_date_picker_widget.dart';
