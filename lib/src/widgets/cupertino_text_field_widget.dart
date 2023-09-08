@@ -14,22 +14,22 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final UndoHistoryController? undoController;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
-  final TextCapitalization textCapitalization = TextCapitalization.none;
-  final TextAlign textAlign = TextAlign.start;
+  final TextCapitalization textCapitalization;
+  final TextAlign textAlign;
   final TextAlignVertical? textAlignVertical;
   final TextDirection? textDirection;
-  final bool readOnly = false;
+  final bool readOnly;
   final bool? showCursor;
-  final bool autofocus = false;
-  final String obscuringCharacter = '•';
-  final bool obscureText = false;
-  final bool autocorrect = true;
+  final bool autofocus;
+  final String obscuringCharacter;
+  final bool obscureText;
+  final bool autocorrect;
   final SmartDashesType? smartDashesType;
   final SmartQuotesType? smartQuotesType;
-  final bool enableSuggestions = true;
-  final int? maxLines = 1;
+  final bool enableSuggestions;
+  final int? maxLines;
   final int? minLines;
-  final bool expands = false;
+  final bool expands;
   final int? maxLength;
   final MaxLengthEnforcement? maxLengthEnforcement;
   final void Function(String)? onChanged;
@@ -37,24 +37,23 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final void Function(String)? onSubmitted;
   final void Function(PointerDownEvent)? onTapOutside;
   final List<TextInputFormatter>? inputFormatters;
-  final bool cursorOpacityAnimates = true;
-  final BoxHeightStyle selectionHeightStyle = BoxHeightStyle.tight;
-  final BoxWidthStyle selectionWidthStyle = BoxWidthStyle.tight;
-  final EdgeInsets scrollPadding = const EdgeInsets.all(20.0);
-  final DragStartBehavior dragStartBehavior = DragStartBehavior.start;
+  final bool cursorOpacityAnimates;
+  final BoxHeightStyle selectionHeightStyle;
+  final BoxWidthStyle selectionWidthStyle;
+  final EdgeInsets scrollPadding;
+  final DragStartBehavior dragStartBehavior;
   final bool? enableInteractiveSelection;
   final TextSelectionControls? selectionControls;
   final void Function()? onTap;
   final ScrollController? scrollController;
   final ScrollPhysics? scrollPhysics;
-  final Iterable<String>? autofillHints = const <String>[];
+  final Iterable<String>? autofillHints;
   final ContentInsertionConfiguration? contentInsertionConfiguration;
-  final Clip clipBehavior = Clip.hardEdge;
+  final Clip clipBehavior;
   final String? restorationId;
-  final bool scribbleEnabled = true;
-  final bool enableIMEPersonalizedLearning = true;
-  final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder =
-      _defaultContextMenuBuilder;
+  final bool scribbleEnabled;
+  final bool enableIMEPersonalizedLearning;
+  final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
   final SpellCheckConfiguration? spellCheckConfiguration;
   final TextMagnifierConfiguration? magnifierConfiguration;
 
@@ -88,6 +87,26 @@ class CupertinoTextFieldWidget extends StatefulWidget {
     this.restorationId,
     this.spellCheckConfiguration,
     this.magnifierConfiguration,
+    this.textCapitalization = TextCapitalization.none,
+    this.textAlign = TextAlign.start,
+    this.readOnly = false,
+    this.autofocus = false,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.enableSuggestions = true,
+    this.maxLines = 1,
+    this.expands = false,
+    this.cursorOpacityAnimates = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.autofillHints = const <String>[],
+    this.clipBehavior = Clip.hardEdge,
+    this.scribbleEnabled = true,
+    this.enableIMEPersonalizedLearning = true,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
   });
 
   static Widget _defaultContextMenuBuilder(
