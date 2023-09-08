@@ -37,11 +37,66 @@ class _MyHomePageState extends State<MyHomePage> {
       child: ScaffoldWidget(
         toolBar: ToolBarWidget(
           imageFilter: ToolBarImageFilter.enabled,
-          child: ButtonWidget.label(
-            size: ButtonSize.large,
-            color: ButtonColor.blue,
-            onPressed: () {},
-            label: 'Label',
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ButtonWidget.label(
+                size: const LargeButtonSize(),
+                color: const BlueButtonColor(),
+                onPressed: () => ModalSheetWidget.showModalSheet(
+                  barrierFilter: BarrierFilter.enabled,
+                  context: context,
+                  cupertinoSearchTextFieldWidget:
+                      const CupertinoSearchTextFieldWidget(),
+                  title: ModalTitleWidget(
+                    title: 'Title',
+                    leftLabelButton: LabelButtonWidget.label(
+                      label: 'Back',
+                      iconLeft: CupertinoIcons.back,
+                      onPressed: () {},
+                    ),
+                    rightLabelButton: LabelButtonWidget.label(
+                      label: 'Add',
+                      iconRight: CupertinoIcons.add,
+                      onPressed: () {},
+                    ),
+                  ),
+                  prompt:
+                      const PromptWidget(message: 'This is a prompt message.'),
+                ),
+                label: 'Label',
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TagWidget(
+                    label: 'games',
+                    selected: true,
+                    onPressed: () {},
+                    imageFilter: TagImageFilter.enabled,
+                  ),
+                  const SizedBox(width: 4),
+                  TagWidget(
+                    label: 'puzzle',
+                    selected: false,
+                    onPressed: () {},
+                    imageFilter: TagImageFilter.enabled,
+                  ),
+                  const SizedBox(width: 4),
+                  TagWidget(
+                    label: 'brain',
+                    selected: false,
+                    onPressed: () {},
+                    imageFilter: TagImageFilter.enabled,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         navigationBar: CupertinoNavigatorBarWidget(
@@ -67,12 +122,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    const SizedBox(height: 8),
+                    TagWidget(
+                      label: 'games',
+                      selected: true,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 8),
+                    TagWidget(
+                      label: 'games',
+                      selected: false,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 8),
                     ToolBarWidget(
-                      child: ButtonWidget.label(
-                        size: ButtonSize.large,
-                        color: ButtonColor.blue,
-                        onPressed: () {},
-                        label: 'Label',
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ButtonWidget.label(
+                            size: const LargeButtonSize(),
+                            color: const BlueButtonColor(),
+                            onPressed: () {},
+                            label: 'Label',
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TagWidget(
+                                label: 'games',
+                                selected: true,
+                                onPressed: () {},
+                                imageFilter: TagImageFilter.enabled,
+                              ),
+                              const SizedBox(width: 4),
+                              TagWidget(
+                                label: 'puzzle',
+                                selected: false,
+                                onPressed: () {},
+                                imageFilter: TagImageFilter.enabled,
+                              ),
+                              const SizedBox(width: 4),
+                              TagWidget(
+                                label: 'brain',
+                                selected: false,
+                                onPressed: () {},
+                                imageFilter: TagImageFilter.enabled,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     ModalTitleWidget(
@@ -110,15 +213,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const SizedBox(height: 8),
                     ButtonWidget.icon(
-                      size: ButtonSize.medium,
-                      color: ButtonColor.greyTransparent,
+                      size: const MediumButtonSize(),
+                      color: const GreyTransparentButtonColor(),
                       onPressed: () {},
                       leftIcon: CupertinoIcons.app,
                     ),
                     const SizedBox(height: 8),
                     ButtonWidget.label(
-                      size: ButtonSize.medium,
-                      color: ButtonColor.greyTransparent,
+                      size: const MediumButtonSize(),
+                      color: const GreyTransparentButtonColor(),
                       onPressed: () {},
                       leftIcon: CupertinoIcons.app,
                       label: 'Label',
