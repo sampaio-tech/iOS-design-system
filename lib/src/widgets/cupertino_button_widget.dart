@@ -137,7 +137,13 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
           onTapDown: enabled ? _handleTapDown : null,
           onTapUp: enabled ? _handleTapUp : null,
           onTapCancel: enabled ? _handleTapCancel : null,
-          onTap: widget.onPressed,
+          onTap: switch (widget.onPressed) {
+            null => null,
+            final onPressed => () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                onPressed();
+              },
+          },
           child: Semantics(
             button: true,
             child: FadeTransition(

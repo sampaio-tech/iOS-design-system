@@ -30,6 +30,7 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
     final textScaleFactor = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
       onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
         final hasClients = primaryScrollController?.hasClients ?? false;
         if (hasClients) {
           primaryScrollController?.animateTo(

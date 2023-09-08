@@ -28,8 +28,17 @@ class ScaffoldWidget extends StatelessWidget {
       extendBodyBehindAppBar:
           navigationBar?.imageFilter == NavigatorBarImageFilter.enabled,
       extendBody: toolBar?.imageFilter == ToolBarImageFilter.enabled,
-      body: child,
-      bottomNavigationBar: toolBar,
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: child,
+      ),
+      bottomNavigationBar: switch (toolBar) {
+        null => null,
+        final toolBar => GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: toolBar,
+          ),
+      },
     );
   }
 }
