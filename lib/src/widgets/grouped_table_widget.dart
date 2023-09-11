@@ -17,8 +17,8 @@ class GroupedTableWidget extends StatelessWidget {
 
   factory GroupedTableWidget.rounded({
     required List<Widget> rows,
-    required TitleWidget title,
-    required DescriptionWidget description,
+    required TitleWidget? title,
+    required DescriptionWidget? description,
   }) =>
       GroupedTableWidget(
         rows: rows,
