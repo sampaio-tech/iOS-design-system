@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import '../exports.dart';
+import '../exports.dart' as exports;
 
 class CupertinoButtonWidget extends StatefulWidget {
   final Widget child;
@@ -22,12 +22,12 @@ class CupertinoButtonWidget extends StatefulWidget {
     super.key,
     required this.child,
     required this.onPressed,
-    this.padding = kCupertinoButtonPadding,
+    this.padding = exports.kCupertinoButtonPadding,
     this.constraints,
     this.color,
     this.disabledColor,
-    this.pressedOpacity = kCupertinoButtonPressedOpacity,
-    this.borderRadius = kCupertinoButtonBorderRadius,
+    this.pressedOpacity = exports.kCupertinoButtonPressedOpacity,
+    this.borderRadius = exports.kCupertinoButtonBorderRadius,
     this.alignment = Alignment.center,
     this.border,
     this.shape = BoxShape.rectangle,
@@ -109,12 +109,12 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
     final TickerFuture ticker = _buttonHeldDown
         ? _animationController.animateTo(
             1.0,
-            duration: kAnimationInDuration,
+            duration: exports.kAnimationInDuration,
             curve: Curves.easeInOutCubicEmphasized,
           )
         : _animationController.animateTo(
             0.0,
-            duration: kAnimationOutDuration,
+            duration: exports.kAnimationOutDuration,
             curve: Curves.easeOutCubic,
           );
     ticker.then<void>((void value) {
@@ -149,7 +149,7 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
             child: FadeTransition(
               opacity: _opacityAnimation,
               child: AnimatedContainer(
-                duration: kAnimationInDuration,
+                duration: exports.kAnimationInDuration,
                 padding: widget.padding,
                 constraints: widget.constraints,
                 decoration: BoxDecoration(
@@ -161,8 +161,8 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
                       : backgroundColor,
                 ),
                 child: AnimatedSwitcher(
-                  duration: kAnimationInDuration,
-                  reverseDuration: kAnimationOutDuration,
+                  duration: exports.kAnimationInDuration,
+                  reverseDuration: exports.kAnimationOutDuration,
                   transitionBuilder: (child, animation) => FadeTransition(
                     opacity: animation,
                     child: child,
