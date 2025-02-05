@@ -9,9 +9,7 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart",
-            "args": [
-                "--no-enable-impeller",
-            ]
+            "args": []
         },
         {
             "name": "example (profile mode)",
@@ -19,9 +17,7 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
-            "args": [
-                "--no-enable-impeller",
-            ]
+            "args": []
         },
         {
             "name": "example (release mode)",
@@ -29,9 +25,7 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
-            "args": [
-                "--no-enable-impeller",
-            ]
+            "args": []
         },
     ]
 }
