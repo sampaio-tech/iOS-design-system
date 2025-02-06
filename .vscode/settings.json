@@ -3,7 +3,7 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.removeUnusedImports": "explicit",
-    "source.sortMembers": "explicit",
+    // "source.sortMembers": "explicit",
     "source.trimTrailingWhitespace": "explicit",
   },
   "editor.formatOnSave": true,
