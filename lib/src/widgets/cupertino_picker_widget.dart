@@ -3,6 +3,20 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class CupertinoPickerWidget extends StatefulWidget {
+  const CupertinoPickerWidget({
+    required this.itemExtent,
+    required this.children,
+    Key? key,
+    this.onSelectedItemChanged,
+    this.showGradient = true,
+    this.useMagnifier = false,
+    this.looping = false,
+    this.magnification = 1.0,
+    this.squeeze = 1.45,
+    this.diameterRatio = 1.07,
+    this.offAxisFraction = 0.0,
+    this.initialItem = 0,
+  }) : super(key: key);
   final double itemExtent;
   final void Function(int)? onSelectedItemChanged;
   final bool useMagnifier;
@@ -15,29 +29,14 @@ class CupertinoPickerWidget extends StatefulWidget {
   final int initialItem;
   final bool showGradient;
 
-  const CupertinoPickerWidget({
-    Key? key,
-    required this.itemExtent,
-    this.onSelectedItemChanged,
-    this.showGradient = true,
-    this.useMagnifier = false,
-    this.looping = false,
-    required this.children,
-    this.magnification = 1.0,
-    this.squeeze = 1.45,
-    this.diameterRatio = 1.07,
-    this.offAxisFraction = 0.0,
-    this.initialItem = 0,
-  }) : super(key: key);
-
   static Future<int?> show({
     required BuildContext context,
-    BoxConstraints? boxConstraints,
     required double itemExtent,
+    required List<Widget> children,
+    BoxConstraints? boxConstraints,
     void Function(int)? onSelectedItemChanged,
     bool useMagnifier = false,
     bool looping = false,
-    required List<Widget> children,
     double magnification = 1.0,
     double squeeze = 1.45,
     double diameterRatio = 1.07,
@@ -58,7 +57,7 @@ class CupertinoPickerWidget extends StatefulWidget {
         },
         context: context,
         useRootNavigator: useRootNavigator,
-        builder: (BuildContext context) => ConstrainedBox(
+        builder: (context) => ConstrainedBox(
           constraints: boxConstraints ?? const BoxConstraints.expand(),
           child: CupertinoPickerWidget(
             showGradient: showGradient,
@@ -157,20 +156,18 @@ class _CupertinoPickerWidgetState extends State<CupertinoPickerWidget> {
 }
 
 class _GradientWidget extends StatelessWidget {
-  final Color color;
   const _GradientWidget({
-    Key? key,
     required this.color,
+    Key? key,
   }) : super(key: key);
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: true,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             flex: 2,
@@ -181,8 +178,8 @@ class _GradientWidget extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     color,
-                    color.withOpacity(.5),
-                    color.withOpacity(0),
+                    color.withValues(alpha: .5),
+                    color.withValues(alpha: 0),
                   ],
                 ),
               ),
@@ -198,8 +195,8 @@ class _GradientWidget extends StatelessWidget {
                   end: Alignment.topCenter,
                   colors: [
                     color,
-                    color.withOpacity(.5),
-                    color.withOpacity(0),
+                    color.withValues(alpha: .5),
+                    color.withValues(alpha: 0),
                   ],
                 ),
               ),

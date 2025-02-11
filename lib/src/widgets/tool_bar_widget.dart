@@ -5,15 +5,14 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class ToolBarWidget extends StatelessWidget {
-  final Widget child;
-  final EdgeInsets padding;
-  final ToolBarImageFilter imageFilter;
   const ToolBarWidget({
-    super.key,
-    required this.child,
+    required this.child, super.key,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
     this.imageFilter = ToolBarImageFilter.disabled,
   });
+  final Widget child;
+  final EdgeInsets padding;
+  final ToolBarImageFilter imageFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +39,11 @@ class ToolBarWidget extends StatelessWidget {
 }
 
 class _ToolBarWidget extends StatelessWidget {
+  const _ToolBarWidget({
+    required this.child, required this.padding, Key? key,
+  }) : super(key: key);
   final Widget child;
   final EdgeInsets padding;
-  const _ToolBarWidget({
-    Key? key,
-    required this.child,
-    required this.padding,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,5 +87,5 @@ enum ToolBarImageFilter {
         Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
         Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkElevated,
       }
-          .withOpacity(backgroundOpacity);
+          withValues(alpha = backgroundOpacity);
 }

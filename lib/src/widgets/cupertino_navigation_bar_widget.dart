@@ -6,20 +6,16 @@ import '../../ios_design_system.dart';
 
 class CupertinoNavigatorBarWidget extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
+
+  const CupertinoNavigatorBarWidget({
+    required this.imageFilter, required this.title, required this.trailing, required this.leading, Key? key,
+    this.backButtonWidget = _kCupertinoNavigationBackButtonWidget,
+  }) : super(key: key);
   final NavigatorBarImageFilter imageFilter;
   final String? title;
   final LabelButtonWidget? trailing;
   final LabelButtonWidget? leading;
   final CupertinoNavigationBackButtonWidget backButtonWidget;
-
-  const CupertinoNavigatorBarWidget({
-    Key? key,
-    required this.imageFilter,
-    required this.title,
-    required this.trailing,
-    required this.leading,
-    this.backButtonWidget = _kCupertinoNavigationBackButtonWidget,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +30,14 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
         final hasClients = primaryScrollController?.hasClients ?? false;
         if (hasClients) {
           primaryScrollController?.animateTo(
-            0.0,
+            0,
             duration: const Duration(milliseconds: 500),
             curve: Curves.linearToEaseOut,
           );
         }
       },
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: textScaleFactor),
+        data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(textScaleFactor)),
         child: CupertinoNavigationBar(
           padding: const EdgeInsetsDirectional.all(0),
           middle: title != null
@@ -73,7 +69,7 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
                   Center(
                     child: MediaQuery(
                       data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
+                          .copyWith(textScaler: TextScaler.linear(textScaleFactor)),
                       child: trailing.copyWith(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -87,14 +83,13 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
           },
           leading: switch ((leading, backButtonWidget, canPop)) {
             (null, _, true) => Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(
                     child: MediaQuery(
                       data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
+                          .copyWith(textScaler: TextScaler.linear(textScaleFactor)),
                       child: backButtonWidget,
                     ),
                   ),
@@ -102,14 +97,13 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
               ),
             (null, _, _) => null,
             (final leading, _, _) => Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(
                     child: MediaQuery(
                       data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
+                          .copyWith(textScaler: TextScaler.linear(textScaleFactor)),
                       child: leading!.copyWith(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -127,7 +121,6 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
           backgroundColor: imageFilter.backgroundColor(brightness: brightness),
           border: Border(
             bottom: BorderSide(
-              width: 1,
               color: switch (brightness) {
                 Brightness.light => SystemColoursSeparatorColors.nonOpaqueLight,
                 Brightness.dark => SystemColoursSeparatorColors.nonOpaqueDark,
@@ -174,18 +167,18 @@ enum NavigatorBarImageFilter {
         Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
         Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkElevated,
       }
-          .withOpacity(backgroundOpacity);
+          withValues(alpha = backgroundOpacity);
 }
 
 const _kCupertinoNavigationBackButtonWidget =
     CupertinoNavigationBackButtonWidget();
 
 class CupertinoNavigationBackButtonWidget extends StatelessWidget {
-  final String? label;
   const CupertinoNavigationBackButtonWidget({
     super.key,
     this.label,
   });
+  final String? label;
 
   @override
   Widget build(BuildContext context) {

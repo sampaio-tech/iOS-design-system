@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 final class AppTypography {
-  const AppTypography._();
+  const AppTypography();
 
-  static const caption2Regular = TextStyle(
+  final caption2Regular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 11,
     fontWeight: FontWeight.w400,
@@ -11,7 +11,7 @@ final class AppTypography {
     letterSpacing: .07,
   );
 
-  static const caption2Bold = TextStyle(
+  final caption2Bold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 11,
     fontWeight: FontWeight.w600,
@@ -19,21 +19,21 @@ final class AppTypography {
     letterSpacing: .06,
   );
 
-  static const caption1Regular = TextStyle(
+  final caption1Regular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 12,
     fontWeight: FontWeight.w400,
     height: 16 / 12,
   );
 
-  static const caption1Bold = TextStyle(
+  final caption1Bold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 16 / 12,
   );
 
-  static const footnoteRegular = TextStyle(
+  final footnoteRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 13,
     fontWeight: FontWeight.w400,
@@ -41,7 +41,7 @@ final class AppTypography {
     letterSpacing: -.08,
   );
 
-  static const footnoteBold = TextStyle(
+  final footnoteBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 13,
     fontWeight: FontWeight.w600,
@@ -49,7 +49,7 @@ final class AppTypography {
     letterSpacing: -.08,
   );
 
-  static const subheadlineRegular = TextStyle(
+  final subheadlineRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 15,
     fontWeight: FontWeight.w400,
@@ -57,7 +57,7 @@ final class AppTypography {
     letterSpacing: -.24,
   );
 
-  static const subheadlineBold = TextStyle(
+  final subheadlineBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 15,
     fontWeight: FontWeight.w600,
@@ -65,7 +65,7 @@ final class AppTypography {
     letterSpacing: -.5,
   );
 
-  static const calloutRegular = TextStyle(
+  final calloutRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -73,7 +73,7 @@ final class AppTypography {
     letterSpacing: -.32,
   );
 
-  static const calloutBold = TextStyle(
+  final calloutBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 16,
     fontWeight: FontWeight.w600,
@@ -81,7 +81,7 @@ final class AppTypography {
     letterSpacing: -.32,
   );
 
-  static const bodyRegular = TextStyle(
+  final bodyRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 17,
     fontWeight: FontWeight.w400,
@@ -89,7 +89,7 @@ final class AppTypography {
     letterSpacing: -.41,
   );
 
-  static const bodyBold = TextStyle(
+  final bodyBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 17,
     fontWeight: FontWeight.w600,
@@ -97,7 +97,7 @@ final class AppTypography {
     letterSpacing: -.41,
   );
 
-  static const headlineRegular = TextStyle(
+  final headlineRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 17,
     fontWeight: FontWeight.w600,
@@ -105,7 +105,7 @@ final class AppTypography {
     letterSpacing: -.41,
   );
 
-  static const headlineBold = TextStyle(
+  final headlineBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 17,
     fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ final class AppTypography {
     letterSpacing: -.41,
   );
 
-  static const title3Regular = TextStyle(
+  final title3Regular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -121,7 +121,7 @@ final class AppTypography {
     letterSpacing: .38,
   );
 
-  static const title3Bold = TextStyle(
+  final title3Bold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -129,7 +129,7 @@ final class AppTypography {
     letterSpacing: .38,
   );
 
-  static const title2Regular = TextStyle(
+  final title2Regular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 22,
     fontWeight: FontWeight.w400,
@@ -137,7 +137,7 @@ final class AppTypography {
     letterSpacing: .35,
   );
 
-  static const title2Bold = TextStyle(
+  final title2Bold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 22,
     fontWeight: FontWeight.w700,
@@ -145,7 +145,7 @@ final class AppTypography {
     letterSpacing: .35,
   );
 
-  static const title1Regular = TextStyle(
+  final title1Regular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 28,
     fontWeight: FontWeight.w400,
@@ -153,7 +153,7 @@ final class AppTypography {
     letterSpacing: .36,
   );
 
-  static const title1Bold = TextStyle(
+  final title1Bold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 28,
     fontWeight: FontWeight.w700,
@@ -161,7 +161,7 @@ final class AppTypography {
     letterSpacing: .36,
   );
 
-  static const largeTitleRegular = TextStyle(
+  final largeTitleRegular = const TextStyle(
     fontFamily: 'SF',
     fontSize: 34,
     fontWeight: FontWeight.w400,
@@ -169,7 +169,7 @@ final class AppTypography {
     letterSpacing: .37,
   );
 
-  static const largeTitleBold = TextStyle(
+  final largeTitleBold = const TextStyle(
     fontFamily: 'SF',
     fontSize: 34,
     fontWeight: FontWeight.w700,

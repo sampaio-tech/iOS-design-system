@@ -1,8 +1,25 @@
 part of 'colors.dart';
 
-final class SystemColoursSeparatorColors {
-  const SystemColoursSeparatorColors._();
+sealed class SystemColoursSeparatorColors {
+  const SystemColoursSeparatorColors({
+    required this.nonOpaque,
+  });
 
-  static const nonOpaqueLight = Color(0xFFC6C6C8);
-  static const nonOpaqueDark = Color(0xFF38383A);
+  final Color nonOpaque;
+}
+
+final class SystemColoursSeparatorColorsLight
+    extends SystemColoursSeparatorColors {
+  const SystemColoursSeparatorColorsLight()
+      : super(
+          nonOpaque: const Color(0xFFC6C6C8),
+        );
+}
+
+final class SystemColoursSeparatorColorsDark
+    extends SystemColoursSeparatorColors {
+  const SystemColoursSeparatorColorsDark()
+      : super(
+          nonOpaque: const Color(0xFF38383A),
+        );
 }
