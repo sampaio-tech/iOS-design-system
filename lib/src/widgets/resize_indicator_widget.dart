@@ -21,8 +21,7 @@ class ResizeIndicatorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        AnimatedContainer(
-          duration: kAnimationInDuration,
+        Container(
           decoration: BoxDecoration(
             borderRadius: borderRadius,
             color: theme.defaultLabelColors.tertiary,

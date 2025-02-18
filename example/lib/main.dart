@@ -12,14 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const themeData = IosLightThemeData();
-    return IosTheme(
+    return IosAnimatedTheme(
       data: themeData,
       child: CupertinoApp(
         title: 'Flutter Demo',
         theme: CupertinoThemeData(
           brightness: themeData.brightness,
         ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: IosAnimatedTheme(
+          data: themeData,
+          child: MyHomePage(title: 'Flutter Demo Home Page'),
+        ),
       ),
     );
   }

@@ -20,8 +20,7 @@ class ToolBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: kAnimationInDuration,
+    return Container(
       decoration: BoxDecoration(
         color: imageFilter.backgroundColor(
           context: context,

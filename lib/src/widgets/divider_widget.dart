@@ -8,8 +8,7 @@ class DividerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = IosTheme.of(context);
-    return AnimatedContainer(
-      duration: kAnimationInDuration,
+    return Container(
       height: 1,
       color: theme.systemColoursSeparatorColors.nonOpaque,
     );

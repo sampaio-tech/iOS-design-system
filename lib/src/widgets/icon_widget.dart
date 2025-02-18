@@ -109,8 +109,7 @@ class IconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = IosTheme.of(context);
-    return AnimatedContainer(
-      duration: kAnimationInDuration,
+    return Container(
       padding: padding,
       decoration: BoxDecoration(
         color: backgroundColorCallback?.call(theme),
