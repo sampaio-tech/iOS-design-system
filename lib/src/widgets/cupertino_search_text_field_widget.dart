@@ -4,6 +4,22 @@ import 'package:flutter/material.dart';
 import '../../ios_design_system.dart';
 
 class CupertinoSearchTextFieldWidget extends StatelessWidget {
+  const CupertinoSearchTextFieldWidget({
+    super.key,
+    this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.onTap,
+    this.placeholder,
+    this.borderRadius,
+    this.onSuffixTap,
+    this.restorationId,
+    this.focusNode,
+    this.smartQuotesType,
+    this.smartDashesType,
+    this.suffixMode = OverlayVisibilityMode.editing,
+  });
+
   final TextEditingController? controller;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
@@ -19,95 +35,74 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
   final bool enableIMEPersonalizedLearning = true;
   final bool autofocus = false;
   final bool autocorrect = true;
-
-  const CupertinoSearchTextFieldWidget({
-    super.key,
-    this.controller,
-    this.onChanged,
-    this.onSubmitted,
-    this.onTap,
-    this.placeholder,
-    this.borderRadius,
-    this.onSuffixTap,
-    this.restorationId,
-    this.focusNode,
-    this.smartQuotesType,
-    this.smartDashesType,
-  });
+  final OverlayVisibilityMode suffixMode;
 
   @override
   Widget build(BuildContext context) {
-    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
-    final brightness = CupertinoTheme.brightnessOf(context);
-    const kBorderRadius = BorderRadius.all(Radius.circular(10));
-    const kPadding = EdgeInsets.only(left: 0, top: 7, bottom: 7, right: 0);
-    const kPrefixInsets = EdgeInsets.only(left: 8, top: 3, bottom: 3, right: 6);
-    const kSuffixInsets = EdgeInsets.only(left: 8, top: 3, bottom: 3, right: 8);
-    const kSuffixMode = OverlayVisibilityMode.editing;
+    final textScaler = MediaQuery.textScalerOf(context);
+    final theme = IosTheme.of(context);
+    const _borderRadius = BorderRadius.all(Radius.circular(10));
+    const padding = EdgeInsets.only(
+      top: 7,
+      bottom: 7,
+    );
+    const prefixInsets = EdgeInsets.only(
+      left: 8,
+      top: 3,
+      bottom: 3,
+      right: 6,
+    );
+    const suffixInsets = EdgeInsets.only(
+      left: 8,
+      top: 3,
+      bottom: 3,
+      right: 8,
+    );
 
     /// this is always enabled because Flutter don't allow change disabled
     /// color of [CupertinoSearchTextField]
-    const kEnabled = true;
+    const enabled = true;
     return Theme(
-      data: AppThemeData.kTextFieldThemeData(brightness),
+      data: theme.textFieldThemeData,
       child: CupertinoSearchTextField(
         autocorrect: autocorrect,
         autofocus: autofocus,
         enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
         keyboardType: keyboardType,
         onSuffixTap: onSuffixTap,
+        suffixMode: suffixMode,
         restorationId: restorationId,
         smartQuotesType: smartQuotesType,
         smartDashesType: smartDashesType,
         focusNode: focusNode,
-        suffixMode: kSuffixMode,
-        enabled: kEnabled,
+        enabled: enabled,
         controller: controller,
         onChanged: onChanged,
         onSubmitted: onSubmitted,
         onTap: onTap,
-        borderRadius: borderRadius ?? kBorderRadius,
-        padding: kPadding,
-        prefixInsets: kPrefixInsets,
-        itemSize: 20,
-        itemColor: switch (brightness) {
-          Brightness.light => DefaultLabelColors.secondaryLight,
-          Brightness.dark => DefaultLabelColors.secondaryDark,
-        },
+        borderRadius: borderRadius ?? _borderRadius,
+        padding: padding,
+        prefixInsets: prefixInsets,
+        itemColor: theme.defaultLabelColors.secondary,
         prefixIcon: Icon(
           CupertinoIcons.search,
-          color: switch (brightness) {
-            Brightness.light => DefaultLabelColors.secondaryLight,
-            Brightness.dark => DefaultLabelColors.secondaryDark,
-          },
-          size: 20 * textScaleFactor,
+          color: theme.defaultLabelColors.secondary,
+          size: textScaler.scale(20),
         ),
-        suffixInsets: kSuffixInsets,
+        suffixInsets: suffixInsets,
         suffixIcon: Icon(
           CupertinoIcons.xmark_circle_fill,
-          size: 18 * textScaleFactor,
-          color: switch (brightness) {
-            Brightness.light => DefaultColors.systemGray01Light,
-            Brightness.dark => DefaultColors.systemGray01Dark,
-          },
+          size: textScaler.scale(18),
+          color: theme.defaultColors.systemGray01,
         ),
         placeholder: placeholder,
-        style: AppTypography.bodyRegular.copyWith(
-          color: switch (brightness) {
-            Brightness.light => DefaultLabelColors.primaryLight,
-            Brightness.dark => DefaultLabelColors.primaryDark,
-          },
+        style: theme.typography.bodyRegular.copyWith(
+          color: theme.defaultLabelColors.primary,
         ),
-        placeholderStyle: AppTypography.bodyRegular.copyWith(
-          color: switch (brightness) {
-            Brightness.light => DefaultLabelColors.secondaryLight,
-            Brightness.dark => DefaultLabelColors.secondaryDark,
-          },
+        placeholderStyle: theme.typography.bodyRegular.copyWith(
+          color: theme.defaultLabelColors.secondary,
         ),
-        backgroundColor: switch (brightness) {
-          Brightness.light => DefaultFillColors.tertiaryLight,
-          Brightness.dark => DefaultFillColors.tertiaryDark,
-        },
+        backgroundColor: theme.defaultFillColors.tertiary,
       ),
     );
   }

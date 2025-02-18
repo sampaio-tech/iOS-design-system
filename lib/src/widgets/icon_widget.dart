@@ -3,46 +3,39 @@ import 'package:flutter/cupertino.dart';
 import '../exports.dart';
 
 class IconWidget extends StatelessWidget {
-  final EdgeInsetsGeometry padding;
-  final BorderRadiusGeometry? borderRadius;
-  final Color Function(Brightness)? backgroundColorCallback;
-  final Widget? Function(Brightness)? iconCallback;
-
   const IconWidget._({
-    Key? key,
     required this.backgroundColorCallback,
     required this.iconCallback,
     required this.padding,
     required this.borderRadius,
+    Key? key,
   }) : super(key: key);
 
   factory IconWidget.background({
     required IconData iconData,
     double iconSize = 20,
-    Color Function(Brightness)? backgroundColorCallback,
-    Color Function(Brightness)? iconColorCallback,
+    Color Function(
+      IosThemeData theme,
+    )? backgroundColorCallback,
+    Color Function(
+      IosThemeData theme,
+    )? iconColorCallback,
     BorderRadiusGeometry? borderRadius,
     EdgeInsetsGeometry? padding,
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Builder(
+        iconCallback: (theme) => Builder(
           builder: (context) => Icon(
             iconData,
-            size: iconSize * MediaQuery.textScaleFactorOf(context),
-            color: iconColorCallback?.call(brightness) ??
-                switch (brightness) {
-                  Brightness.light => DefaultColors.systemWhiteLight,
-                  Brightness.dark => DefaultColors.systemWhiteDark,
-                },
+            size: MediaQuery.textScalerOf(context).scale(iconSize),
+            color: iconColorCallback?.call(theme) ??
+                theme.defaultColors.systemWhite,
           ),
         ),
         borderRadius: borderRadius ?? BorderRadius.circular(7),
         backgroundColorCallback: backgroundColorCallback ??
-            (Brightness brightness) => switch (brightness) {
-                  Brightness.light => DefaultColors.systemBlueLight,
-                  Brightness.dark => DefaultColors.systemBlueDark,
-                },
+            (IosThemeData theme) => theme.defaultColors.systemBlue,
         padding: padding ?? const EdgeInsets.all(5),
         key: key,
       );
@@ -50,20 +43,19 @@ class IconWidget extends StatelessWidget {
   factory IconWidget.transparentBackground({
     required IconData iconData,
     double iconSize = 26,
-    Color Function(Brightness)? iconColorCallback,
+    Color Function(
+      IosThemeData theme,
+    )? iconColorCallback,
     EdgeInsetsGeometry? padding,
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Builder(
+        iconCallback: (theme) => Builder(
           builder: (context) => Icon(
             iconData,
-            size: iconSize * MediaQuery.textScaleFactorOf(context),
-            color: iconColorCallback?.call(brightness) ??
-                switch (brightness) {
-                  Brightness.light => DefaultColors.systemBlueLight,
-                  Brightness.dark => DefaultColors.systemBlueDark,
-                },
+            size: MediaQuery.textScalerOf(context).scale(iconSize),
+            color: iconColorCallback?.call(theme) ??
+                theme.defaultColors.systemBlue,
           ),
         ),
         borderRadius: null,
@@ -75,30 +67,28 @@ class IconWidget extends StatelessWidget {
   factory IconWidget.slideAction({
     required IconData iconData,
     double iconSize = 20,
-    Color Function(Brightness)? backgroundColorCallback,
-    Color Function(Brightness)? iconColorCallback,
+    Color Function(
+      IosThemeData theme,
+    )? backgroundColorCallback,
+    Color Function(
+      IosThemeData theme,
+    )? iconColorCallback,
     BorderRadiusGeometry? borderRadius,
     EdgeInsetsGeometry? padding,
     Key? key,
   }) =>
       IconWidget._(
-        iconCallback: (Brightness brightness) => Builder(
+        iconCallback: (theme) => Builder(
           builder: (context) => Icon(
             iconData,
-            size: iconSize * MediaQuery.textScaleFactorOf(context),
-            color: iconColorCallback?.call(brightness) ??
-                switch (brightness) {
-                  Brightness.light => DefaultColors.systemWhiteLight,
-                  Brightness.dark => DefaultColors.systemWhiteDark,
-                },
+            size: MediaQuery.textScalerOf(context).scale(iconSize),
+            color: iconColorCallback?.call(theme) ??
+                theme.defaultColors.systemWhite,
           ),
         ),
         borderRadius: borderRadius,
         backgroundColorCallback: backgroundColorCallback ??
-            (Brightness brightness) => switch (brightness) {
-                  Brightness.light => DefaultColors.systemGray01Light,
-                  Brightness.dark => DefaultColors.systemGray01Dark,
-                },
+            (IosThemeData theme) => theme.defaultColors.systemGray01,
         padding: padding ??
             const EdgeInsets.symmetric(
               horizontal: 26,
@@ -107,17 +97,26 @@ class IconWidget extends StatelessWidget {
         key: key,
       );
 
+  final EdgeInsetsGeometry padding;
+  final BorderRadiusGeometry? borderRadius;
+  final Color Function(
+    IosThemeData theme,
+  )? backgroundColorCallback;
+  final Widget? Function(
+    IosThemeData theme,
+  )? iconCallback;
+
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final theme = IosTheme.of(context);
     return AnimatedContainer(
       duration: kAnimationInDuration,
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColorCallback?.call(brightness),
+        color: backgroundColorCallback?.call(theme),
         borderRadius: borderRadius,
       ),
-      child: iconCallback?.call(brightness),
+      child: iconCallback?.call(theme),
     );
   }
 }

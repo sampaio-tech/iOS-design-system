@@ -8,6 +8,57 @@ import 'package:flutter/services.dart';
 import '../../ios_design_system.dart';
 
 class CupertinoTextFieldWidget extends StatefulWidget {
+  const CupertinoTextFieldWidget({
+    super.key,
+    this.placeholder,
+    this.controller,
+    this.focusNode,
+    this.undoController,
+    this.keyboardType,
+    this.textInputAction,
+    this.textAlignVertical,
+    this.textDirection,
+    this.showCursor,
+    this.smartDashesType,
+    this.smartQuotesType,
+    this.minLines,
+    this.maxLength,
+    this.maxLengthEnforcement,
+    this.onChanged,
+    this.onEditingComplete,
+    this.onSubmitted,
+    this.onTapOutside,
+    this.inputFormatters,
+    this.enableInteractiveSelection,
+    this.selectionControls,
+    this.onTap,
+    this.scrollController,
+    this.scrollPhysics,
+    this.contentInsertionConfiguration,
+    this.restorationId,
+    this.spellCheckConfiguration,
+    this.magnifierConfiguration,
+    this.textCapitalization = TextCapitalization.none,
+    this.textAlign = TextAlign.start,
+    this.readOnly = false,
+    this.autofocus = false,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.enableSuggestions = true,
+    this.maxLines = 1,
+    this.expands = false,
+    this.cursorOpacityAnimates = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.scrollPadding = const EdgeInsets.all(20),
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.autofillHints = const <String>[],
+    this.clipBehavior = Clip.hardEdge,
+    this.scribbleEnabled = true,
+    this.enableIMEPersonalizedLearning = true,
+    this.contextMenuBuilder = _defaultContextMenuBuilder,
+  });
   final String? placeholder;
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -57,57 +108,11 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final SpellCheckConfiguration? spellCheckConfiguration;
   final TextMagnifierConfiguration? magnifierConfiguration;
 
-  const CupertinoTextFieldWidget({
-    super.key,
-    this.placeholder,
-    this.controller,
-    this.focusNode,
-    this.undoController,
-    this.keyboardType,
-    this.textInputAction,
-    this.textAlignVertical,
-    this.textDirection,
-    this.showCursor,
-    this.smartDashesType,
-    this.smartQuotesType,
-    this.minLines,
-    this.maxLength,
-    this.maxLengthEnforcement,
-    this.onChanged,
-    this.onEditingComplete,
-    this.onSubmitted,
-    this.onTapOutside,
-    this.inputFormatters,
-    this.enableInteractiveSelection,
-    this.selectionControls,
-    this.onTap,
-    this.scrollController,
-    this.scrollPhysics,
-    this.contentInsertionConfiguration,
-    this.restorationId,
-    this.spellCheckConfiguration,
-    this.magnifierConfiguration,
-    this.textCapitalization = TextCapitalization.none,
-    this.textAlign = TextAlign.start,
-    this.readOnly = false,
-    this.autofocus = false,
-    this.obscuringCharacter = '•',
-    this.obscureText = false,
-    this.autocorrect = true,
-    this.enableSuggestions = true,
-    this.maxLines = 1,
-    this.expands = false,
-    this.cursorOpacityAnimates = true,
-    this.selectionHeightStyle = BoxHeightStyle.tight,
-    this.selectionWidthStyle = BoxWidthStyle.tight,
-    this.scrollPadding = const EdgeInsets.all(20.0),
-    this.dragStartBehavior = DragStartBehavior.start,
-    this.autofillHints = const <String>[],
-    this.clipBehavior = Clip.hardEdge,
-    this.scribbleEnabled = true,
-    this.enableIMEPersonalizedLearning = true,
-    this.contextMenuBuilder = _defaultContextMenuBuilder,
-  });
+  /// this is always enabled because Flutter don't allow change disabled
+  /// color of [CupertinoTextField]
+  final bool enabled = true;
+
+  final OverlayVisibilityMode clearButtonMode = OverlayVisibilityMode.never;
 
   static Widget _defaultContextMenuBuilder(
     BuildContext context,
@@ -143,24 +148,19 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
-    final brightness = CupertinoTheme.brightnessOf(context);
-    const kCursorWidth = 1.0;
-    const kCursorHeight = 24.0;
-    const kClearButtonMode = OverlayVisibilityMode.never;
-    const kSuffixMode = OverlayVisibilityMode.editing;
-    const kPadding = EdgeInsets.only(
+    final textScaler = MediaQuery.textScalerOf(context);
+    final theme = IosTheme.of(context);
+    const cursorWidth = 1.0;
+    const cursorHeight = 24.0;
+    const suffixMode = OverlayVisibilityMode.editing;
+    const padding = EdgeInsets.only(
       left: 16,
       top: 11,
       bottom: 11,
-      right: 0,
     );
 
-    /// this is always enabled because Flutter don't allow change disabled
-    /// color of [CupertinoTextField]
-    const kEnabled = true;
     return Theme(
-      data: AppThemeData.kTextFieldThemeData(brightness),
+      data: theme.textFieldThemeData,
       child: CupertinoTextField(
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
@@ -209,49 +209,41 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
         controller: _effectiveController,
         focusNode: widget.focusNode,
         undoController: widget.undoController,
-        enabled: kEnabled,
-        keyboardAppearance: brightness,
+        enabled: widget.enabled,
+        keyboardAppearance: theme.brightness,
         placeholder: widget.placeholder,
-        clearButtonMode: kClearButtonMode,
-        suffixMode: kSuffixMode,
+        clearButtonMode: widget.clearButtonMode,
+        suffixMode: suffixMode,
         suffix: GestureDetector(
           onTap: _effectiveController?.clear,
           child: Padding(
-            padding: const EdgeInsets.only(right: 16, left: 8),
+            padding: const EdgeInsets.only(
+              right: 16,
+              left: 8,
+            ),
             child: Icon(
               CupertinoIcons.clear_thick_circled,
-              size: 18 * textScaleFactor,
-              color: switch (brightness) {
-                Brightness.light => DefaultColors.systemGray01Light,
-                Brightness.dark => DefaultColors.systemGray01Dark,
-              },
+              size: textScaler.scale(18),
+              color: theme.defaultColors.systemGray01,
             ),
           ),
         ),
-        placeholderStyle: AppTypography.bodyRegular.copyWith(
-          color: switch (brightness) {
-            Brightness.light => DefaultLabelColors.secondaryLight,
-            Brightness.dark => DefaultLabelColors.secondaryDark,
-          },
+        placeholderStyle: theme.typography.bodyRegular.copyWith(
+          color: theme.defaultLabelColors.secondary,
         ),
-        style: AppTypography.bodyRegular.copyWith(
-          color: switch (brightness) {
-            Brightness.light => DefaultLabelColors.primaryLight,
-            Brightness.dark => DefaultLabelColors.primaryDark,
-          },
+        style: theme.typography.bodyRegular.copyWith(
+          color: theme.defaultLabelColors.primary,
         ),
-        cursorWidth: kCursorWidth,
-        cursorHeight: kCursorHeight,
-        cursorColor: switch (brightness) {
-          Brightness.light => DefaultColors.systemBlueLight,
-          Brightness.dark => DefaultColors.systemBlueDark,
-        },
-        padding: kPadding,
+        cursorWidth: cursorWidth,
+        cursorHeight: cursorHeight,
+        cursorColor: theme.defaultColors.systemBlue,
+        padding: padding,
         decoration: BoxDecoration(
-          color: switch (brightness) {
-            Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
-            Brightness.dark =>
-              DefaultSystemBackgroundsColors.primaryDarkElevated,
+          color: switch (theme) {
+            IosLightThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryLight,
+            IosDarkThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
           },
         ),
       ),

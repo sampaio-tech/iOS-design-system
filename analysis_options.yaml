@@ -53,4 +53,7 @@ linter:
     sort_child_properties_last: true
     use_build_context_synchronously: true
     use_key_in_widget_constructors: true
+    directives_ordering: true
+    prefer_const_constructors: true
+    sort_constructors_first: true
     # - avoid_print

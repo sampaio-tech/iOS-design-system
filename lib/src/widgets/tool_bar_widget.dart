@@ -5,29 +5,36 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class ToolBarWidget extends StatelessWidget {
+  const ToolBarWidget({
+    required this.child,
+    super.key,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 5,
+    ),
+    this.imageFilter = ToolBarImageFilter.disabled,
+  });
   final Widget child;
   final EdgeInsets padding;
   final ToolBarImageFilter imageFilter;
-  const ToolBarWidget({
-    super.key,
-    required this.child,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-    this.imageFilter = ToolBarImageFilter.disabled,
-  });
 
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
     return AnimatedContainer(
       duration: kAnimationInDuration,
       decoration: BoxDecoration(
-        color: imageFilter.backgroundColor(brightness: brightness),
+        color: imageFilter.backgroundColor(
+          context: context,
+        ),
       ),
       child: switch (imageFilter) {
         ToolBarImageFilter.enabled => ClipRect(
             child: BackdropFilter(
               filter: kImageFilterBlur,
-              child: _ToolBarWidget(padding: padding, child: child),
+              child: _ToolBarWidget(
+                padding: padding,
+                child: child,
+              ),
             ),
           ),
         ToolBarImageFilter.disabled => _ToolBarWidget(
@@ -40,13 +47,13 @@ class ToolBarWidget extends StatelessWidget {
 }
 
 class _ToolBarWidget extends StatelessWidget {
-  final Widget child;
-  final EdgeInsets padding;
   const _ToolBarWidget({
-    Key? key,
     required this.child,
     required this.padding,
+    Key? key,
   }) : super(key: key);
+  final Widget child;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,10 @@ class _ToolBarWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const DividerWidget(),
-          Padding(padding: padding, child: child),
+          Padding(
+            padding: padding,
+            child: child,
+          ),
         ],
       ),
     );
@@ -84,11 +94,14 @@ enum ToolBarImageFilter {
       };
 
   Color backgroundColor({
-    required Brightness brightness,
-  }) =>
-      switch (brightness) {
-        Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
-        Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkElevated,
-      }
-          .withOpacity(backgroundOpacity);
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return switch (theme) {
+      IosLightThemeData() => theme.defaultSystemBackgroundsColors.primaryLight,
+      IosDarkThemeData() =>
+        theme.defaultSystemBackgroundsColors.primaryDarkElevated,
+    }
+        .withValues(alpha: backgroundOpacity);
+  }
 }

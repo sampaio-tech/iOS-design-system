@@ -7,14 +7,11 @@ class DividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final theme = IosTheme.of(context);
     return AnimatedContainer(
       duration: kAnimationInDuration,
       height: 1,
-      color: switch (brightness) {
-        Brightness.light => SystemColoursSeparatorColors.nonOpaqueLight,
-        Brightness.dark => SystemColoursSeparatorColors.nonOpaqueDark,
-      },
+      color: theme.systemColoursSeparatorColors.nonOpaque,
     );
   }
 }

@@ -9,3 +9,4 @@ const kAnimationOutDuration = Duration(milliseconds: 120);
 const kAnimationInDuration = Duration(milliseconds: 180);
 const kMinimumSafeAreaPadding = EdgeInsets.only(bottom: 34);
 final kImageFilterBlur = ImageFilter.blur(sigmaY: 10, sigmaX: 10);
+const Duration kThemeAnimationDuration = Duration(milliseconds: 200);

@@ -1,15 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../ios_design_system.dart';
 
 class LabelButtonWidget extends StatelessWidget {
-  final String? label;
-  final IconData? iconLeft;
-  final IconData? iconRight;
-  final EdgeInsetsGeometry padding;
-  final void Function()? onPressed;
-
   const LabelButtonWidget._({
     Key? key,
     this.label,
@@ -20,8 +13,8 @@ class LabelButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   factory LabelButtonWidget.label({
-    Key? key,
     required String label,
+    Key? key,
     IconData? iconLeft,
     IconData? iconRight,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
@@ -37,19 +30,22 @@ class LabelButtonWidget extends StatelessWidget {
       );
 
   factory LabelButtonWidget.icon({
-    Key? key,
     required IconData icon,
+    Key? key,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     void Function()? onPressed,
   }) =>
       LabelButtonWidget._(
         key: key,
         iconLeft: icon,
-        iconRight: null,
         padding: padding,
-        label: null,
         onPressed: onPressed,
       );
+  final String? label;
+  final IconData? iconLeft;
+  final IconData? iconRight;
+  final EdgeInsetsGeometry padding;
+  final void Function()? onPressed;
 
   LabelButtonWidget copyWith({
     Key? key,
@@ -73,22 +69,19 @@ class LabelButtonWidget extends StatelessWidget {
     if (label == null && iconLeft == null && iconRight == null) {
       return const SizedBox.shrink();
     }
-    final brightness = CupertinoTheme.brightnessOf(context);
-    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
-    const kBorderRadius = BorderRadius.all(Radius.zero);
-    const kColor = Colors.transparent;
-    const kDisabledColor = Colors.transparent;
-    const kIconSize = 20.0;
-    final kLabelColor = switch (brightness) {
-      Brightness.light => DefaultColors.systemBlueLight,
-      Brightness.dark => DefaultColors.systemBlueDark,
-    };
+    final textScaleFactor = MediaQuery.textScalerOf(context);
+    final theme = IosTheme.of(context);
+    const borderRadius = BorderRadius.all(Radius.zero);
+    const color = Colors.transparent;
+    const disabledColor = Colors.transparent;
+    const iconSize = 20.0;
+    final labelColor = theme.defaultColors.systemBlue;
     return CupertinoButtonWidget(
       padding: padding,
       onPressed: onPressed,
-      borderRadius: kBorderRadius,
-      color: kColor,
-      disabledColor: kDisabledColor,
+      borderRadius: borderRadius,
+      color: color,
+      disabledColor: disabledColor,
       child: Wrap(
         alignment: WrapAlignment.center,
         runAlignment: WrapAlignment.center,
@@ -99,21 +92,23 @@ class LabelButtonWidget extends StatelessWidget {
           if (iconLeft != null)
             Icon(
               iconLeft,
-              color: kLabelColor,
-              size: kIconSize * textScaleFactor,
+              color: labelColor,
+              size: textScaleFactor.scale(iconSize),
             ),
           if (label != null)
             Text(
               label!,
-              style: AppTypography.bodyRegular.copyWith(color: kLabelColor),
+              style: theme.typography.bodyRegular.copyWith(
+                color: labelColor,
+              ),
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
             ),
           if (iconRight != null)
             Icon(
               iconRight,
-              color: kLabelColor,
-              size: kIconSize * textScaleFactor,
+              color: labelColor,
+              size: textScaleFactor.scale(iconSize),
             ),
         ],
       ),
