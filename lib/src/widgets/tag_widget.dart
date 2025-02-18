@@ -61,8 +61,7 @@ class _TagWidget extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(50)),
       child: BackdropFilter(
         filter: kImageFilterBlur,
-        child: AnimatedContainer(
-          duration: kAnimationInDuration,
+        child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: switch ((theme, selected)) {

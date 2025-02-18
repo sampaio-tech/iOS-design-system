@@ -57,8 +57,7 @@ class ModalSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = IosTheme.of(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
-    return AnimatedContainer(
-      duration: kAnimationInDuration,
+    return Container(
       decoration: BoxDecoration(
         borderRadius: kBorderRadius,
         color: switch (theme) {

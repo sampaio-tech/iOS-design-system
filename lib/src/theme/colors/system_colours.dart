@@ -6,20 +6,56 @@ sealed class SystemColoursSeparatorColors {
   });
 
   final Color nonOpaque;
+
+  SystemColoursSeparatorColors lerp(
+    SystemColoursSeparatorColors b,
+    double t,
+  ) {
+    final instance = switch (t) {
+      < 0.5 => this,
+      _ => b,
+    };
+
+    return instance.copyWith(
+      nonOpaque: Color.lerp(nonOpaque, b.nonOpaque, t),
+    );
+  }
+
+  SystemColoursSeparatorColors copyWith({
+    Color? nonOpaque,
+  });
 }
 
 final class SystemColoursSeparatorColorsLight
     extends SystemColoursSeparatorColors {
-  const SystemColoursSeparatorColorsLight()
-      : super(
-          nonOpaque: const Color(0xFFC6C6C8),
+  const SystemColoursSeparatorColorsLight({
+    Color? nonOpaque,
+  }) : super(
+          nonOpaque: nonOpaque ?? const Color(0xFFC6C6C8),
         );
+
+  @override
+  SystemColoursSeparatorColors copyWith({
+    Color? nonOpaque,
+  }) =>
+      SystemColoursSeparatorColorsLight(
+        nonOpaque: nonOpaque,
+      );
 }
 
 final class SystemColoursSeparatorColorsDark
     extends SystemColoursSeparatorColors {
-  const SystemColoursSeparatorColorsDark()
-      : super(
-          nonOpaque: const Color(0xFF38383A),
+  const SystemColoursSeparatorColorsDark({
+    Color? nonOpaque,
+  }) : super(
+          nonOpaque: nonOpaque ?? const Color(0xFF38383A),
         );
+
+  @override
+  SystemColoursSeparatorColors copyWith({
+    Color? nonOpaque,
+  }) =>
+      SystemColoursSeparatorColorsDark(
+        nonOpaque: nonOpaque,
+      );
 }

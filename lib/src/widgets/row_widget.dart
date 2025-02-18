@@ -24,8 +24,7 @@ class RowWidget extends StatelessWidget {
     final theme = IosTheme.of(context);
     return CupertinoButtonWidget(
       onPressed: onPressed,
-      child: AnimatedContainer(
-        duration: kAnimationInDuration,
+      child: Container(
         decoration: BoxDecoration(
           color: switch (theme) {
             IosLightThemeData() =>

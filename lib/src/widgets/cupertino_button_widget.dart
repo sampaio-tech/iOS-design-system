@@ -147,8 +147,7 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
             button: true,
             child: FadeTransition(
               opacity: _opacityAnimation,
-              child: AnimatedContainer(
-                duration: exports.kAnimationInDuration,
+              child: Container(
                 padding: widget.padding,
                 constraints: widget.constraints,
                 decoration: BoxDecoration(
