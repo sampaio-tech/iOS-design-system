@@ -3,28 +3,13 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class ButtonWidget extends StatelessWidget {
-  final ButtonSize size;
-  final ButtonColor color;
-  final LabelFontWeight labelFontWeight;
-  final String? label;
-  final Widget? leftWidget;
-  final Widget? rigthWidget;
-  final IconData? leftIcon;
-  final IconData? rigthIcon;
-  final void Function()? onPressed;
-  final double spacing;
-  final BoxBorder? border;
-  final BoxShape shape;
-  final bool displayCupertinoActivityIndicator;
-  final CupertinoActivityIndicator? cupertinoActivityIndicator;
-
   const ButtonWidget._({
-    Key? key,
     required this.size,
     required this.onPressed,
     required this.color,
+    Key? key,
     this.cupertinoActivityIndicator,
-    this.labelFontWeight = LabelFontWeight.regular,
+    this.labelFontWeight = const RegularLabelFontWeight(),
     this.leftIcon,
     this.rigthIcon,
     this.leftWidget,
@@ -41,7 +26,7 @@ class ButtonWidget extends StatelessWidget {
     required ButtonColor color,
     required String label,
     CupertinoActivityIndicator? cupertinoActivityIndicator,
-    LabelFontWeight labelFontWeight = LabelFontWeight.regular,
+    LabelFontWeight labelFontWeight = const RegularLabelFontWeight(),
     IconData? leftIcon,
     IconData? rigthIcon,
     Widget? leftWidget,
@@ -89,29 +74,41 @@ class ButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         color: color,
         leftIcon: leftIcon,
-        label: null,
         spacing: spacing,
         border: border,
         shape: shape,
         displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
         key: key,
       );
+  final ButtonSize size;
+  final ButtonColor color;
+  final LabelFontWeight labelFontWeight;
+  final String? label;
+  final Widget? leftWidget;
+  final Widget? rigthWidget;
+  final IconData? leftIcon;
+  final IconData? rigthIcon;
+  final void Function()? onPressed;
+  final double spacing;
+  final BoxBorder? border;
+  final BoxShape shape;
+  final bool displayCupertinoActivityIndicator;
+  final CupertinoActivityIndicator? cupertinoActivityIndicator;
 
   @override
   Widget build(BuildContext context) {
     if (label == null && leftIcon == null) {
       return const SizedBox.shrink();
     }
-    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final textScale = MediaQuery.textScalerOf(context);
     final enabled = onPressed != null;
-    final kLabelTextStyle = size.textStyle(
-      labelFontWeight: labelFontWeight,
+    final labelTextStyle = labelFontWeight.textStyle(
+      context: context,
+      buttonSize: size,
       buttonColor: color,
-      brightness: brightness,
       enabled: enabled,
     );
-    final kPadding = size.padding(label);
+    final padding = size.padding(label);
     return CupertinoButtonWidget(
       onPressed: onPressed,
       border: border,
@@ -119,16 +116,22 @@ class ButtonWidget extends StatelessWidget {
       displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
       cupertinoActivityIndicator: cupertinoActivityIndicator ??
           CupertinoActivityIndicator(
-            radius: switch (kLabelTextStyle.fontSize) {
+            radius: switch (labelTextStyle.fontSize) {
               null => 10,
-              final fontSize => (fontSize * textScaleFactor) / 2
+              final fontSize => (textScale.scale(fontSize)) / 2
             },
           ),
       constraints: size._boxConstraints,
       borderRadius: size.borderRadius(label),
-      padding: kPadding,
-      color: color.background(brightness),
-      disabledColor: color.backgroundDisabled(brightness),
+      padding: padding,
+      color: color.background(
+        context: context,
+        enabled: enabled,
+      ),
+      disabledColor: color.background(
+        context: context,
+        enabled: enabled,
+      ),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         alignment: WrapAlignment.center,
@@ -148,20 +151,26 @@ class ButtonWidget extends StatelessWidget {
           if (leftIcon != null)
             Icon(
               leftIcon,
-              color: color.label(brightness: brightness, enabled: enabled),
+              color: color.label(
+                context: context,
+                enabled: enabled,
+              ),
               size: size.iconSize(label),
             ),
           if (label != null)
             Text(
               label!,
-              style: kLabelTextStyle,
+              style: labelTextStyle,
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
             ),
           if (rigthIcon != null)
             Icon(
               rigthIcon,
-              color: color.label(brightness: brightness, enabled: enabled),
+              color: color.label(
+                context: context,
+                enabled: enabled,
+              ),
               size: size.iconSize(label),
             ),
           if (rigthWidget != null)
@@ -180,101 +189,156 @@ class ButtonWidget extends StatelessWidget {
 }
 
 sealed class ButtonColor {
-  final Color _backgroundLight;
-  final Color _backgroundDark;
-  final Color _labelLight;
-  final Color _labelDark;
+  const ButtonColor();
 
-  const ButtonColor({
-    required Color backgroundLight,
-    required Color backgroundDark,
-    required Color labelLight,
-    required Color labelDark,
-  })  : _labelDark = labelDark,
-        _labelLight = labelLight,
-        _backgroundDark = backgroundDark,
-        _backgroundLight = backgroundLight;
-
-  Color background(Brightness brightness) => switch ((this, brightness)) {
-        (BlueTransparentButtonColor(), Brightness.light) =>
-          _backgroundLight.withOpacity(.15),
-        (BlueTransparentButtonColor(), Brightness.dark) =>
-          _backgroundDark.withOpacity(.15),
-        (_, Brightness.light) => _backgroundLight,
-        (_, Brightness.dark) => _backgroundDark,
-      };
+  Color background({
+    required BuildContext context,
+    required bool enabled,
+  }) {
+    if (!enabled) {
+      return backgroundDisabled(context: context);
+    }
+    return backgroundEnabled(context: context);
+  }
 
   Color label({
-    required Brightness brightness,
+    required BuildContext context,
     required bool enabled,
-  }) =>
-      switch ((brightness, enabled)) {
-        (final brightness, false) => _labelDisabled(brightness),
-        (Brightness.light, _) => _labelLight,
-        (Brightness.dark, _) => _labelDark,
-      };
+  }) {
+    if (!enabled) {
+      return labelDisabled(context: context);
+    }
+    return labelEnabled(context: context);
+  }
 
-  Color _labelDisabled(Brightness brightness) => switch (brightness) {
-        Brightness.light => DefaultLabelColors.tertiaryLight,
-        Brightness.dark => DefaultLabelColors.tertiaryDark,
-      };
+  Color labelDisabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultLabelColors.tertiary;
+  }
 
-  Color backgroundDisabled(Brightness brightness) => switch (brightness) {
-        Brightness.light => DefaultFillColors.secondaryLight,
-        Brightness.dark => DefaultFillColors.secondaryDark,
-      };
+  Color labelEnabled({
+    required BuildContext context,
+  });
+
+  Color backgroundDisabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultFillColors.secondary;
+  }
+
+  Color backgroundEnabled({
+    required BuildContext context,
+  });
 }
 
 class GreyTransparentButtonColor extends ButtonColor {
-  const GreyTransparentButtonColor()
-      : super(
-          backgroundLight: DefaultFillColors.secondaryLight,
-          backgroundDark: DefaultFillColors.secondaryDark,
-          labelLight: DefaultColors.systemBlueLight,
-          labelDark: DefaultColors.systemBlueDark,
-        );
+  const GreyTransparentButtonColor();
+
+  @override
+  Color backgroundEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultFillColors.secondary;
+  }
+
+  @override
+  Color labelEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultColors.systemBlue;
+  }
 }
 
 class BlueButtonColor extends ButtonColor {
-  const BlueButtonColor()
-      : super(
-          backgroundLight: DefaultColors.systemBlueLight,
-          backgroundDark: DefaultColors.systemBlueDark,
-          labelLight: DefaultLabelColors.primaryDark,
-          labelDark: DefaultLabelColors.primaryDark,
-        );
+  const BlueButtonColor();
+
+  @override
+  Color backgroundEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultColors.systemBlue;
+  }
+
+  @override
+  Color labelEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return switch (theme) {
+      IosLightThemeData() => const DefaultLabelColorsDark().primary,
+      IosDarkThemeData() => theme.defaultLabelColors.primary,
+    };
+  }
 }
 
 class BlueTransparentButtonColor extends ButtonColor {
-  const BlueTransparentButtonColor()
-      : super(
-          backgroundLight: DefaultColors.systemBlueLight,
-          backgroundDark: DefaultColors.systemBlueDark,
-          labelLight: DefaultColors.systemBlueLight,
-          labelDark: DefaultColors.systemBlueDark,
-        );
+  const BlueTransparentButtonColor();
+
+  @override
+  Color backgroundEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultColors.systemBlue.withValues(alpha: .15);
+  }
+
+  @override
+  Color labelEnabled({
+    required BuildContext context,
+  }) {
+    final theme = IosTheme.of(context);
+    return theme.defaultColors.systemBlue;
+  }
 }
 
 class CustomButtonColor extends ButtonColor {
   const CustomButtonColor({
-    required Color backgroundLight,
-    required Color backgroundDark,
-    required Color labelLight,
-    required Color labelDark,
-  }) : super(
-          backgroundLight: backgroundLight,
-          backgroundDark: backgroundDark,
-          labelLight: labelLight,
-          labelDark: labelDark,
-        );
+    required Color backgroundEnabled,
+    required Color? backgroundDisabled,
+    required Color labelEnabled,
+    required Color? labelDisabled,
+  })  : _backgroundEnabled = backgroundEnabled,
+        _backgroundDisabled = backgroundDisabled,
+        _labelEnabled = labelEnabled,
+        _labelDisabled = labelDisabled;
+
+  final Color _backgroundEnabled;
+  final Color? _backgroundDisabled;
+  final Color _labelEnabled;
+  final Color? _labelDisabled;
+
+  @override
+  Color backgroundEnabled({
+    required BuildContext context,
+  }) =>
+      _backgroundEnabled;
+
+  @override
+  Color backgroundDisabled({
+    required BuildContext context,
+  }) =>
+      _backgroundDisabled ?? super.backgroundDisabled(context: context);
+
+  @override
+  Color labelEnabled({
+    required BuildContext context,
+  }) =>
+      _labelEnabled;
+
+  @override
+  Color labelDisabled({
+    required BuildContext context,
+  }) =>
+      _labelDisabled ?? super.labelDisabled(context: context);
 }
 
 sealed class ButtonSize {
-  final BorderRadius _borderRadius;
-  final EdgeInsets _padding;
-  final double _iconSize;
-  final BoxConstraints? _boxConstraints;
-
   const ButtonSize({
     required BorderRadius borderRadius,
     required EdgeInsets padding,
@@ -285,25 +349,10 @@ sealed class ButtonSize {
         _iconSize = iconSize,
         _boxConstraints = boxConstraints;
 
-  TextStyle textStyle({
-    required ButtonColor buttonColor,
-    required Brightness brightness,
-    required bool enabled,
-    required LabelFontWeight labelFontWeight,
-  }) =>
-      switch ((this, labelFontWeight)) {
-        (SmallButtonSize(), LabelFontWeight.regular) =>
-          AppTypography.subheadlineRegular,
-        (SmallButtonSize(), LabelFontWeight.bold) =>
-          AppTypography.subheadlineBold,
-        (_, LabelFontWeight.regular) => AppTypography.bodyRegular,
-        (_, LabelFontWeight.bold) => AppTypography.bodyBold,
-      }
-          .copyWith(
-        color: buttonColor.label(brightness: brightness, enabled: enabled),
-        height: 1,
-        letterSpacing: 0,
-      );
+  final BorderRadius _borderRadius;
+  final EdgeInsets _padding;
+  final double _iconSize;
+  final BoxConstraints? _boxConstraints;
 
   double iconSize(String? label) => switch (label) {
         null => 26,
@@ -326,9 +375,15 @@ class SmallButtonSize extends ButtonSize {
   const SmallButtonSize()
       : super(
           borderRadius: const BorderRadius.all(Radius.circular(14)),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
           iconSize: 18,
-          boxConstraints: const BoxConstraints(minHeight: 28, minWidth: 28),
+          boxConstraints: const BoxConstraints(
+            minHeight: 28,
+            minWidth: 28,
+          ),
         );
 }
 
@@ -336,9 +391,15 @@ class MediumButtonSize extends ButtonSize {
   const MediumButtonSize()
       : super(
           borderRadius: const BorderRadius.all(Radius.circular(50)),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 7,
+          ),
           iconSize: 18,
-          boxConstraints: const BoxConstraints(minHeight: 34, minWidth: 34),
+          boxConstraints: const BoxConstraints(
+            minHeight: 34,
+            minWidth: 34,
+          ),
         );
 }
 
@@ -346,9 +407,15 @@ class LargeButtonSize extends ButtonSize {
   const LargeButtonSize()
       : super(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          padding: const EdgeInsets.symmetric(horizontal: 20.5, vertical: 15),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.5,
+            vertical: 15,
+          ),
           iconSize: 18,
-          boxConstraints: const BoxConstraints(minHeight: 50, minWidth: 50),
+          boxConstraints: const BoxConstraints(
+            minHeight: 50,
+            minWidth: 50,
+          ),
         );
 }
 
@@ -366,7 +433,67 @@ class CustomButtonSize extends ButtonSize {
         );
 }
 
-enum LabelFontWeight {
-  regular,
-  bold,
+sealed class LabelFontWeight {
+  const LabelFontWeight();
+
+  TextStyle textStyle({
+    required BuildContext context,
+    required ButtonSize buttonSize,
+    required ButtonColor buttonColor,
+    required bool enabled,
+    double? height = 1.0,
+    double? letterSpacing = 0,
+  });
+}
+
+class RegularLabelFontWeight extends LabelFontWeight {
+  const RegularLabelFontWeight();
+
+  @override
+  TextStyle textStyle({
+    required BuildContext context,
+    required ButtonSize buttonSize,
+    required ButtonColor buttonColor,
+    required bool enabled,
+    double? height = 1.0,
+    double? letterSpacing = 0,
+  }) {
+    final theme = IosTheme.of(context);
+    final textStyle = switch (buttonSize) {
+      SmallButtonSize() => theme.typography.subheadlineRegular,
+      _ => theme.typography.bodyRegular,
+    }
+        .copyWith(
+      color: buttonColor.label(context: context, enabled: enabled),
+      height: height,
+      letterSpacing: letterSpacing,
+    );
+    return textStyle;
+  }
+}
+
+class BoldLabelFontWeight extends LabelFontWeight {
+  const BoldLabelFontWeight();
+
+  @override
+  TextStyle textStyle({
+    required BuildContext context,
+    required ButtonSize buttonSize,
+    required ButtonColor buttonColor,
+    required bool enabled,
+    double? height = 1.0,
+    double? letterSpacing = 0,
+  }) {
+    final theme = IosTheme.of(context);
+    final textStyle = switch (buttonSize) {
+      SmallButtonSize() => theme.typography.subheadlineBold,
+      _ => theme.typography.bodyBold,
+    }
+        .copyWith(
+      color: buttonColor.label(context: context, enabled: enabled),
+      height: height,
+      letterSpacing: letterSpacing,
+    );
+    return textStyle;
+  }
 }

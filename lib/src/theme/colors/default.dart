@@ -1,103 +1,294 @@
 part of 'colors.dart';
 
-final class DefaultColors {
-  const DefaultColors._();
+sealed class DefaultColors {
+  const DefaultColors({
+    required this.systemRed,
+    required this.systemOrange,
+    required this.systemYellow,
+    required this.systemGreen,
+    required this.systemTeal,
+    required this.systemBlue,
+    required this.systemIndigo,
+    required this.systemPurple,
+    required this.systemPink,
+    required this.systemBlack,
+    required this.systemWhite,
+    required this.systemGray01,
+    required this.systemGray02,
+    required this.systemGray03,
+    required this.systemGray04,
+    required this.systemGray05,
+    required this.systemGray06,
+  });
 
-  static const systemRedLight = Color(0xFFFF3B30);
-  static const systemRedDark = Color(0xFFFF453A);
-  static const systemOrangeLight = Color(0xFFFF9500);
-  static const systemOrangeDark = Color(0xFFFF9F0A);
-  static const systemYellowLight = Color(0xFFFFCC00);
-  static const systemYellowDark = Color(0xFFFFD60A);
-  static const systemGreenLight = Color(0xFF34C759);
-  static const systemGreenDark = Color(0xFF32D74B);
-  static const systemTealLight = Color(0xFF5AC8FA);
-  static const systemTealDark = Color(0xFF64D2FF);
-  static const systemBlueLight = Color(0xFF007AFF);
-  static const systemBlueDark = Color(0xFF0A84FF);
-  static const systemIndigoLight = Color(0xFF5856D6);
-  static const systemIndigoDark = Color(0xFF5E5CE6);
-  static const systemPurpleLight = Color(0xFFAF52DE);
-  static const systemPurpleDark = Color(0xFFBF5AF2);
-  static const systemPinkLight = Color(0xFFFF2D55);
-  static const systemPinkDark = Color(0xFFFF2D55);
-  static const systemBlackLight = Color(0xFF000000);
-  static const systemBlackDark = Color(0xFF000000);
-  static const systemWhiteLight = Color(0xFFFFFFFF);
-  static const systemWhiteDark = Color(0xFFFFFFFF);
-  static const systemGray01Light = Color(0xFF8E8E93);
-  static const systemGray01Dark = Color(0xFF8E8E93);
-  static const systemGray02Light = Color(0xFFAEAEB2);
-  static const systemGray02Dark = Color(0xFF636366);
-  static const systemGray03Light = Color(0xFFC7C7CC);
-  static const systemGray03Dark = Color(0xFF48484A);
-  static const systemGray04Light = Color(0xFFD1D1D6);
-  static const systemGray04Dark = Color(0xFF3A3A3C);
-  static const systemGray05Light = Color(0xFFE5E5EA);
-  static const systemGray05Dark = Color(0xFF2C2C2E);
-  static const systemGray06Light = Color(0xFFF2F2F7);
-  static const systemGray06Dark = Color(0xFF1C1C1E);
+  final Color systemRed;
+  final Color systemOrange;
+  final Color systemYellow;
+  final Color systemGreen;
+  final Color systemTeal;
+  final Color systemBlue;
+  final Color systemIndigo;
+  final Color systemPurple;
+  final Color systemPink;
+  final Color systemBlack;
+  final Color systemWhite;
+  final Color systemGray01;
+  final Color systemGray02;
+  final Color systemGray03;
+  final Color systemGray04;
+  final Color systemGray05;
+  final Color systemGray06;
 }
 
-final class DefaultSystemBackgroundsColors {
-  const DefaultSystemBackgroundsColors._();
-
-  static const primaryLight = Color(0xFFFFFFFF);
-  static const primaryDarkBase = Color(0xFF000000);
-  static const primaryDarkElevated = Color(0xFF1C1C1E);
-  static const secondaryLight = Color(0xFFF2F2F7);
-  static const secondaryDarkBase = Color(0xFF1C1C1E);
-  static const secondaryDarkElevated = Color(0xFF2C2C2E);
-  static const tertiaryLight = Color(0xFFFFFFFF);
-  static const tertiaryDarkBase = Color(0xFF2C2C2E);
-  static const tertiaryDarkElevated = Color(0xFF3A3A3C);
+final class DefaultColorsLight extends DefaultColors {
+  const DefaultColorsLight()
+      : super(
+          systemRed: const Color(0xFFFF3B30),
+          systemOrange: const Color(0xFFFF9500),
+          systemYellow: const Color(0xFFFFCC00),
+          systemGreen: const Color(0xFF34C759),
+          systemTeal: const Color(0xFF5AC8FA),
+          systemBlue: const Color(0xFF007AFF),
+          systemIndigo: const Color(0xFF5856D6),
+          systemPurple: const Color(0xFFAF52DE),
+          systemPink: const Color(0xFFFF2D55),
+          systemBlack: const Color(0xFF000000),
+          systemWhite: const Color(0xFFFFFFFF),
+          systemGray01: const Color(0xFF8E8E93),
+          systemGray02: const Color(0xFFAEAEB2),
+          systemGray03: const Color(0xFFC7C7CC),
+          systemGray04: const Color(0xFFD1D1D6),
+          systemGray05: const Color(0xFFE5E5EA),
+          systemGray06: const Color(0xFFF2F2F7),
+        );
 }
 
-final class DefaultSystemGroupedBackgroundsColors {
-  const DefaultSystemGroupedBackgroundsColors._();
-
-  static const primaryLight = Color(0xFFF2F2F7);
-  static const primaryDarkBase = Color(0xFF000000);
-  static const primaryDarkElevated = Color(0xFF1C1C1E);
-  static const secondaryLight = Color(0xFFFFFFFF);
-  static const secondaryDarkBase = Color(0xFF1C1C1E);
-  static const secondaryDarkElevated = Color(0xFF2C2C2E);
-  static const tertiaryLight = Color(0xFFF2F2F7);
-  static const tertiaryDarkBase = Color(0xFF2C2C2E);
-  static const tertiaryDarkElevated = Color(0xFF3A3A3C);
+final class DefaultColorsDark extends DefaultColors {
+  const DefaultColorsDark()
+      : super(
+          systemRed: const Color(0xFFFF453A),
+          systemOrange: const Color(0xFFFF9F0A),
+          systemYellow: const Color(0xFFFFD60A),
+          systemGreen: const Color(0xFF32D74B),
+          systemTeal: const Color(0xFF64D2FF),
+          systemBlue: const Color(0xFF0A84FF),
+          systemIndigo: const Color(0xFF5E5CE6),
+          systemPurple: const Color(0xFFBF5AF2),
+          systemPink: const Color(0xFFFF2D55),
+          systemBlack: const Color(0xFF000000),
+          systemWhite: const Color(0xFFFFFFFF),
+          systemGray01: const Color(0xFF8E8E93),
+          systemGray02: const Color(0xFF636366),
+          systemGray03: const Color(0xFF48484A),
+          systemGray04: const Color(0xFF3A3A3C),
+          systemGray05: const Color(0xFF2C2C2E),
+          systemGray06: const Color(0xFF1C1C1E),
+        );
 }
 
-final class DefaultFillColors {
-  const DefaultFillColors._();
+sealed class DefaultSystemBackgroundsColors {
+  const DefaultSystemBackgroundsColors({
+    required this.primaryLight,
+    required this.primaryDarkBase,
+    required this.primaryDarkElevated,
+    required this.secondaryLight,
+    required this.secondaryDarkBase,
+    required this.secondaryDarkElevated,
+    required this.tertiaryLight,
+    required this.tertiaryDarkBase,
+    required this.tertiaryDarkElevated,
+  });
 
-  static const primaryLight = Color.fromRGBO(120, 120, 128, .2);
-  static const primaryDark = Color.fromRGBO(120, 120, 128, .36);
-  static const secondaryLight = Color.fromRGBO(120, 120, 128, .16);
-  static const secondaryDark = Color.fromRGBO(120, 120, 128, .32);
-  static const tertiaryLight = Color.fromRGBO(120, 120, 128, .12);
-  static const tertiaryDark = Color.fromRGBO(120, 120, 128, .24);
-  static const quartenaryLight = Color.fromRGBO(120, 120, 128, .8);
-  static const quartenaryDark = Color.fromRGBO(120, 120, 128, .18);
+  final Color primaryLight;
+  final Color primaryDarkBase;
+  final Color primaryDarkElevated;
+  final Color secondaryLight;
+  final Color secondaryDarkBase;
+  final Color secondaryDarkElevated;
+  final Color tertiaryLight;
+  final Color tertiaryDarkBase;
+  final Color tertiaryDarkElevated;
 }
 
-final class DefaultLabelColors {
-  const DefaultLabelColors._();
-
-  static const primaryLight = Color(0xFF000000);
-  static const primaryDark = Color(0xFFFFFFFF);
-  static const secondaryLight = Color.fromRGBO(60, 60, 67, .60);
-  static const secondaryDark = Color.fromRGBO(235, 235, 245, .60);
-  static const tertiaryLight = Color.fromRGBO(60, 60, 67, .30);
-  static const tertiaryDark = Color.fromRGBO(235, 235, 245, .30);
-  static const quartenaryLight = Color.fromRGBO(60, 60, 67, .18);
-  static const quartenaryDark = Color.fromRGBO(235, 235, 245, .18);
+final class DefaultSystemBackgroundsColorsLight
+    extends DefaultSystemBackgroundsColors {
+  const DefaultSystemBackgroundsColorsLight()
+      : super(
+          primaryLight: const Color(0xFFFFFFFF),
+          primaryDarkBase: const Color(0xFF000000),
+          primaryDarkElevated: const Color(0xFF1C1C1E),
+          secondaryLight: const Color(0xFFF2F2F7),
+          secondaryDarkBase: const Color(0xFF1C1C1E),
+          secondaryDarkElevated: const Color(0xFF2C2C2E),
+          tertiaryLight: const Color(0xFFFFFFFF),
+          tertiaryDarkBase: const Color(0xFF2C2C2E),
+          tertiaryDarkElevated: const Color(0xFF3A3A3C),
+        );
 }
 
-final class DefaultSeparatorColors {
-  const DefaultSeparatorColors._();
+final class DefaultSystemBackgroundsColorsDark
+    extends DefaultSystemBackgroundsColors {
+  const DefaultSystemBackgroundsColorsDark()
+      : super(
+          primaryLight: const Color(0xFFFFFFFF),
+          primaryDarkBase: const Color(0xFF000000),
+          primaryDarkElevated: const Color(0xFF1C1C1E),
+          secondaryLight: const Color(0xFFF2F2F7),
+          secondaryDarkBase: const Color(0xFF1C1C1E),
+          secondaryDarkElevated: const Color(0xFF2C2C2E),
+          tertiaryLight: const Color(0xFFFFFFFF),
+          tertiaryDarkBase: const Color(0xFF2C2C2E),
+          tertiaryDarkElevated: const Color(0xFF3A3A3C),
+        );
+}
 
-  static const nonOpaqueLight = Color(0xFFC6C6C8);
-  static const nonOpaqueDark = Color(0xFF38383A);
-  static const opaqueLight = Color.fromRGBO(60, 60, 67, .36);
-  static const opaqueDark = Color.fromRGBO(84, 84, 88, .36);
+sealed class DefaultSystemGroupedBackgroundsColors {
+  const DefaultSystemGroupedBackgroundsColors({
+    required this.primaryLight,
+    required this.primaryDarkBase,
+    required this.primaryDarkElevated,
+    required this.secondaryLight,
+    required this.secondaryDarkBase,
+    required this.secondaryDarkElevated,
+    required this.tertiaryLight,
+    required this.tertiaryDarkBase,
+    required this.tertiaryDarkElevated,
+  });
+
+  final Color primaryLight;
+  final Color primaryDarkBase;
+  final Color primaryDarkElevated;
+  final Color secondaryLight;
+  final Color secondaryDarkBase;
+  final Color secondaryDarkElevated;
+  final Color tertiaryLight;
+  final Color tertiaryDarkBase;
+  final Color tertiaryDarkElevated;
+}
+
+final class DefaultSystemGroupedBackgroundsColorsLight
+    extends DefaultSystemGroupedBackgroundsColors {
+  const DefaultSystemGroupedBackgroundsColorsLight()
+      : super(
+          primaryLight: const Color(0xFFF2F2F7),
+          primaryDarkBase: const Color(0xFF000000),
+          primaryDarkElevated: const Color(0xFF1C1C1E),
+          secondaryLight: const Color(0xFFFFFFFF),
+          secondaryDarkBase: const Color(0xFF1C1C1E),
+          secondaryDarkElevated: const Color(0xFF2C2C2E),
+          tertiaryLight: const Color(0xFFF2F2F7),
+          tertiaryDarkBase: const Color(0xFF2C2C2E),
+          tertiaryDarkElevated: const Color(0xFF3A3A3C),
+        );
+}
+
+final class DefaultSystemGroupedBackgroundsColorsDark
+    extends DefaultSystemGroupedBackgroundsColors {
+  const DefaultSystemGroupedBackgroundsColorsDark()
+      : super(
+          primaryLight: const Color(0xFFF2F2F7),
+          primaryDarkBase: const Color(0xFF000000),
+          primaryDarkElevated: const Color(0xFF1C1C1E),
+          secondaryLight: const Color(0xFFFFFFFF),
+          secondaryDarkBase: const Color(0xFF1C1C1E),
+          secondaryDarkElevated: const Color(0xFF2C2C2E),
+          tertiaryLight: const Color(0xFFF2F2F7),
+          tertiaryDarkBase: const Color(0xFF2C2C2E),
+          tertiaryDarkElevated: const Color(0xFF3A3A3C),
+        );
+}
+
+sealed class DefaultFillColors {
+  const DefaultFillColors({
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+    required this.quartenary,
+  });
+
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+  final Color quartenary;
+}
+
+final class DefaultFillColorsLight extends DefaultFillColors {
+  const DefaultFillColorsLight()
+      : super(
+          primary: const Color.fromRGBO(120, 120, 128, .2),
+          secondary: const Color.fromRGBO(120, 120, 128, .16),
+          tertiary: const Color.fromRGBO(120, 120, 128, .12),
+          quartenary: const Color.fromRGBO(120, 120, 128,
+              .8), // Note: Was .18 in original request, corrected to .8 based on naming pattern and light theme
+        );
+}
+
+final class DefaultFillColorsDark extends DefaultFillColors {
+  const DefaultFillColorsDark()
+      : super(
+          primary: const Color.fromRGBO(120, 120, 128, .36),
+          secondary: const Color.fromRGBO(120, 120, 128, .32),
+          tertiary: const Color.fromRGBO(120, 120, 128, .24),
+          quartenary: const Color.fromRGBO(120, 120, 128, .18),
+        );
+}
+
+sealed class DefaultLabelColors {
+  const DefaultLabelColors({
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+    required this.quartenary,
+  });
+
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+  final Color quartenary;
+}
+
+final class DefaultLabelColorsLight extends DefaultLabelColors {
+  const DefaultLabelColorsLight()
+      : super(
+          primary: const Color(0xFF000000),
+          secondary: const Color.fromRGBO(60, 60, 67, .60),
+          tertiary: const Color.fromRGBO(60, 60, 67, .30),
+          quartenary: const Color.fromRGBO(60, 60, 67, .18),
+        );
+}
+
+final class DefaultLabelColorsDark extends DefaultLabelColors {
+  const DefaultLabelColorsDark()
+      : super(
+          primary: const Color(0xFFFFFFFF),
+          secondary: const Color.fromRGBO(235, 235, 245, .60),
+          tertiary: const Color.fromRGBO(235, 235, 245, .30),
+          quartenary: const Color.fromRGBO(235, 235, 245, .18),
+        );
+}
+
+sealed class DefaultSeparatorColors {
+  const DefaultSeparatorColors({
+    required this.nonOpaque,
+    required this.opaque,
+  });
+
+  final Color nonOpaque;
+  final Color opaque;
+}
+
+final class DefaultSeparatorColorsLight extends DefaultSeparatorColors {
+  const DefaultSeparatorColorsLight()
+      : super(
+          nonOpaque: const Color(0xFFC6C6C8),
+          opaque: const Color.fromRGBO(60, 60, 67, .36),
+        );
+}
+
+final class DefaultSeparatorColorsDark extends DefaultSeparatorColors {
+  const DefaultSeparatorColorsDark()
+      : super(
+          nonOpaque: const Color(0xFF38383A),
+          opaque: const Color.fromRGBO(84, 84, 88, .36),
+        );
 }

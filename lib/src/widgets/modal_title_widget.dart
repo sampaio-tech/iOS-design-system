@@ -3,23 +3,24 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class ModalTitleWidget extends StatelessWidget {
+  const ModalTitleWidget({
+    required this.title,
+    required this.leftLabelButton,
+    required this.rightLabelButton,
+    super.key,
+    this.size = ModalTitleSize.small,
+  });
   final String title;
   final LabelButtonWidget? leftLabelButton;
   final LabelButtonWidget? rightLabelButton;
   final ModalTitleSize size;
 
-  const ModalTitleWidget({
-    super.key,
-    required this.title,
-    required this.leftLabelButton,
-    required this.rightLabelButton,
-    this.size = ModalTitleSize.small,
-  });
-
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
-    const kLabelPadding = EdgeInsets.symmetric(horizontal: 7, vertical: 11);
+    const labelPadding = EdgeInsets.symmetric(
+      horizontal: 7,
+      vertical: 11,
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,11 +28,9 @@ class ModalTitleWidget extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
           children: [
             if (leftLabelButton != null)
-              leftLabelButton?.copyWith(padding: kLabelPadding) ??
+              leftLabelButton?.copyWith(padding: labelPadding) ??
                   const SizedBox.shrink(),
             switch (size) {
               ModalTitleSize.large => const Spacer(),
@@ -40,7 +39,7 @@ class ModalTitleWidget extends StatelessWidget {
                     padding: size.padding,
                     child: Text(
                       title,
-                      style: size.style(brightness),
+                      style: size.style(context),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.visible,
                     ),
@@ -48,7 +47,7 @@ class ModalTitleWidget extends StatelessWidget {
                 ),
             },
             if (rightLabelButton != null)
-              rightLabelButton?.copyWith(padding: kLabelPadding) ??
+              rightLabelButton?.copyWith(padding: labelPadding) ??
                   const SizedBox.shrink(),
           ],
         ),
@@ -58,7 +57,7 @@ class ModalTitleWidget extends StatelessWidget {
               padding: size.padding,
               child: Text(
                 title,
-                style: size.style(brightness),
+                style: size.style(context),
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.visible,
               ),
@@ -71,27 +70,37 @@ class ModalTitleWidget extends StatelessWidget {
 
 enum ModalTitleSize {
   small(
-    style: AppTypography.headlineRegular,
-    padding: EdgeInsets.symmetric(vertical: 11),
+    padding: EdgeInsets.symmetric(
+      vertical: 11,
+    ),
   ),
   large(
-    style: AppTypography.largeTitleBold,
-    padding: EdgeInsets.only(left: 16, right: 16, top: 5),
+    padding: EdgeInsets.only(
+      left: 16,
+      right: 16,
+      top: 5,
+    ),
   );
 
   const ModalTitleSize({
     required this.padding,
-    required TextStyle style,
-  }) : _style = style;
+  });
 
   final EdgeInsets padding;
-  final TextStyle _style;
 
-  TextStyle style(Brightness brightness) =>
-      _style.copyWith(color: _color(brightness));
+  TextStyle style(BuildContext context) {
+    final theme = IosTheme.of(context);
+    final _style = switch (this) {
+      ModalTitleSize.small => theme.typography.headlineRegular,
+      ModalTitleSize.large => theme.typography.largeTitleBold,
+    };
+    return _style.copyWith(
+      color: _color(theme),
+    );
+  }
 
-  Color _color(Brightness brightness) => switch (brightness) {
-        Brightness.light => DefaultLabelColors.primaryLight,
-        Brightness.dark => DefaultLabelColors.primaryDark,
-      };
+  Color _color(
+    IosThemeData theme,
+  ) =>
+      theme.defaultLabelColors.primary;
 }

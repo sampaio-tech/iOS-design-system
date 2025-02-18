@@ -4,6 +4,21 @@ import '../../ios_design_system.dart';
 
 // TODO: implement this from scratch (allow edit like CupertinoPickerWidget)
 class CupertinoDatePickerWidget extends StatelessWidget {
+  const CupertinoDatePickerWidget({
+    required this.onDateTimeChanged,
+    Key? key,
+    this.mode = CupertinoDatePickerMode.dateAndTime,
+    this.initialDateTime,
+    this.minimumDate,
+    this.maximumDate,
+    this.minimumYear = 1,
+    this.maximumYear,
+    this.minuteInterval = 1,
+    this.use24hFormat = false,
+    this.dateOrder,
+    this.showDayOfWeek = false,
+    this.showGradient = true,
+  }) : super(key: key);
   final CupertinoDatePickerMode mode;
   final void Function(DateTime) onDateTimeChanged;
   final DateTime? initialDateTime;
@@ -17,27 +32,11 @@ class CupertinoDatePickerWidget extends StatelessWidget {
   final bool showDayOfWeek;
   final bool showGradient;
 
-  const CupertinoDatePickerWidget({
-    Key? key,
-    required this.onDateTimeChanged,
-    this.mode = CupertinoDatePickerMode.dateAndTime,
-    this.initialDateTime,
-    this.minimumDate,
-    this.maximumDate,
-    this.minimumYear = 1,
-    this.maximumYear,
-    this.minuteInterval = 1,
-    this.use24hFormat = false,
-    this.dateOrder,
-    this.showDayOfWeek = false,
-    this.showGradient = true,
-  }) : super(key: key);
-
   static Future<int?> show({
     required BuildContext context,
+    required void Function(DateTime) onDateTimeChanged,
     BoxConstraints? boxConstraints,
     CupertinoDatePickerMode mode = CupertinoDatePickerMode.dateAndTime,
-    required void Function(DateTime) onDateTimeChanged,
     DateTime? initialDateTime,
     DateTime? minimumDate,
     DateTime? maximumDate,
@@ -57,12 +56,12 @@ class CupertinoDatePickerWidget extends StatelessWidget {
           false => null,
         },
         barrierColor: switch (barrierFilter) {
-          true => SystemMaterialsBackgroundsColors.thickDark,
-          false => SystemMaterialsBackgroundsColors.ultraThinDark,
+          true => const SystemMaterialsBackgroundsColorsDark().thick,
+          false => const SystemMaterialsBackgroundsColorsDark().ultraThin,
         },
         context: context,
         useRootNavigator: useRootNavigator,
-        builder: (BuildContext context) => ConstrainedBox(
+        builder: (context) => ConstrainedBox(
           constraints: boxConstraints ?? const BoxConstraints.expand(),
           child: CupertinoDatePickerWidget(
             onDateTimeChanged: onDateTimeChanged,
@@ -80,15 +79,18 @@ class CupertinoDatePickerWidget extends StatelessWidget {
           ),
         ),
       );
+
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
-    final kBackgroundColor = switch (brightness) {
-      Brightness.light => DefaultSystemGroupedBackgroundsColors.primaryLight,
-      Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkElevated,
+    final theme = IosTheme.of(context);
+    final backgroundColor = switch (theme) {
+      IosLightThemeData() =>
+        theme.defaultSystemGroupedBackgroundsColors.primaryLight,
+      IosDarkThemeData() =>
+        theme.defaultSystemBackgroundsColors.primaryDarkElevated,
     };
     return DecoratedBox(
-      decoration: BoxDecoration(color: kBackgroundColor),
+      decoration: BoxDecoration(color: backgroundColor),
       child: SafeArea(
         top: false,
         maintainBottomViewPadding: true,
@@ -97,7 +99,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
           children: [
             Positioned.fill(
               child: CupertinoDatePicker(
-                backgroundColor: kBackgroundColor,
+                backgroundColor: backgroundColor,
                 onDateTimeChanged: onDateTimeChanged,
                 mode: mode,
                 initialDateTime: initialDateTime,
@@ -113,7 +115,9 @@ class CupertinoDatePickerWidget extends StatelessWidget {
             ),
             if (showGradient)
               Positioned.fill(
-                child: _GradientWidget(color: kBackgroundColor),
+                child: _GradientWidget(
+                  color: backgroundColor,
+                ),
               ),
           ],
         ),
@@ -123,20 +127,18 @@ class CupertinoDatePickerWidget extends StatelessWidget {
 }
 
 class _GradientWidget extends StatelessWidget {
-  final Color color;
   const _GradientWidget({
-    Key? key,
     required this.color,
+    Key? key,
   }) : super(key: key);
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: true,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: DecoratedBox(
@@ -146,9 +148,9 @@ class _GradientWidget extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     color,
-                    color.withOpacity(.8),
-                    color.withOpacity(.5),
-                    color.withOpacity(0),
+                    color.withValues(alpha: .8),
+                    color.withValues(alpha: .5),
+                    color.withValues(alpha: 0),
                   ],
                 ),
               ),
@@ -162,9 +164,9 @@ class _GradientWidget extends StatelessWidget {
                   end: Alignment.topCenter,
                   colors: [
                     color,
-                    color.withOpacity(.8),
-                    color.withOpacity(.5),
-                    color.withOpacity(0),
+                    color.withValues(alpha: .8),
+                    color.withValues(alpha: .5),
+                    color.withValues(alpha: 0),
                   ],
                 ),
               ),

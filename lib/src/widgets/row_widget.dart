@@ -3,6 +3,15 @@ import 'package:flutter/cupertino.dart';
 import '../exports.dart';
 
 class RowWidget extends StatelessWidget {
+  const RowWidget({
+    required this.title,
+    required this.description,
+    required this.displayDivider,
+    required this.onPressed,
+    super.key,
+    this.leftWidget,
+    this.rightWidget,
+  });
   final String title;
   final String? description;
   final Widget? leftWidget;
@@ -10,34 +19,23 @@ class RowWidget extends StatelessWidget {
   final bool displayDivider;
   final VoidCallback? onPressed;
 
-  const RowWidget({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.displayDivider,
-    required this.onPressed,
-    this.leftWidget,
-    this.rightWidget,
-  });
-
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final theme = IosTheme.of(context);
     return CupertinoButtonWidget(
       onPressed: onPressed,
       child: AnimatedContainer(
         duration: kAnimationInDuration,
         decoration: BoxDecoration(
-          color: switch (brightness) {
-            Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
-            Brightness.dark =>
-              DefaultSystemBackgroundsColors.primaryDarkElevated,
+          color: switch (theme) {
+            IosLightThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryLight,
+            IosDarkThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
           },
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(width: 16),
             if (leftWidget != null) leftWidget ?? const SizedBox.shrink(),
@@ -53,8 +51,6 @@ class RowWidget extends StatelessWidget {
                         .copyWith(right: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Column(
@@ -64,13 +60,8 @@ class RowWidget extends StatelessWidget {
                             children: [
                               Text(
                                 title,
-                                style: AppTypography.bodyRegular.copyWith(
-                                  color: switch (brightness) {
-                                    Brightness.light =>
-                                      DefaultLabelColors.primaryLight,
-                                    Brightness.dark =>
-                                      DefaultLabelColors.primaryDark,
-                                  },
+                                style: theme.typography.bodyRegular.copyWith(
+                                  color: theme.defaultLabelColors.primary,
                                 ),
                                 textAlign: TextAlign.start,
                                 overflow: TextOverflow.visible,
@@ -80,13 +71,9 @@ class RowWidget extends StatelessWidget {
                               if (description != null)
                                 Text(
                                   description!,
-                                  style: AppTypography.caption1Regular.copyWith(
-                                    color: switch (brightness) {
-                                      Brightness.light =>
-                                        DefaultLabelColors.secondaryLight,
-                                      Brightness.dark =>
-                                        DefaultLabelColors.secondaryDark,
-                                    },
+                                  style:
+                                      theme.typography.caption1Regular.copyWith(
+                                    color: theme.defaultLabelColors.secondary,
                                   ),
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.visible,

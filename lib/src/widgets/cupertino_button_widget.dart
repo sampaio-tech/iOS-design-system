@@ -4,6 +4,22 @@ import 'package:flutter/foundation.dart';
 import '../exports.dart' as exports;
 
 class CupertinoButtonWidget extends StatefulWidget {
+  const CupertinoButtonWidget({
+    required this.child,
+    required this.onPressed,
+    super.key,
+    this.padding = exports.kCupertinoButtonPadding,
+    this.constraints,
+    this.color,
+    this.disabledColor,
+    this.pressedOpacity = exports.kCupertinoButtonPressedOpacity,
+    this.borderRadius = exports.kCupertinoButtonBorderRadius,
+    this.alignment = Alignment.center,
+    this.border,
+    this.shape = BoxShape.rectangle,
+    this.displayCupertinoActivityIndicator = false,
+    this.cupertinoActivityIndicator = const CupertinoActivityIndicator(),
+  }) : assert((pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
   final Widget child;
   final EdgeInsetsGeometry padding;
   final Color? color;
@@ -18,23 +34,6 @@ class CupertinoButtonWidget extends StatefulWidget {
   final bool displayCupertinoActivityIndicator;
   final CupertinoActivityIndicator cupertinoActivityIndicator;
 
-  const CupertinoButtonWidget({
-    super.key,
-    required this.child,
-    required this.onPressed,
-    this.padding = exports.kCupertinoButtonPadding,
-    this.constraints,
-    this.color,
-    this.disabledColor,
-    this.pressedOpacity = exports.kCupertinoButtonPressedOpacity,
-    this.borderRadius = exports.kCupertinoButtonBorderRadius,
-    this.alignment = Alignment.center,
-    this.border,
-    this.shape = BoxShape.rectangle,
-    this.displayCupertinoActivityIndicator = false,
-    this.cupertinoActivityIndicator = const CupertinoActivityIndicator(),
-  }) : assert((pressedOpacity >= 0.0 && pressedOpacity <= 1.0));
-
   bool get enabled => onPressed != null;
 
   @override
@@ -43,7 +42,7 @@ class CupertinoButtonWidget extends StatefulWidget {
 
 class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
     with SingleTickerProviderStateMixin {
-  final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
+  final Tween<double> _opacityTween = Tween<double>(begin: 1);
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
@@ -53,7 +52,7 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
     super.initState();
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
-      value: 0.0,
+      value: 0,
       vsync: this,
     );
     _opacityAnimation = _animationController
@@ -108,16 +107,16 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
     final bool wasHeldDown = _buttonHeldDown;
     final TickerFuture ticker = _buttonHeldDown
         ? _animationController.animateTo(
-            1.0,
+            1,
             duration: exports.kAnimationInDuration,
             curve: Curves.easeInOutCubicEmphasized,
           )
         : _animationController.animateTo(
-            0.0,
+            0,
             duration: exports.kAnimationOutDuration,
             curve: Curves.easeOutCubic,
           );
-    ticker.then<void>((void value) {
+    ticker.then<void>((value) {
       if (mounted && wasHeldDown != _buttonHeldDown) {
         _animate();
       }

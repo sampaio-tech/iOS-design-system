@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../../ios_design_system.dart';
 
 class GroupedTableWidget extends StatelessWidget {
-  final List<Widget> rows;
-  final TitleWidget? title;
-  final DescriptionWidget? description;
-  final BorderRadiusGeometry? borderRadius;
-
   const GroupedTableWidget({
-    Key? key,
     required this.rows,
     required this.title,
     required this.description,
+    Key? key,
     this.borderRadius,
   }) : super(key: key);
 
@@ -26,6 +22,10 @@ class GroupedTableWidget extends StatelessWidget {
         description: description,
         borderRadius: BorderRadius.circular(14),
       );
+  final List<Widget> rows;
+  final TitleWidget? title;
+  final DescriptionWidget? description;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {

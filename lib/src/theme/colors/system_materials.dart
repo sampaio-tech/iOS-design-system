@@ -1,45 +1,127 @@
 part of 'colors.dart';
 
-final class SystemMaterialsBackgroundsColors {
-  const SystemMaterialsBackgroundsColors._();
+sealed class SystemMaterialsBackgroundsColors {
+  const SystemMaterialsBackgroundsColors({
+    required this.thick,
+    required this.regular,
+    required this.thin,
+    required this.ultraThin,
+  });
 
-  static const thickLight = Color.fromRGBO(253, 253, 253, .92);
-  static const thickDark = Color.fromRGBO(0, 0, 0, .6);
-  static const regularLight = Color.fromRGBO(249, 249, 249, .78);
-  static const regularDark = Color.fromRGBO(0, 0, 0, .41);
-  static const thinLight = Color.fromRGBO(245, 245, 245, .6);
-  static const thinDark = Color.fromRGBO(0, 0, 0, .25);
-  static const ultraThinLight = Color.fromRGBO(240, 240, 240, .38);
-  static const ultraThinDark = Color.fromRGBO(0, 0, 0, .1);
+  final Color thick;
+  final Color regular;
+  final Color thin;
+  final Color ultraThin;
 }
 
-final class SystemMaterialsLabelsTextColors {
-  const SystemMaterialsLabelsTextColors._();
-
-  static const vibrantPrimaryLight = Color.fromRGBO(0, 0, 0, .96);
-  static const vibrantPrimaryDark = Color.fromRGBO(255, 255, 255, .5);
-  static const vibrantSecondaryLight = Color.fromRGBO(0, 0, 0, .5);
-  static const vibrantSecondaryDark = Color.fromRGBO(255, 255, 255, .5);
-  static const vibratTertiaryLight = Color.fromRGBO(0, 0, 0, .3);
-  static const vibratTertiaryDark = Color.fromRGBO(255, 255, 255, .3);
-  static const vibrantQuartenaryLight = Color.fromRGBO(0, 0, 0, .2);
-  static const vibrantQuartenaryDark = Color.fromRGBO(255, 255, 255, .2);
+final class SystemMaterialsBackgroundsColorsLight
+    extends SystemMaterialsBackgroundsColors {
+  const SystemMaterialsBackgroundsColorsLight()
+      : super(
+          thick: const Color.fromRGBO(253, 253, 253, .92),
+          regular: const Color.fromRGBO(249, 249, 249, .78),
+          thin: const Color.fromRGBO(245, 245, 245, .6),
+          ultraThin: const Color.fromRGBO(240, 240, 240, .38),
+        );
 }
 
-final class SystemMaterialsFillColors {
-  const SystemMaterialsFillColors._();
-
-  static const primaryLight = Color.fromRGBO(0, 0, 0, .45);
-  static const primaryDark = Color.fromRGBO(255, 255, 255, .45);
-  static const secondaryLight = Color.fromRGBO(0, 0, 0, .2);
-  static const secondaryDark = Color.fromRGBO(255, 255, 255, .2);
-  static const tertiaryLight = Color.fromRGBO(0, 0, 0, .1);
-  static const tertiaryDark = Color.fromRGBO(255, 255, 255, .1);
+final class SystemMaterialsBackgroundsColorsDark
+    extends SystemMaterialsBackgroundsColors {
+  const SystemMaterialsBackgroundsColorsDark()
+      : super(
+          thick: const Color.fromRGBO(0, 0, 0, .6),
+          regular: const Color.fromRGBO(0, 0, 0, .41),
+          thin: const Color.fromRGBO(0, 0, 0, .25),
+          ultraThin: const Color.fromRGBO(0, 0, 0, .1),
+        );
 }
 
-final class SystemMaterialsSeparatorColors {
-  const SystemMaterialsSeparatorColors._();
+sealed class SystemMaterialsLabelsTextColors {
+  const SystemMaterialsLabelsTextColors({
+    required this.vibrantPrimary,
+    required this.vibrantSecondary,
+    required this.vibratTertiary,
+    required this.vibrantQuartenary,
+  });
 
-  static const separatorLight = Color.fromRGBO(0, 0, 0, .3);
-  static const separatorDark = Color.fromRGBO(255, 255, 255, .3);
+  final Color vibrantPrimary;
+  final Color vibrantSecondary;
+  final Color vibratTertiary;
+  final Color vibrantQuartenary;
+}
+
+final class SystemMaterialsLabelsTextColorsLight
+    extends SystemMaterialsLabelsTextColors {
+  const SystemMaterialsLabelsTextColorsLight()
+      : super(
+          vibrantPrimary: const Color.fromRGBO(0, 0, 0, .96),
+          vibrantSecondary: const Color.fromRGBO(0, 0, 0, .5),
+          vibratTertiary: const Color.fromRGBO(0, 0, 0, .3),
+          vibrantQuartenary: const Color.fromRGBO(0, 0, 0, .2),
+        );
+}
+
+final class SystemMaterialsLabelsTextColorsDark
+    extends SystemMaterialsLabelsTextColors {
+  const SystemMaterialsLabelsTextColorsDark()
+      : super(
+          vibrantPrimary: const Color.fromRGBO(255, 255, 255, .5),
+          vibrantSecondary: const Color.fromRGBO(255, 255, 255, .5),
+          vibratTertiary: const Color.fromRGBO(255, 255, 255, .3),
+          vibrantQuartenary: const Color.fromRGBO(255, 255, 255, .2),
+        );
+}
+
+sealed class SystemMaterialsFillColors {
+  const SystemMaterialsFillColors({
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+  });
+
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+}
+
+final class SystemMaterialsFillColorsLight extends SystemMaterialsFillColors {
+  const SystemMaterialsFillColorsLight()
+      : super(
+          primary: const Color.fromRGBO(0, 0, 0, .45),
+          secondary: const Color.fromRGBO(0, 0, 0, .2),
+          tertiary: const Color.fromRGBO(0, 0, 0, .1),
+        );
+}
+
+final class SystemMaterialsFillColorsDark extends SystemMaterialsFillColors {
+  const SystemMaterialsFillColorsDark()
+      : super(
+          primary: const Color.fromRGBO(255, 255, 255, .45),
+          secondary: const Color.fromRGBO(255, 255, 255, .2),
+          tertiary: const Color.fromRGBO(255, 255, 255, .1),
+        );
+}
+
+sealed class SystemMaterialsSeparatorColors {
+  const SystemMaterialsSeparatorColors({
+    required this.separator,
+  });
+
+  final Color separator;
+}
+
+final class SystemMaterialsSeparatorColorsLight
+    extends SystemMaterialsSeparatorColors {
+  const SystemMaterialsSeparatorColorsLight()
+      : super(
+          separator: const Color.fromRGBO(0, 0, 0, .3),
+        );
+}
+
+final class SystemMaterialsSeparatorColorsDark
+    extends SystemMaterialsSeparatorColors {
+  const SystemMaterialsSeparatorColorsDark()
+      : super(
+          separator: const Color.fromRGBO(255, 255, 255, .3),
+        );
 }

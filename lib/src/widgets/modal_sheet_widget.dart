@@ -5,18 +5,17 @@ import 'package:flutter/cupertino.dart';
 import '../../ios_design_system.dart';
 
 class ModalSheetWidget extends StatelessWidget {
+  const ModalSheetWidget({
+    required this.prompt,
+    required this.title,
+    required this.cupertinoSearchTextFieldWidget,
+    super.key,
+    this.children,
+  });
   final PromptWidget? prompt;
   final ModalTitleWidget? title;
   final List<Widget> Function(BuildContext context)? children;
   final CupertinoSearchTextFieldWidget? cupertinoSearchTextFieldWidget;
-
-  const ModalSheetWidget({
-    super.key,
-    required this.prompt,
-    required this.title,
-    required this.cupertinoSearchTextFieldWidget,
-    this.children,
-  });
 
   static Future<T?> showModalSheet<T>({
     required BuildContext context,
@@ -34,7 +33,7 @@ class ModalSheetWidget extends StatelessWidget {
   }) =>
       Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
         CupertinoModalPopupRoute<T>(
-          builder: (BuildContext context) => ModalSheetWidget(
+          builder: (context) => ModalSheetWidget(
             cupertinoSearchTextFieldWidget: cupertinoSearchTextFieldWidget,
             prompt: prompt,
             title: title,
@@ -56,15 +55,16 @@ class ModalSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final theme = IosTheme.of(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     return AnimatedContainer(
       duration: kAnimationInDuration,
       decoration: BoxDecoration(
         borderRadius: kBorderRadius,
-        color: switch (brightness) {
-          Brightness.light => DefaultColors.systemWhiteLight,
-          Brightness.dark => DefaultSystemBackgroundsColors.secondaryDarkBase,
+        color: switch (theme) {
+          IosLightThemeData() => theme.defaultColors.systemWhite,
+          IosDarkThemeData() =>
+            theme.defaultSystemBackgroundsColors.secondaryDarkBase,
         },
       ),
       child: SafeArea(
@@ -101,17 +101,17 @@ class ModalSheetWidget extends StatelessWidget {
 }
 
 enum BarrierFilter {
-  enabled(
-    barrierColor: SystemMaterialsBackgroundsColors.thickDark,
-  ),
-  disabled(
-    barrierColor: SystemMaterialsBackgroundsColors.ultraThinDark,
-  ),
-  ;
+  enabled,
+  disabled;
 
-  const BarrierFilter({required this.barrierColor});
+  const BarrierFilter();
 
-  final Color barrierColor;
+  Color get barrierColor => switch (this) {
+        BarrierFilter.enabled =>
+          const SystemMaterialsBackgroundsColorsDark().thick,
+        BarrierFilter.disabled =>
+          const SystemMaterialsBackgroundsColorsDark().ultraThin,
+      };
   ImageFilter? get imageFilter => switch (this) {
         BarrierFilter.enabled => kImageFilterBlur,
         BarrierFilter.disabled => null,

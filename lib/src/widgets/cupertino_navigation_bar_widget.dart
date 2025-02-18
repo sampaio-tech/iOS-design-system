@@ -6,57 +6,55 @@ import '../../ios_design_system.dart';
 
 class CupertinoNavigatorBarWidget extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
+  const CupertinoNavigatorBarWidget({
+    required this.imageFilter,
+    required this.title,
+    required this.trailing,
+    required this.leading,
+    Key? key,
+    this.backButtonWidget = _kCupertinoNavigationBackButtonWidget,
+  }) : super(key: key);
   final NavigatorBarImageFilter imageFilter;
   final String? title;
   final LabelButtonWidget? trailing;
   final LabelButtonWidget? leading;
   final CupertinoNavigationBackButtonWidget backButtonWidget;
 
-  const CupertinoNavigatorBarWidget({
-    Key? key,
-    required this.imageFilter,
-    required this.title,
-    required this.trailing,
-    required this.leading,
-    this.backButtonWidget = _kCupertinoNavigationBackButtonWidget,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final ScrollController? primaryScrollController =
         PrimaryScrollController.maybeOf(context);
-    final brightness = CupertinoTheme.brightnessOf(context);
+    final theme = IosTheme.of(context);
     final canPop = ModalRoute.of(context)?.canPop ?? false;
-    final textScaleFactor = MediaQuery.textScaleFactorOf(context);
+    final textScaler = MediaQuery.textScalerOf(context);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
         final hasClients = primaryScrollController?.hasClients ?? false;
         if (hasClients) {
           primaryScrollController?.animateTo(
-            0.0,
+            0,
             duration: const Duration(milliseconds: 500),
             curve: Curves.linearToEaseOut,
           );
         }
       },
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: textScaleFactor),
+        data: MediaQuery.of(context).copyWith(
+          textScaler: textScaler,
+        ),
         child: CupertinoNavigationBar(
           padding: const EdgeInsetsDirectional.all(0),
           middle: title != null
               ? DefaultTextStyle(
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.headlineRegular.copyWith(
-                    color: switch (brightness) {
-                      Brightness.light => DefaultLabelColors.primaryLight,
-                      Brightness.dark => DefaultLabelColors.primaryDark,
-                    },
+                  style: theme.typography.headlineRegular.copyWith(
+                    color: theme.defaultLabelColors.primary,
                   ),
                   child: Text(
                     title!,
-                    textScaleFactor: textScaleFactor,
+                    textScaler: textScaler,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -72,8 +70,9 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
                 children: [
                   Center(
                     child: MediaQuery(
-                      data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: textScaler,
+                      ),
                       child: trailing.copyWith(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -87,14 +86,14 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
           },
           leading: switch ((leading, backButtonWidget, canPop)) {
             (null, _, true) => Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(
                     child: MediaQuery(
-                      data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: textScaler,
+                      ),
                       child: backButtonWidget,
                     ),
                   ),
@@ -102,20 +101,21 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
               ),
             (null, _, _) => null,
             (final leading, _, _) => Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(
                     child: MediaQuery(
-                      data: MediaQuery.of(context)
-                          .copyWith(textScaleFactor: textScaleFactor),
-                      child: leading!.copyWith(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 11,
-                        ),
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: textScaler,
                       ),
+                      child: leading?.copyWith(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 11,
+                            ),
+                          ) ??
+                          const SizedBox.shrink(),
                     ),
                   ),
                 ],
@@ -123,15 +123,17 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
           },
           automaticallyImplyMiddle: false,
           automaticallyImplyLeading: false,
-          brightness: brightness,
-          backgroundColor: imageFilter.backgroundColor(brightness: brightness),
+          brightness: theme.brightness,
+          backgroundColor: switch (theme) {
+            IosLightThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryLight,
+            IosDarkThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
+          }
+              .withValues(alpha: imageFilter.backgroundOpacity),
           border: Border(
             bottom: BorderSide(
-              width: 1,
-              color: switch (brightness) {
-                Brightness.light => SystemColoursSeparatorColors.nonOpaqueLight,
-                Brightness.dark => SystemColoursSeparatorColors.nonOpaqueDark,
-              },
+              color: theme.systemColoursSeparatorColors.nonOpaque,
             ),
           ),
         ),
@@ -166,26 +168,17 @@ enum NavigatorBarImageFilter {
         NavigatorBarImageFilter.enabled => .8,
         NavigatorBarImageFilter.disabled => 1,
       };
-
-  Color backgroundColor({
-    required Brightness brightness,
-  }) =>
-      switch (brightness) {
-        Brightness.light => DefaultSystemBackgroundsColors.primaryLight,
-        Brightness.dark => DefaultSystemBackgroundsColors.primaryDarkElevated,
-      }
-          .withOpacity(backgroundOpacity);
 }
 
 const _kCupertinoNavigationBackButtonWidget =
     CupertinoNavigationBackButtonWidget();
 
 class CupertinoNavigationBackButtonWidget extends StatelessWidget {
-  final String? label;
   const CupertinoNavigationBackButtonWidget({
     super.key,
     this.label,
   });
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
