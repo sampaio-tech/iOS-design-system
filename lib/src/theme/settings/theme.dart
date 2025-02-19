@@ -194,21 +194,17 @@ sealed class IosThemeData {
     };
   }
 
-  static IosThemeData lerp(IosThemeData a, IosThemeData b, double t) {
-    if (identical(a, b)) {
-      return a;
-    }
-    return a._lerp(b, t);
-  }
+  static IosThemeData lerp(IosThemeData a, IosThemeData b, double t) =>
+      a._lerp(b, t);
 
   IosThemeData _lerp(
     IosThemeData b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       acessibleColors: acessibleColors.lerp(
         b.acessibleColors,

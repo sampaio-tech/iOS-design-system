@@ -17,11 +17,10 @@ sealed class SystemMaterialsBackgroundsColors {
     SystemMaterialsBackgroundsColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       thick: Color.lerp(thick, b.thick, t),
       regular: Color.lerp(regular, b.regular, t),
@@ -113,11 +112,10 @@ sealed class SystemMaterialsLabelsTextColors {
     SystemMaterialsLabelsTextColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       vibrantPrimary: Color.lerp(vibrantPrimary, b.vibrantPrimary, t),
       vibrantSecondary: Color.lerp(vibrantSecondary, b.vibrantSecondary, t),
@@ -213,11 +211,10 @@ sealed class SystemMaterialsFillColors {
     SystemMaterialsFillColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       primary: Color.lerp(primary, b.primary, t),
       secondary: Color.lerp(secondary, b.secondary, t),
@@ -291,11 +288,10 @@ sealed class SystemMaterialsSeparatorColors {
     SystemMaterialsSeparatorColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       separator: Color.lerp(separator, b.separator, t),
     );

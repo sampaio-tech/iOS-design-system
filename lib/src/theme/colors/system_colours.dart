@@ -11,11 +11,10 @@ sealed class SystemColoursSeparatorColors {
     SystemColoursSeparatorColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       nonOpaque: Color.lerp(nonOpaque, b.nonOpaque, t),
     );

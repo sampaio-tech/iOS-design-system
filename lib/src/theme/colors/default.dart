@@ -40,6 +40,9 @@ sealed class DefaultColors {
   final Color systemGray06;
 
   DefaultColors lerp(DefaultColors b, double t) {
+    if (identical(this, b)) {
+      return this;
+    }
     final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       systemRed: Color.lerp(systemRed, b.systemRed, t),
@@ -576,11 +579,10 @@ sealed class DefaultFillColors {
     DefaultFillColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       primary: Color.lerp(primary, b.primary, t),
       secondary: Color.lerp(secondary, b.secondary, t),
@@ -670,11 +672,10 @@ sealed class DefaultLabelColors {
     DefaultLabelColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       primary: Color.lerp(primary, b.primary, t),
       secondary: Color.lerp(secondary, b.secondary, t),
@@ -760,11 +761,10 @@ sealed class DefaultSeparatorColors {
     DefaultSeparatorColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
-
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       nonOpaque: Color.lerp(nonOpaque, b.nonOpaque, t),
       opaque: Color.lerp(opaque, b.opaque, t),

@@ -39,10 +39,10 @@ sealed class AcessibleColors {
     AcessibleColors b,
     double t,
   ) {
-    final instance = switch (t) {
-      < 0.5 => this,
-      _ => b,
-    };
+    if (identical(this, b)) {
+      return this;
+    }
+    final instance = t < 0.5 ? this : b;
     return instance.copyWith(
       systemRed: Color.lerp(systemRed, b.systemRed, t),
       systemOrange: Color.lerp(systemOrange, b.systemOrange, t),
