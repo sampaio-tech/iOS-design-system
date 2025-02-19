@@ -204,7 +204,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
         contextMenuBuilder: widget.contextMenuBuilder,
         spellCheckConfiguration: widget.spellCheckConfiguration,
         magnifierConfiguration: widget.magnifierConfiguration,
-        scribbleEnabled: widget.scribbleEnabled,
+        stylusHandwritingEnabled: widget.scribbleEnabled,
         enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
         controller: _effectiveController,
         focusNode: widget.focusNode,
