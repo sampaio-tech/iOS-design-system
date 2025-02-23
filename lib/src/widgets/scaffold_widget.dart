@@ -25,8 +25,8 @@ class ScaffoldWidget extends StatelessWidget {
     };
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: switch (theme) {
-        IosLightThemeData() => SystemUiOverlayStyle.light,
-        IosDarkThemeData() => SystemUiOverlayStyle.dark,
+        IosLightThemeData() => SystemUiOverlayStyle.dark,
+        IosDarkThemeData() => SystemUiOverlayStyle.light,
       },
       child: Scaffold(
         backgroundColor: scaffoldBackgroundColor,
@@ -41,9 +41,9 @@ class ScaffoldWidget extends StatelessWidget {
         bottomNavigationBar: switch (toolBar) {
           null => null,
           final toolBar => GestureDetector(
-              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              child: toolBar,
-            ),
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: toolBar,
+          ),
         },
       ),
     );
