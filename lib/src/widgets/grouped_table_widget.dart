@@ -13,18 +13,18 @@ class GroupedTableWidget extends StatelessWidget {
 
   factory GroupedTableWidget.rounded({
     required List<Widget> rows,
-    required TitleWidget? title,
-    required DescriptionWidget? description,
-  }) =>
-      GroupedTableWidget(
-        rows: rows,
-        title: title,
-        description: description,
-        borderRadius: BorderRadius.circular(14),
-      );
+    required Widget? title,
+    required Widget? description,
+  }) => GroupedTableWidget(
+    rows: rows,
+    title: title,
+    description: description,
+    borderRadius: BorderRadius.circular(14),
+  );
+
   final List<Widget> rows;
-  final TitleWidget? title;
-  final DescriptionWidget? description;
+  final Widget? title;
+  final Widget? description;
   final BorderRadiusGeometry? borderRadius;
 
   @override
