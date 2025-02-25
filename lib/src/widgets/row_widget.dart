@@ -10,6 +10,7 @@ class RowWidget extends StatelessWidget {
     required this.onPressed,
     required this.leftWidget,
     required this.rightWidget,
+    this.contentPadding,
     super.key,
   });
 
@@ -20,6 +21,7 @@ class RowWidget extends StatelessWidget {
     required Widget? rightWidget,
     required bool displayDivider,
     required VoidCallback? onPressed,
+    EdgeInsets? contentPadding,
   }) => RowWidget(
     title:
         (theme) => Text(
@@ -46,6 +48,7 @@ class RowWidget extends StatelessWidget {
     onPressed: onPressed,
     leftWidget: leftWidget,
     rightWidget: rightWidget,
+    contentPadding: contentPadding,
   );
 
   final Widget Function(IosThemeData theme) title;
@@ -54,6 +57,7 @@ class RowWidget extends StatelessWidget {
   final Widget? rightWidget;
   final bool displayDivider;
   final VoidCallback? onPressed;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +86,11 @@ class RowWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                    ).copyWith(right: 16),
+                    padding:
+                        contentPadding ??
+                        const EdgeInsets.symmetric(
+                          vertical: 12,
+                        ).copyWith(right: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
