@@ -18,7 +18,7 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
   final String? title;
   final LabelButtonWidget? trailing;
   final LabelButtonWidget? leading;
-  final CupertinoNavigationBackButtonWidget backButtonWidget;
+  final Widget backButtonWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -40,86 +40,86 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
         }
       },
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: textScaler,
-        ),
+        data: MediaQuery.of(context).copyWith(textScaler: textScaler),
         child: CupertinoNavigationBar(
           padding: const EdgeInsetsDirectional.all(0),
-          middle: title != null
-              ? DefaultTextStyle(
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.typography.headlineRegular.copyWith(
-                    color: theme.defaultLabelColors.primary,
-                  ),
-                  child: Text(
-                    title!,
-                    textScaler: textScaler,
+          middle:
+              title != null
+                  ? DefaultTextStyle(
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                )
-              : null,
+                    style: theme.typography.headlineRegular.copyWith(
+                      color: theme.defaultLabelColors.primary,
+                    ),
+                    child: Text(
+                      title!,
+                      textScaler: textScaler,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  )
+                  : null,
           trailing: switch (trailing) {
             null => null,
             final trailing => Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: MediaQuery(
-                      data: MediaQuery.of(context).copyWith(
-                        textScaler: textScaler,
-                      ),
-                      child: trailing.copyWith(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 11,
-                        ),
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: textScaler),
+                    child: trailing.copyWith(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 11,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           },
           leading: switch ((leading, backButtonWidget, canPop)) {
             (null, _, true) => Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: MediaQuery(
-                      data: MediaQuery.of(context).copyWith(
-                        textScaler: textScaler,
-                      ),
-                      child: backButtonWidget,
-                    ),
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: textScaler),
+                    child: backButtonWidget,
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             (null, _, _) => null,
             (final leading, _, _) => Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: MediaQuery(
-                      data: MediaQuery.of(context).copyWith(
-                        textScaler: textScaler,
-                      ),
-                      child: leading?.copyWith(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 11,
-                            ),
-                          ) ??
-                          const SizedBox.shrink(),
-                    ),
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: textScaler),
+                    child:
+                        leading?.copyWith(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 11,
+                          ),
+                        ) ??
+                        const SizedBox.shrink(),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           },
           automaticallyImplyMiddle: false,
           automaticallyImplyLeading: false,
@@ -129,8 +129,7 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
               theme.defaultSystemBackgroundsColors.primaryLight,
             IosDarkThemeData() =>
               theme.defaultSystemBackgroundsColors.primaryDarkElevated,
-          }
-              .withValues(alpha: imageFilter.backgroundOpacity),
+          }.withValues(alpha: imageFilter.backgroundOpacity),
           border: Border(
             bottom: BorderSide(
               color: theme.systemColoursSeparatorColors.nonOpaque,
@@ -143,9 +142,9 @@ class CupertinoNavigatorBarWidget extends StatelessWidget
 
   @override
   bool shouldFullyObstruct(BuildContext context) => switch (imageFilter) {
-        NavigatorBarImageFilter.enabled => true,
-        NavigatorBarImageFilter.disabled => false,
-      };
+    NavigatorBarImageFilter.enabled => true,
+    NavigatorBarImageFilter.disabled => false,
+  };
 
   @override
   Size get preferredSize => const Size.fromHeight(_kNavBarPersistentHeight);
@@ -160,24 +159,21 @@ enum NavigatorBarImageFilter {
   const NavigatorBarImageFilter();
 
   ImageFilter? get imageFilter => switch (this) {
-        NavigatorBarImageFilter.enabled => kImageFilterBlur,
-        NavigatorBarImageFilter.disabled => null,
-      };
+    NavigatorBarImageFilter.enabled => kImageFilterBlur,
+    NavigatorBarImageFilter.disabled => null,
+  };
 
   double get backgroundOpacity => switch (this) {
-        NavigatorBarImageFilter.enabled => .8,
-        NavigatorBarImageFilter.disabled => 1,
-      };
+    NavigatorBarImageFilter.enabled => .8,
+    NavigatorBarImageFilter.disabled => 1,
+  };
 }
 
 const _kCupertinoNavigationBackButtonWidget =
     CupertinoNavigationBackButtonWidget();
 
 class CupertinoNavigationBackButtonWidget extends StatelessWidget {
-  const CupertinoNavigationBackButtonWidget({
-    super.key,
-    this.label,
-  });
+  const CupertinoNavigationBackButtonWidget({super.key, this.label});
   final String? label;
 
   @override
@@ -187,10 +183,7 @@ class CupertinoNavigationBackButtonWidget extends StatelessWidget {
       label: label ?? 'Back',
       iconLeft: CupertinoIcons.back,
       onPressed: canPop ? Navigator.of(context).pop : null,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 11,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
     );
   }
 }
