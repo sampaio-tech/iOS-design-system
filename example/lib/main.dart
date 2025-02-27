@@ -238,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       const CupertinoTextFieldWidget(
                         placeholder: 'Placeholder',
                       ),
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: true,
                         title: 'Lorem Ipsum',
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           iconData: CupertinoIcons.app,
                         ),
                       ),
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: true,
                         title: 'Birthday',
@@ -268,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: false,
                         title: 'Birthday',
@@ -292,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(height: 8),
                   GroupedTableWidget.rounded(
                     rows: [
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: true,
                         title: 'Lorem Ipsum',
@@ -305,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           iconData: CupertinoIcons.app,
                         ),
                       ),
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: true,
                         title: 'Birthday',
@@ -322,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      RowWidget(
+                      RowWidget.standard(
                         onPressed: null,
                         displayDivider: false,
                         title: 'Birthday',
