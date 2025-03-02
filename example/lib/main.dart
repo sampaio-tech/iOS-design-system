@@ -343,6 +343,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: 'Add description here...',
                     ),
                   ),
+                  CloseButtonWidget(
+                    onPressed: () {},
+                  ),
                   const SizedBox(height: 8),
                   IconWidget.slideAction(iconData: CupertinoIcons.app),
                   const SizedBox(height: 8),
