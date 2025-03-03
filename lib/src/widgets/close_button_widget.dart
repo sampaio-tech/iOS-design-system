@@ -34,8 +34,8 @@ class CloseButtonWidget extends StatelessWidget {
             ),
             Center(
               child: Assets.lib.src.assets.svg.closeRounded.svg(
-                height: 16,
-                width: 16,
+                height: 12,
+                width: 12,
                 colorFilter: ColorFilter.mode(switch (theme) {
                   IosLightThemeData() => const Color(
                     0xFF3C3C43,
