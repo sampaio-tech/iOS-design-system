@@ -10,11 +10,24 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.19.0
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  build_runner:
+  flutter_gen_runner:
+
+flutter_gen:
+  output: lib/src/assets_gen/
+  assets:
+    outputs:
+      package_parameter_enabled: true
+      class_name: Assets
+  line_length: 80
+  integrations:
+    flutter_svg: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -33,6 +46,9 @@ flutter:
           weight: 500
         - asset: lib/src/assets/fonts/sf-pro-text-regular.ttf
           weight: 400
+
+  assets:
+    - lib/src/assets/svg/
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
