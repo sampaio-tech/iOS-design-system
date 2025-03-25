@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../ios_design_system.dart';
-import 'title_sheet_widget.dart';
 
 class CupertinoSheetWidget extends StatelessWidget {
   const CupertinoSheetWidget({
