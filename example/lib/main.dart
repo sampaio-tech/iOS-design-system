@@ -190,6 +190,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  MarkdownWidget(text: kMarkdownExample),
+                  const SizedBox(height: 8),
                   ModalTitleWidget(
                     title: 'Title',
                     leftLabelButton: LabelButtonWidget.label(
