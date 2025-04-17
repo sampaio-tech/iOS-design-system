@@ -69,193 +69,199 @@ class MarkdownWidget extends StatelessWidget {
       true => TextDirection.rtl,
       false => TextDirection.ltr,
     };
-    return GptMarkdownTheme(
-      gptThemeData: GptMarkdownThemeData(
-        brightness: theme.brightness,
-        highlightColor: highlightColor,
-        h6:
-            h6 ??
-            theme.typography.bodyBold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        h5:
-            h5 ??
-            theme.typography.headlineBold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        h4:
-            h4 ??
-            theme.typography.title3Bold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        h3:
-            h3 ??
-            theme.typography.title2Bold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        h2:
-            h2 ??
-            theme.typography.title1Bold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        h1:
-            h1 ??
-            theme.typography.largeTitleBold.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        hrLineThickness: hrLineThickness,
-        hrLineColor: hrLineColor,
-        linkColor: linkColor ?? theme.acessibleColors.systemBlue,
-        linkHoverColor: linkHoverColor ?? theme.acessibleColors.systemBlue,
-      ),
-      child: GptMarkdown(
-        text,
-        textAlign: textAlign,
-        textScaler: this.textScaler ?? textScaler,
-        style:
-            style ??
-            theme.typography.bodyRegular.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        textDirection: this.textDirection ?? textDirection,
-        onLinkTab: onLinkTab,
-        highlightBuilder:
-            highlightBuilder ??
-            (context, text, style) {
-              final theme = IosTheme.of(context);
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                decoration: BoxDecoration(
-                  color: theme.defaultColors.systemBlue.withValues(
-                    alpha: switch (theme) {
-                      IosDarkThemeData() => 0.25,
-                      IosLightThemeData() => 0.1,
-                    },
+    return Material(
+      color: Colors.transparent,
+      child: GptMarkdownTheme(
+        gptThemeData: GptMarkdownThemeData(
+          brightness: theme.brightness,
+          highlightColor: highlightColor,
+          h6:
+              h6 ??
+              theme.typography.bodyBold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          h5:
+              h5 ??
+              theme.typography.headlineBold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          h4:
+              h4 ??
+              theme.typography.title3Bold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          h3:
+              h3 ??
+              theme.typography.title2Bold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          h2:
+              h2 ??
+              theme.typography.title1Bold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          h1:
+              h1 ??
+              theme.typography.largeTitleBold.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          hrLineThickness: hrLineThickness,
+          hrLineColor: hrLineColor,
+          linkColor: linkColor ?? theme.acessibleColors.systemBlue,
+          linkHoverColor: linkHoverColor ?? theme.acessibleColors.systemBlue,
+        ),
+        child: GptMarkdown(
+          text,
+          textAlign: textAlign,
+          textScaler: this.textScaler ?? textScaler,
+          style:
+              style ??
+              theme.typography.bodyRegular.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          textDirection: this.textDirection ?? textDirection,
+          onLinkTab: onLinkTab,
+          highlightBuilder:
+              highlightBuilder ??
+              (context, text, style) {
+                final theme = IosTheme.of(context);
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 2,
                   ),
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(
+                  decoration: BoxDecoration(
                     color: theme.defaultColors.systemBlue.withValues(
-                      alpha: 0.5,
+                      alpha: switch (theme) {
+                        IosDarkThemeData() => 0.25,
+                        IosLightThemeData() => 0.1,
+                      },
+                    ),
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: theme.defaultColors.systemBlue.withValues(
+                        alpha: 0.5,
+                      ),
                     ),
                   ),
-                ),
-                child: Text(
-                  text,
-                  style: theme.typography.bodyBold.copyWith(
-                    color: theme.defaultLabelColors.primary,
+                  child: Text(
+                    text,
+                    style: theme.typography.bodyBold.copyWith(
+                      color: theme.defaultLabelColors.primary,
+                    ),
                   ),
-                ),
-              );
-            },
-        latexWorkaround:
-            latexWorkaround ??
-            (tex) {
-              final List<String> stack = [];
-              tex = tex.splitMapJoin(
-                RegExp(r'\\text\{|\{|\}|\_'),
-                onMatch: (p) {
-                  final String input = p[0] ?? '';
-                  if (input == r'\text{') {
-                    stack.add(input);
-                  }
-                  if (stack.isNotEmpty) {
-                    if (input == r'{') {
+                );
+              },
+          latexWorkaround:
+              latexWorkaround ??
+              (tex) {
+                final List<String> stack = [];
+                tex = tex.splitMapJoin(
+                  RegExp(r'\\text\{|\{|\}|\_'),
+                  onMatch: (p) {
+                    final String input = p[0] ?? '';
+                    if (input == r'\text{') {
                       stack.add(input);
                     }
-                    if (input == r'}') {
-                      stack.removeLast();
+                    if (stack.isNotEmpty) {
+                      if (input == r'{') {
+                        stack.add(input);
+                      }
+                      if (input == r'}') {
+                        stack.removeLast();
+                      }
+                      if (input == r'_') {
+                        return r'\_';
+                      }
                     }
-                    if (input == r'_') {
-                      return r'\_';
-                    }
-                  }
-                  return input;
-                },
-              );
-              return tex.replaceAllMapped(
-                RegExp(r'align\*'),
-                (match) => 'aligned',
-              );
-            },
-        imageBuilder:
-            imageBuilder ??
-            (context, url) {
-              final uri = Uri.tryParse(url);
-              if (uri == null) {
+                    return input;
+                  },
+                );
+                return tex.replaceAllMapped(
+                  RegExp(r'align\*'),
+                  (match) => 'aligned',
+                );
+              },
+          imageBuilder:
+              imageBuilder ??
+              (context, url) {
+                final uri = Uri.tryParse(url);
+                if (uri == null) {
+                  return const SizedBox.shrink();
+                }
+                if (uri.scheme == 'file' || uri.scheme.isEmpty) {
+                  return Image.asset(url);
+                }
+                if (uri.scheme == 'http' || uri.scheme == 'https') {
+                  return Image.network(url);
+                }
                 return const SizedBox.shrink();
-              }
-              if (uri.scheme == 'file' || uri.scheme.isEmpty) {
-                return Image.asset(url);
-              }
-              if (uri.scheme == 'http' || uri.scheme == 'https') {
-                return Image.network(url);
-              }
-              return const SizedBox.shrink();
-            },
-        latexBuilder:
-            latexBuilder ??
-            (context, tex, textStyle, inline) =>
-                LatexWidget(tex: tex, textStyle: textStyle, inline: inline),
-        sourceTagBuilder:
-            sourceTagBuilder ??
-            (buildContext, string, textStyle) {
-              var value = int.tryParse(string);
-              value ??= -1;
-              value += 1;
-              return SizedBox(
-                height: 20,
-                width: 20,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
+              },
+          latexBuilder:
+              latexBuilder ??
+              (context, tex, textStyle, inline) =>
+                  LatexWidget(tex: tex, textStyle: textStyle, inline: inline),
+          sourceTagBuilder:
+              sourceTagBuilder ??
+              (buildContext, string, textStyle) {
+                var value = int.tryParse(string);
+                value ??= -1;
+                value += 1;
+                return SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(child: Text('$value')),
                   ),
-                  child: Center(child: Text('$value')),
+                );
+              },
+          linkBuilder:
+              linkBuilder ??
+              (context, label, path, style) => Text(
+                label,
+                style: theme.typography.bodyRegular.copyWith(
+                  color: theme.defaultColors.systemBlue,
                 ),
-              );
-            },
-        linkBuilder:
-            linkBuilder ??
-            (context, label, path, style) => Text(
-              label,
-              style: theme.typography.bodyRegular.copyWith(
-                color: theme.defaultColors.systemBlue,
               ),
-            ),
-        components: [
-          CodeBlockMd(),
-          NewLines(),
-          BlockQuote(),
-          ImageMd(),
-          ATagMd(),
-          TableMd(),
-          HTag(),
-          UnOrderedList(),
-          OrderedList(),
-          RadioButtonMd(),
-          CheckBoxMd(),
-          HrLine(),
-          StrikeMd(),
-          BoldMd(),
-          ItalicMd(),
-          LatexMath(),
-          LatexMathMultiLine(),
-          HighlightedText(),
-          SourceTag(),
-          IndentMd(),
-        ],
-        inlineComponents: [
-          ImageMd(),
-          ATagMd(),
-          TableMd(),
-          StrikeMd(),
-          BoldMd(),
-          ItalicMd(),
-          LatexMath(),
-          LatexMathMultiLine(),
-          HighlightedText(),
-          SourceTag(),
-        ],
+          components: [
+            CodeBlockMd(),
+            NewLines(),
+            BlockQuote(),
+            ImageMd(),
+            ATagMd(),
+            TableMd(),
+            HTag(),
+            UnOrderedList(),
+            OrderedList(),
+            RadioButtonMd(),
+            CheckBoxMd(),
+            HrLine(),
+            StrikeMd(),
+            BoldMd(),
+            ItalicMd(),
+            LatexMath(),
+            LatexMathMultiLine(),
+            HighlightedText(),
+            SourceTag(),
+            IndentMd(),
+          ],
+          inlineComponents: [
+            ImageMd(),
+            ATagMd(),
+            TableMd(),
+            StrikeMd(),
+            BoldMd(),
+            ItalicMd(),
+            LatexMath(),
+            LatexMathMultiLine(),
+            HighlightedText(),
+            SourceTag(),
+          ],
+        ),
       ),
     );
   }
