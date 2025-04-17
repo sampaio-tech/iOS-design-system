@@ -12,6 +12,7 @@ export 'divider_widget.dart';
 export 'grouped_table_widget.dart';
 export 'icon_widget.dart';
 export 'label_button_widget.dart';
+export 'markdown_modal_sheet_widget.dart';
 export 'markdown_widget.dart';
 export 'modal_sheet_widget.dart';
 export 'modal_title_widget.dart';
