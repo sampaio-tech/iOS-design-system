@@ -32,80 +32,89 @@ class TitleSheetWidget extends StatelessWidget {
   });
 
   factory TitleSheetWidget.standard({
-    required String title,
+    required String? title,
     Widget? leading,
     Widget? separator = const DividerWidget(),
   }) => TitleSheetWidget(
     leading: leading,
     separator: separator,
-    title: Builder(
-      builder: (context) {
-        final theme = IosTheme.of(context);
-        return Text(
-          title,
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.start,
-          style: theme.typography.title1Bold.copyWith(
-            fontSize: 25,
-            height: 30 / 25,
-            letterSpacing: 0,
-            color: theme.defaultLabelColors.primary,
-          ),
-        );
-      },
-    ),
+    title: switch (title) {
+      null => const Spacer(),
+      final title => Builder(
+        builder: (context) {
+          final theme = IosTheme.of(context);
+          return Text(
+            title,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.start,
+            style: theme.typography.title1Bold.copyWith(
+              fontSize: 25,
+              height: 30 / 25,
+              letterSpacing: 0,
+              color: theme.defaultLabelColors.primary,
+            ),
+          );
+        },
+      ),
+    },
   );
 
   factory TitleSheetWidget.applePay01({
-    required String title,
+    required String? title,
     Widget? leading,
     Widget? separator = DividerWidget.applePay,
   }) => TitleSheetWidget(
     leading: leading,
     separator: separator,
     colorCallback: applePlayBackgroundColorCallback01,
-    title: Builder(
-      builder: (context) {
-        final theme = IosTheme.of(context);
-        return Text(
-          title,
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.start,
-          style: theme.typography.title1Bold.copyWith(
-            fontSize: 25,
-            height: 30 / 25,
-            letterSpacing: 0,
-            color: theme.defaultLabelColors.primary,
-          ),
-        );
-      },
-    ),
+    title: switch (title) {
+      null => const Spacer(),
+      final title => Builder(
+        builder: (context) {
+          final theme = IosTheme.of(context);
+          return Text(
+            title,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.start,
+            style: theme.typography.title1Bold.copyWith(
+              fontSize: 25,
+              height: 30 / 25,
+              letterSpacing: 0,
+              color: theme.defaultLabelColors.primary,
+            ),
+          );
+        },
+      ),
+    },
   );
 
   factory TitleSheetWidget.applePay02({
-    required String title,
+    required String? title,
     Widget? leading,
     Widget? separator = DividerWidget.applePay,
   }) => TitleSheetWidget(
     leading: leading,
     separator: separator,
     colorCallback: applePlayBackgroundColorCallback02,
-    title: Builder(
-      builder: (context) {
-        final theme = IosTheme.of(context);
-        return Text(
-          title,
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.start,
-          style: theme.typography.title1Bold.copyWith(
-            fontSize: 25,
-            height: 30 / 25,
-            letterSpacing: 0,
-            color: theme.defaultLabelColors.primary,
-          ),
-        );
-      },
-    ),
+    title: switch (title) {
+      null => const Spacer(),
+      final title => Builder(
+        builder: (context) {
+          final theme = IosTheme.of(context);
+          return Text(
+            title,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.start,
+            style: theme.typography.title1Bold.copyWith(
+              fontSize: 25,
+              height: 30 / 25,
+              letterSpacing: 0,
+              color: theme.defaultLabelColors.primary,
+            ),
+          );
+        },
+      ),
+    },
   );
 
   final BorderRadius borderRadius;
