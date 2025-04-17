@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../ios_design_system.dart';
@@ -91,6 +93,8 @@ class CupertinoSheetWidget extends StatelessWidget {
     useNestedNavigation: useNestedNavigation,
     colorCallback: applePlayBackgroundColorCallback01,
   );
+
+  static ViewPadding safeArea(BuildContext context) => View.of(context).padding;
 
   @override
   Widget build(BuildContext context) {
