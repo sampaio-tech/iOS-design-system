@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../ios_design_system.dart';
@@ -31,8 +31,8 @@ class MarkdownModalSheetWidget extends HookWidget {
     this.latexBuilder,
     super.key,
   });
-  final String markdownText;
-  final String? title;
+  final String Function(BuildContext context) markdownText;
+  final String? Function(BuildContext context) title;
   final TextAlign? textAlign;
   final TextScaler? textScaler;
   final TextDirection? textDirection;
@@ -52,7 +52,12 @@ class MarkdownModalSheetWidget extends HookWidget {
   final Widget Function(BuildContext, String)? imageBuilder;
   final Widget Function(BuildContext, String, TextStyle)? sourceTagBuilder;
   final Widget Function(BuildContext, String, TextStyle)? highlightBuilder;
-  final void Function(String, String)? onLinkTab;
+  final void Function({
+    required String url,
+    required String title,
+    required BuildContext context,
+  })?
+  onLinkTab;
   final String Function(String)? latexWorkaround;
   final Widget Function(BuildContext, String, TextStyle, bool)? latexBuilder;
 
@@ -64,7 +69,7 @@ class MarkdownModalSheetWidget extends HookWidget {
   }) => CupertinoSheetWidget.showModalSheet<T>(
     context: context,
     title: TitleSheetWidget.applePay02(
-      title: title,
+      title: title(context),
       separator: separator,
       leading: leading,
     ),
@@ -78,7 +83,7 @@ class MarkdownModalSheetWidget extends HookWidget {
     final scrollController = useScrollController();
     final safeArea = CupertinoSheetWidget.safeArea(context);
     return Expanded(
-      child: Scrollbar(
+      child: CupertinoScrollbar(
         controller: scrollController,
         child: SingleChildScrollView(
           controller: scrollController,
@@ -88,7 +93,7 @@ class MarkdownModalSheetWidget extends HookWidget {
             horizontal: 20,
           ).copyWith(bottom: safeArea.bottom + 20),
           child: MarkdownWidget(
-            text: markdownText,
+            text: markdownText(context),
             textAlign: textAlign,
             h1: h1,
             h2: h2,
@@ -105,7 +110,9 @@ class MarkdownModalSheetWidget extends HookWidget {
             imageBuilder: imageBuilder,
             sourceTagBuilder: sourceTagBuilder,
             highlightBuilder: highlightBuilder,
-            onLinkTab: onLinkTab,
+            onLinkTab:
+                (url, title) =>
+                    onLinkTab?.call(url: url, title: title, context: context),
             latexWorkaround: latexWorkaround,
             latexBuilder: latexBuilder,
           ),
