@@ -33,6 +33,9 @@ class TitleSheetWidget extends StatelessWidget {
 
   factory TitleSheetWidget.standard({
     required String? title,
+    int? maxLines,
+    TextOverflow? overflow = TextOverflow.visible,
+
     Widget? leading,
     Widget? separator = const DividerWidget(),
   }) => TitleSheetWidget(
@@ -45,7 +48,7 @@ class TitleSheetWidget extends StatelessWidget {
           final theme = IosTheme.of(context);
           return Text(
             title,
-            overflow: TextOverflow.visible,
+            overflow: overflow,
             textAlign: TextAlign.start,
             style: theme.typography.title1Bold.copyWith(
               fontSize: 25,
@@ -53,6 +56,7 @@ class TitleSheetWidget extends StatelessWidget {
               letterSpacing: 0,
               color: theme.defaultLabelColors.primary,
             ),
+            maxLines: maxLines,
           );
         },
       ),
@@ -61,6 +65,8 @@ class TitleSheetWidget extends StatelessWidget {
 
   factory TitleSheetWidget.applePay01({
     required String? title,
+    int? maxLines,
+    TextOverflow? overflow = TextOverflow.visible,
     Widget? leading,
     Widget? separator = DividerWidget.applePay,
   }) => TitleSheetWidget(
@@ -74,7 +80,7 @@ class TitleSheetWidget extends StatelessWidget {
           final theme = IosTheme.of(context);
           return Text(
             title,
-            overflow: TextOverflow.visible,
+            overflow: overflow,
             textAlign: TextAlign.start,
             style: theme.typography.title1Bold.copyWith(
               fontSize: 25,
@@ -82,6 +88,7 @@ class TitleSheetWidget extends StatelessWidget {
               letterSpacing: 0,
               color: theme.defaultLabelColors.primary,
             ),
+            maxLines: maxLines,
           );
         },
       ),
@@ -90,6 +97,9 @@ class TitleSheetWidget extends StatelessWidget {
 
   factory TitleSheetWidget.applePay02({
     required String? title,
+    int? maxLines,
+    TextOverflow? overflow = TextOverflow.visible,
+
     Widget? leading,
     Widget? separator = DividerWidget.applePay,
   }) => TitleSheetWidget(
@@ -103,7 +113,7 @@ class TitleSheetWidget extends StatelessWidget {
           final theme = IosTheme.of(context);
           return Text(
             title,
-            overflow: TextOverflow.visible,
+            overflow: overflow,
             textAlign: TextAlign.start,
             style: theme.typography.title1Bold.copyWith(
               fontSize: 25,
@@ -111,6 +121,7 @@ class TitleSheetWidget extends StatelessWidget {
               letterSpacing: 0,
               color: theme.defaultLabelColors.primary,
             ),
+            maxLines: maxLines,
           );
         },
       ),
