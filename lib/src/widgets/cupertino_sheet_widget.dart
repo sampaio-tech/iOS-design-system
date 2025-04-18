@@ -38,6 +38,41 @@ class CupertinoSheetWidget extends StatelessWidget {
     useNestedNavigation: useNestedNavigation,
   );
 
+  static Future<T?> showCupertinoModalSheet<T>({
+    required BuildContext context,
+    required Widget? title,
+    required List<Widget> Function(BuildContext context)? children,
+    Color? Function(IosThemeData theme)? colorCallback,
+    ImageFilter? filter,
+    Color barrierColor = kCupertinoModalBarrierColor,
+    bool barrierDismissible = true,
+    bool useRootNavigator = true,
+    bool semanticsDismissible = false,
+    RouteSettings? routeSettings,
+    Offset? anchorPoint,
+  }) => showCupertinoModalPopup<T>(
+    context: context,
+    builder:
+        (context) => Column(
+          children: [
+            SafeArea(bottom: false, child: Container()),
+            Expanded(
+              child: CupertinoSheetWidget(
+                title: title,
+                children: children,
+                colorCallback: colorCallback,
+              ),
+            ),
+          ],
+        ),
+    filter: filter,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    semanticsDismissible: semanticsDismissible,
+    routeSettings: routeSettings,
+    anchorPoint: anchorPoint,
+  );
+
   static Future<T?> showStandardModalSheet<T>({
     required BuildContext context,
     required String title,
@@ -56,14 +91,20 @@ class CupertinoSheetWidget extends StatelessWidget {
     useNestedNavigation: useNestedNavigation,
   );
 
-  static Future<T?> showApplePayModalSheet01<T>({
+  static Future<T?> showCupertinoModalSheetApplePayModalSheet01<T>({
     required BuildContext context,
     required String title,
     required List<Widget> Function(BuildContext context)? children,
     Widget? leading,
     Widget? separator = DividerWidget.applePay,
-    bool useNestedNavigation = false,
-  }) => showModalSheet<T>(
+    ImageFilter? filter,
+    Color barrierColor = kCupertinoModalBarrierColor,
+    bool barrierDismissible = true,
+    bool useRootNavigator = true,
+    bool semanticsDismissible = false,
+    RouteSettings? routeSettings,
+    Offset? anchorPoint,
+  }) => showCupertinoModalSheet<T>(
     context: context,
     title: TitleSheetWidget.applePay01(
       title: title,
@@ -71,7 +112,72 @@ class CupertinoSheetWidget extends StatelessWidget {
       leading: leading,
     ),
     children: children,
-    useNestedNavigation: useNestedNavigation,
+    filter: filter,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    semanticsDismissible: semanticsDismissible,
+    routeSettings: routeSettings,
+    anchorPoint: anchorPoint,
+    colorCallback: applePlayBackgroundColorCallback01,
+  );
+
+  static Future<T?> showCupertinoModalSheetApplePayModalSheet02<T>({
+    required BuildContext context,
+    required String title,
+    required List<Widget> Function(BuildContext context)? children,
+    Widget? leading,
+    Widget? separator = DividerWidget.applePay,
+    ImageFilter? filter,
+    Color barrierColor = kCupertinoModalBarrierColor,
+    bool barrierDismissible = true,
+    bool useRootNavigator = true,
+    bool semanticsDismissible = false,
+    RouteSettings? routeSettings,
+    Offset? anchorPoint,
+  }) => showCupertinoModalSheet<T>(
+    context: context,
+    title: TitleSheetWidget.applePay02(
+      title: title,
+      separator: separator,
+      leading: leading,
+    ),
+    children: children,
+    filter: filter,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    semanticsDismissible: semanticsDismissible,
+    routeSettings: routeSettings,
+    anchorPoint: anchorPoint,
+    colorCallback: applePlayBackgroundColorCallback01,
+  );
+
+  static Future<T?> showApplePayModalSheet01<T>({
+    required BuildContext context,
+    required String title,
+    required List<Widget> Function(BuildContext context)? children,
+    Widget? leading,
+    Widget? separator = DividerWidget.applePay,
+    ImageFilter? filter,
+    Color barrierColor = kCupertinoModalBarrierColor,
+    bool barrierDismissible = true,
+    bool useRootNavigator = true,
+    bool semanticsDismissible = false,
+    RouteSettings? routeSettings,
+    Offset? anchorPoint,
+  }) => showCupertinoModalSheet<T>(
+    context: context,
+    title: TitleSheetWidget.applePay01(
+      title: title,
+      separator: separator,
+      leading: leading,
+    ),
+    children: children,
+    filter: filter,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    semanticsDismissible: semanticsDismissible,
+    routeSettings: routeSettings,
+    anchorPoint: anchorPoint,
     colorCallback: applePlayBackgroundColorCallback01,
   );
 
@@ -99,7 +205,6 @@ class CupertinoSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = IosTheme.of(context);
-    final viewInsets = MediaQuery.viewInsetsOf(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: borderRadius,
@@ -111,19 +216,13 @@ class CupertinoSheetWidget extends StatelessWidget {
                 theme.defaultSystemBackgroundsColors.secondaryDarkBase,
             },
       ),
-      child: SafeArea(
-        top: false,
-        maintainBottomViewPadding: true,
-        minimum: kMinimumSafeAreaPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            title ?? const SizedBox.shrink(),
-            if (children != null) ...(children?.call(context) ?? []),
-            SizedBox(height: viewInsets.bottom),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          title ?? const SizedBox.shrink(),
+          if (children != null) ...(children?.call(context) ?? []),
+        ],
       ),
     );
   }
