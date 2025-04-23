@@ -4,6 +4,12 @@ import 'package:flutter/cupertino.dart';
 
 import '../../ios_design_system.dart';
 
+Color scaffoldBackgroundColorCallback01(IosThemeData theme) => switch (theme) {
+  IosLightThemeData() =>
+    theme.defaultSystemGroupedBackgroundsColors.primaryLight,
+  IosDarkThemeData() => theme.defaultSystemBackgroundsColors.primaryDarkBase,
+};
+
 class CupertinoSheetWidget extends StatelessWidget {
   const CupertinoSheetWidget({
     required this.title,
