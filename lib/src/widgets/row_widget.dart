@@ -10,6 +10,7 @@ class RowWidget extends StatelessWidget {
     required this.onPressed,
     required this.leftWidget,
     required this.rightWidget,
+    this.onLongPress,
     this.contentPadding,
     super.key,
   });
@@ -21,6 +22,7 @@ class RowWidget extends StatelessWidget {
     required Widget? rightWidget,
     required bool displayDivider,
     required VoidCallback? onPressed,
+    required VoidCallback? onLongPress,
     EdgeInsets? contentPadding,
   }) => RowWidget(
     title:
@@ -46,6 +48,7 @@ class RowWidget extends StatelessWidget {
     },
     displayDivider: displayDivider,
     onPressed: onPressed,
+    onLongPress: onLongPress,
     leftWidget: leftWidget,
     rightWidget: rightWidget,
     contentPadding: contentPadding,
@@ -57,6 +60,7 @@ class RowWidget extends StatelessWidget {
   final Widget? rightWidget;
   final bool displayDivider;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
   final EdgeInsets? contentPadding;
 
   @override
@@ -64,6 +68,7 @@ class RowWidget extends StatelessWidget {
     final theme = IosTheme.of(context);
     return CupertinoButtonWidget(
       onPressed: onPressed,
+      onLongPress: onLongPress,
       child: Container(
         decoration: BoxDecoration(
           color: switch (theme) {
@@ -92,26 +97,31 @@ class RowWidget extends StatelessWidget {
                           vertical: 12,
                         ).copyWith(right: 16),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              title(theme),
-                              if (description != null)
-                                const SizedBox(height: 2),
-                              if (description != null)
-                                description?.call(theme) ??
-                                    const SizedBox.shrink(),
-                            ],
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            title(theme),
+                            if (description != null) const SizedBox(height: 2),
+                            if (description != null)
+                              description?.call(theme) ??
+                                  const SizedBox.shrink(),
+                          ],
                         ),
                         if (rightWidget != null) const SizedBox(width: 16),
                         if (rightWidget != null)
-                          rightWidget ?? const SizedBox.shrink(),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (rightWidget is! Expanded) const Spacer(),
+                                rightWidget ?? const SizedBox.shrink(),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                   ),
