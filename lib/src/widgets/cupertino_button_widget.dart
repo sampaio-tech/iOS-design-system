@@ -7,6 +7,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   const CupertinoButtonWidget({
     required this.child,
     required this.onPressed,
+    this.onLongPress,
     super.key,
     this.padding = exports.kCupertinoButtonPadding,
     this.constraints,
@@ -25,6 +26,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   final Color? color;
   final Color? disabledColor;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
   final double pressedOpacity;
   final BorderRadius borderRadius;
   final AlignmentGeometry alignment;
@@ -34,7 +36,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   final bool displayCupertinoActivityIndicator;
   final CupertinoActivityIndicator cupertinoActivityIndicator;
 
-  bool get enabled => onPressed != null;
+  bool get enabled => onPressed != null || onLongPress != null;
 
   @override
   State<CupertinoButtonWidget> createState() => _CupertinoButtonWidgetState();
@@ -105,17 +107,18 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
       return;
     }
     final bool wasHeldDown = _buttonHeldDown;
-    final TickerFuture ticker = _buttonHeldDown
-        ? _animationController.animateTo(
-            1,
-            duration: exports.kAnimationInDuration,
-            curve: Curves.easeInOutCubicEmphasized,
-          )
-        : _animationController.animateTo(
-            0,
-            duration: exports.kAnimationOutDuration,
-            curve: Curves.easeOutCubic,
-          );
+    final TickerFuture ticker =
+        _buttonHeldDown
+            ? _animationController.animateTo(
+              1,
+              duration: exports.kAnimationInDuration,
+              curve: Curves.easeInOutCubicEmphasized,
+            )
+            : _animationController.animateTo(
+              0,
+              duration: exports.kAnimationOutDuration,
+              curve: Curves.easeOutCubic,
+            );
     ticker.then<void>((value) {
       if (mounted && wasHeldDown != _buttonHeldDown) {
         _animate();
@@ -139,9 +142,16 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
           onTap: switch (widget.onPressed) {
             null => null,
             final onPressed => () {
-                FocusManager.instance.primaryFocus?.unfocus();
-                onPressed();
-              },
+              FocusManager.instance.primaryFocus?.unfocus();
+              onPressed();
+            },
+          },
+          onLongPress: switch (widget.onLongPress) {
+            null => null,
+            final onLongPress => () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onLongPress();
+            },
           },
           child: Semantics(
             button: true,
@@ -154,17 +164,17 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
                   border: widget.border,
                   shape: widget.shape,
                   borderRadius: widget.borderRadius,
-                  color: backgroundColor != null && !enabled
-                      ? widget.disabledColor
-                      : backgroundColor,
+                  color:
+                      backgroundColor != null && !enabled
+                          ? widget.disabledColor
+                          : backgroundColor,
                 ),
                 child: AnimatedSwitcher(
                   duration: exports.kAnimationInDuration,
                   reverseDuration: exports.kAnimationOutDuration,
-                  transitionBuilder: (child, animation) => FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  ),
+                  transitionBuilder:
+                      (child, animation) =>
+                          FadeTransition(opacity: animation, child: child),
                   child: switch (widget.displayCupertinoActivityIndicator) {
                     true => widget.cupertinoActivityIndicator,
                     false => widget.child,
