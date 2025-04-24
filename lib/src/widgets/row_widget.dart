@@ -99,29 +99,39 @@ class RowWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            title(theme),
-                            if (description != null) const SizedBox(height: 2),
-                            if (description != null)
-                              description?.call(theme) ??
-                                  const SizedBox.shrink(),
-                          ],
-                        ),
-                        if (rightWidget != null) const SizedBox(width: 16),
-                        if (rightWidget != null)
+                        if (rightWidget is! Flexible)
                           Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                if (rightWidget is! Expanded) const Spacer(),
-                                rightWidget ?? const SizedBox.shrink(),
+                                title(theme),
+                                if (description != null)
+                                  const SizedBox(height: 2),
+                                if (description != null)
+                                  description?.call(theme) ??
+                                      const SizedBox.shrink(),
                               ],
                             ),
                           ),
+                        if (rightWidget is Flexible)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              title(theme),
+                              if (description != null)
+                                const SizedBox(height: 2),
+                              if (description != null)
+                                description?.call(theme) ??
+                                    const SizedBox.shrink(),
+                            ],
+                          ),
+                        if (rightWidget != null) const SizedBox(width: 16),
+                        if (rightWidget != null)
+                          rightWidget ?? const SizedBox.shrink(),
                       ],
                     ),
                   ),
