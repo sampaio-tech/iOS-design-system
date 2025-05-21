@@ -58,3 +58,21 @@ BoxDecoration neutralWeatherDayBackgroundDecorationCallback(
     ),
   ),
 };
+
+BoxDecoration neutralStocksBackgroundDecorationCallback(IosThemeData theme) =>
+    switch (theme) {
+      IosLightThemeData() => const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        ),
+      ),
+      IosDarkThemeData() => const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        ),
+      ),
+    };
