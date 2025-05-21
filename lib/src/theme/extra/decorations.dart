@@ -20,3 +20,22 @@ BoxDecoration neutralWeatherRainBackgroundDecorationCallback(
     ),
   ),
 };
+
+BoxDecoration neutralWeatherNightBackgroundDecorationCallback(
+  IosThemeData theme,
+) => switch (theme) {
+  IosLightThemeData() => const BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xFF020518), Color(0xFF283555)],
+    ),
+  ),
+  IosDarkThemeData() => const BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xFF020518), Color(0xFF283555)],
+    ),
+  ),
+};
