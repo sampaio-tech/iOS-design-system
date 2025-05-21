@@ -10,6 +10,7 @@ class RowWidget extends StatelessWidget {
     required this.onPressed,
     required this.leftWidget,
     required this.rightWidget,
+    this.decorationCallback,
     this.onLongPress,
     this.contentPadding,
     super.key,
@@ -23,8 +24,10 @@ class RowWidget extends StatelessWidget {
     required bool displayDivider,
     required VoidCallback? onPressed,
     required VoidCallback? onLongPress,
+    required BoxDecoration Function(IosThemeData theme)? decorationCallback,
     EdgeInsets? contentPadding,
   }) => RowWidget(
+    decorationCallback: decorationCallback,
     title:
         (theme) => Text(
           title,
@@ -56,6 +59,7 @@ class RowWidget extends StatelessWidget {
 
   final Widget Function(IosThemeData theme) title;
   final Widget Function(IosThemeData theme)? description;
+  final BoxDecoration Function(IosThemeData theme)? decorationCallback;
   final Widget? leftWidget;
   final Widget? rightWidget;
   final bool displayDivider;
@@ -70,14 +74,10 @@ class RowWidget extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       child: Container(
-        decoration: BoxDecoration(
-          color: switch (theme) {
-            IosLightThemeData() =>
-              theme.defaultSystemBackgroundsColors.primaryLight,
-            IosDarkThemeData() =>
-              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
-          },
-        ),
+        decoration: switch (decorationCallback) {
+          null => null,
+          final callback => callback(theme),
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
