@@ -15,10 +15,8 @@ class IosInheritedTheme extends InheritedTheme {
   final IosTheme theme;
 
   @override
-  Widget wrap(BuildContext context, Widget child) => IosTheme(
-        data: theme.data,
-        child: child,
-      );
+  Widget wrap(BuildContext context, Widget child) =>
+      IosTheme(data: theme.data, child: child);
 
   @override
   bool updateShouldNotify(IosInheritedTheme oldWidget) =>
@@ -26,17 +24,12 @@ class IosInheritedTheme extends InheritedTheme {
 }
 
 class IosTheme extends StatelessWidget {
-  const IosTheme({
-    required this.data,
-    required this.child,
-    super.key,
-  });
+  const IosTheme({required this.data, required this.child, super.key});
   final IosThemeData data;
   final Widget child;
 
-  static final IosThemeData Function(
-    BuildContext? context,
-  ) _kFallbackTheme = IosThemeData.fallback;
+  static final IosThemeData Function(BuildContext? context) _kFallbackTheme =
+      IosThemeData.fallback;
 
   static IosThemeData of(BuildContext context) {
     final IosInheritedTheme? inheritedTheme =
@@ -45,29 +38,20 @@ class IosTheme extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => IosInheritedTheme(
-        theme: this,
-        child: child,
-      );
+  Widget build(BuildContext context) =>
+      IosInheritedTheme(theme: this, child: child);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      DiagnosticsProperty<IosThemeData>(
-        'data',
-        data,
-        showName: false,
-      ),
+      DiagnosticsProperty<IosThemeData>('data', data, showName: false),
     );
   }
 }
 
 class IosThemeDataTween extends Tween<IosThemeData> {
-  IosThemeDataTween({
-    super.begin,
-    super.end,
-  });
+  IosThemeDataTween({super.begin, super.end});
 
   @override
   IosThemeData lerp(double t) => IosThemeData.lerp(begin!, end!, t);
@@ -112,9 +96,9 @@ class _IosAnimatedThemeState extends AnimatedWidgetBaseState<IosAnimatedTheme> {
 
   @override
   Widget build(BuildContext context) => IosTheme(
-        data: _data?.evaluate(animation) ?? IosThemeData.fallback(context),
-        child: widget.child,
-      );
+    data: _data?.evaluate(animation) ?? IosThemeData.fallback(context),
+    child: widget.child,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
@@ -144,13 +128,14 @@ sealed class IosThemeData {
     required this.systemMaterialsLabelsTextColors,
     required this.systemMaterialsFillColors,
     required this.typography,
+    required this.weatherDecorations,
   });
 
   final AcessibleColors acessibleColors;
   final DefaultColors defaultColors;
   final DefaultSystemBackgroundsColors defaultSystemBackgroundsColors;
   final DefaultSystemGroupedBackgroundsColors
-      defaultSystemGroupedBackgroundsColors;
+  defaultSystemGroupedBackgroundsColors;
   final DefaultFillColors defaultFillColors;
   final DefaultLabelColors defaultLabelColors;
   final DefaultSeparatorColors defaultSeparatorColors;
@@ -159,31 +144,29 @@ sealed class IosThemeData {
   final SystemMaterialsLabelsTextColors systemMaterialsLabelsTextColors;
   final SystemMaterialsFillColors systemMaterialsFillColors;
   final IosTypography typography;
+  final WeatherDecorations weatherDecorations;
 
   Brightness get brightness => switch (this) {
-        IosLightThemeData() => Brightness.light,
-        IosDarkThemeData() => Brightness.dark,
-      };
+    IosLightThemeData() => Brightness.light,
+    IosDarkThemeData() => Brightness.dark,
+  };
 
   ThemeData get textFieldThemeData => ThemeData(
-        brightness: brightness,
-        splashColor: defaultColors.systemBlue,
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: defaultColors.systemBlue,
-          selectionColor: switch (this) {
-            IosLightThemeData() =>
-              defaultColors.systemBlue.withValues(alpha: .2),
-            IosDarkThemeData() =>
-              defaultLabelColors.primary.withValues(alpha: .2),
-          },
-          selectionHandleColor: defaultColors.systemBlue.withValues(alpha: .2),
-        ),
-      );
+    brightness: brightness,
+    splashColor: defaultColors.systemBlue,
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: defaultColors.systemBlue,
+      selectionColor: switch (this) {
+        IosLightThemeData() => defaultColors.systemBlue.withValues(alpha: .2),
+        IosDarkThemeData() => defaultLabelColors.primary.withValues(alpha: .2),
+      },
+      selectionHandleColor: defaultColors.systemBlue.withValues(alpha: .2),
+    ),
+  );
 
-  static IosThemeData fallback(
-    BuildContext? context,
-  ) {
-    final brightness = switch (context) {
+  static IosThemeData fallback(BuildContext? context) {
+    final brightness =
+        switch (context) {
           null => null,
           final context => MediaQuery.maybePlatformBrightnessOf(context),
         } ??
@@ -197,35 +180,20 @@ sealed class IosThemeData {
   static IosThemeData lerp(IosThemeData a, IosThemeData b, double t) =>
       a._lerp(b, t);
 
-  IosThemeData _lerp(
-    IosThemeData b,
-    double t,
-  ) {
+  IosThemeData _lerp(IosThemeData b, double t) {
     if (identical(this, b)) {
       return this;
     }
     final instance = t < 0.5 ? this : b;
     return instance.copyWith(
-      acessibleColors: acessibleColors.lerp(
-        b.acessibleColors,
-        t,
-      ),
-      defaultColors: defaultColors.lerp(
-        b.defaultColors,
-        t,
-      ),
+      acessibleColors: acessibleColors.lerp(b.acessibleColors, t),
+      defaultColors: defaultColors.lerp(b.defaultColors, t),
       defaultSystemBackgroundsColors: defaultSystemBackgroundsColors.lerp(
         b.defaultSystemBackgroundsColors,
         t,
       ),
-      defaultFillColors: defaultFillColors.lerp(
-        b.defaultFillColors,
-        t,
-      ),
-      defaultLabelColors: defaultLabelColors.lerp(
-        b.defaultLabelColors,
-        t,
-      ),
+      defaultFillColors: defaultFillColors.lerp(b.defaultFillColors, t),
+      defaultLabelColors: defaultLabelColors.lerp(b.defaultLabelColors, t),
       defaultSeparatorColors: defaultSeparatorColors.lerp(
         b.defaultSeparatorColors,
         t,
@@ -246,10 +214,8 @@ sealed class IosThemeData {
         b.systemMaterialsFillColors,
         t,
       ),
-      typography: typography.lerp(
-        b.typography,
-        t,
-      ),
+      typography: typography.lerp(b.typography, t),
+      weatherDecorations: weatherDecorations.lerp(b.weatherDecorations, t),
     );
   }
 
@@ -265,6 +231,7 @@ sealed class IosThemeData {
     SystemMaterialsLabelsTextColors? systemMaterialsLabelsTextColors,
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
+    WeatherDecorations? weatherDecorations,
   });
 }
 
@@ -274,7 +241,7 @@ class IosLightThemeData extends IosThemeData {
     DefaultColors? defaultColors,
     DefaultSystemBackgroundsColors? defaultSystemBackgroundsColors,
     DefaultSystemGroupedBackgroundsColors?
-        defaultSystemGroupedBackgroundsColors,
+    defaultSystemGroupedBackgroundsColors,
     DefaultFillColors? defaultFillColors,
     DefaultLabelColors? defaultLabelColors,
     DefaultSeparatorColors? defaultSeparatorColors,
@@ -283,30 +250,37 @@ class IosLightThemeData extends IosThemeData {
     SystemMaterialsLabelsTextColors? systemMaterialsLabelsTextColors,
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
+    WeatherDecorations? weatherDecorations,
   }) : super(
-          acessibleColors: acessibleColors ?? const AcessibleColorsLight(),
-          defaultColors: defaultColors ?? const DefaultColorsLight(),
-          defaultSystemBackgroundsColors: defaultSystemBackgroundsColors ??
-              const DefaultSystemBackgroundsColorsLight(),
-          defaultSystemGroupedBackgroundsColors:
-              defaultSystemGroupedBackgroundsColors ??
-                  const DefaultSystemGroupedBackgroundsColorsLight(),
-          defaultFillColors:
-              defaultFillColors ?? const DefaultFillColorsLight(),
-          defaultLabelColors:
-              defaultLabelColors ?? const DefaultLabelColorsLight(),
-          defaultSeparatorColors:
-              defaultSeparatorColors ?? const DefaultSeparatorColorsLight(),
-          systemColoursSeparatorColors: systemColoursSeparatorColors ??
-              const SystemColoursSeparatorColorsLight(),
-          systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors ??
-              const SystemMaterialsBackgroundsColorsLight(),
-          systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors ??
-              const SystemMaterialsLabelsTextColorsLight(),
-          systemMaterialsFillColors: systemMaterialsFillColors ??
-              const SystemMaterialsFillColorsLight(),
-          typography: typography ?? const IosTypography(),
-        );
+         acessibleColors: acessibleColors ?? const AcessibleColorsLight(),
+         defaultColors: defaultColors ?? const DefaultColorsLight(),
+         defaultSystemBackgroundsColors:
+             defaultSystemBackgroundsColors ??
+             const DefaultSystemBackgroundsColorsLight(),
+         defaultSystemGroupedBackgroundsColors:
+             defaultSystemGroupedBackgroundsColors ??
+             const DefaultSystemGroupedBackgroundsColorsLight(),
+         defaultFillColors: defaultFillColors ?? const DefaultFillColorsLight(),
+         defaultLabelColors:
+             defaultLabelColors ?? const DefaultLabelColorsLight(),
+         defaultSeparatorColors:
+             defaultSeparatorColors ?? const DefaultSeparatorColorsLight(),
+         systemColoursSeparatorColors:
+             systemColoursSeparatorColors ??
+             const SystemColoursSeparatorColorsLight(),
+         systemMaterialsBackgroundsColors:
+             systemMaterialsBackgroundsColors ??
+             const SystemMaterialsBackgroundsColorsLight(),
+         systemMaterialsLabelsTextColors:
+             systemMaterialsLabelsTextColors ??
+             const SystemMaterialsLabelsTextColorsLight(),
+         systemMaterialsFillColors:
+             systemMaterialsFillColors ??
+             const SystemMaterialsFillColorsLight(),
+         typography: typography ?? const IosTypography(),
+         weatherDecorations:
+             weatherDecorations ?? const WeatherDecorationsLight(),
+       );
 
   @override
   IosThemeData copyWith({
@@ -321,20 +295,21 @@ class IosLightThemeData extends IosThemeData {
     SystemMaterialsLabelsTextColors? systemMaterialsLabelsTextColors,
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
-  }) =>
-      IosLightThemeData(
-        acessibleColors: acessibleColors,
-        defaultColors: defaultColors,
-        defaultSystemBackgroundsColors: defaultSystemBackgroundsColors,
-        defaultFillColors: defaultFillColors,
-        defaultLabelColors: defaultLabelColors,
-        defaultSeparatorColors: defaultSeparatorColors,
-        systemColoursSeparatorColors: systemColoursSeparatorColors,
-        systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors,
-        systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors,
-        systemMaterialsFillColors: systemMaterialsFillColors,
-        typography: typography,
-      );
+    WeatherDecorations? weatherDecorations,
+  }) => IosLightThemeData(
+    acessibleColors: acessibleColors,
+    defaultColors: defaultColors,
+    defaultSystemBackgroundsColors: defaultSystemBackgroundsColors,
+    defaultFillColors: defaultFillColors,
+    defaultLabelColors: defaultLabelColors,
+    defaultSeparatorColors: defaultSeparatorColors,
+    systemColoursSeparatorColors: systemColoursSeparatorColors,
+    systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors,
+    systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors,
+    systemMaterialsFillColors: systemMaterialsFillColors,
+    typography: typography,
+    weatherDecorations: weatherDecorations,
+  );
 }
 
 class IosDarkThemeData extends IosThemeData {
@@ -343,7 +318,7 @@ class IosDarkThemeData extends IosThemeData {
     DefaultColors? defaultColors,
     DefaultSystemBackgroundsColors? defaultSystemBackgroundsColors,
     DefaultSystemGroupedBackgroundsColors?
-        defaultSystemGroupedBackgroundsColors,
+    defaultSystemGroupedBackgroundsColors,
     DefaultFillColors? defaultFillColors,
     DefaultLabelColors? defaultLabelColors,
     DefaultSeparatorColors? defaultSeparatorColors,
@@ -352,29 +327,36 @@ class IosDarkThemeData extends IosThemeData {
     SystemMaterialsLabelsTextColors? systemMaterialsLabelsTextColors,
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
+    WeatherDecorations? weatherDecorations,
   }) : super(
-          acessibleColors: acessibleColors ?? const AcessibleColorsDark(),
-          defaultColors: defaultColors ?? const DefaultColorsDark(),
-          defaultSystemBackgroundsColors: defaultSystemBackgroundsColors ??
-              const DefaultSystemBackgroundsColorsDark(),
-          defaultSystemGroupedBackgroundsColors:
-              defaultSystemGroupedBackgroundsColors ??
-                  const DefaultSystemGroupedBackgroundsColorsDark(),
-          defaultFillColors: defaultFillColors ?? const DefaultFillColorsDark(),
-          defaultLabelColors:
-              defaultLabelColors ?? const DefaultLabelColorsDark(),
-          defaultSeparatorColors:
-              defaultSeparatorColors ?? const DefaultSeparatorColorsDark(),
-          systemColoursSeparatorColors: systemColoursSeparatorColors ??
-              const SystemColoursSeparatorColorsDark(),
-          systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors ??
-              const SystemMaterialsBackgroundsColorsDark(),
-          systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors ??
-              const SystemMaterialsLabelsTextColorsDark(),
-          systemMaterialsFillColors: systemMaterialsFillColors ??
-              const SystemMaterialsFillColorsDark(),
-          typography: typography ?? const IosTypography(),
-        );
+         acessibleColors: acessibleColors ?? const AcessibleColorsDark(),
+         defaultColors: defaultColors ?? const DefaultColorsDark(),
+         defaultSystemBackgroundsColors:
+             defaultSystemBackgroundsColors ??
+             const DefaultSystemBackgroundsColorsDark(),
+         defaultSystemGroupedBackgroundsColors:
+             defaultSystemGroupedBackgroundsColors ??
+             const DefaultSystemGroupedBackgroundsColorsDark(),
+         defaultFillColors: defaultFillColors ?? const DefaultFillColorsDark(),
+         defaultLabelColors:
+             defaultLabelColors ?? const DefaultLabelColorsDark(),
+         defaultSeparatorColors:
+             defaultSeparatorColors ?? const DefaultSeparatorColorsDark(),
+         systemColoursSeparatorColors:
+             systemColoursSeparatorColors ??
+             const SystemColoursSeparatorColorsDark(),
+         systemMaterialsBackgroundsColors:
+             systemMaterialsBackgroundsColors ??
+             const SystemMaterialsBackgroundsColorsDark(),
+         systemMaterialsLabelsTextColors:
+             systemMaterialsLabelsTextColors ??
+             const SystemMaterialsLabelsTextColorsDark(),
+         systemMaterialsFillColors:
+             systemMaterialsFillColors ?? const SystemMaterialsFillColorsDark(),
+         typography: typography ?? const IosTypography(),
+         weatherDecorations:
+             weatherDecorations ?? const WeatherDecorationsDark(),
+       );
 
   @override
   IosThemeData copyWith({
@@ -389,18 +371,19 @@ class IosDarkThemeData extends IosThemeData {
     SystemMaterialsLabelsTextColors? systemMaterialsLabelsTextColors,
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
-  }) =>
-      IosDarkThemeData(
-        acessibleColors: acessibleColors,
-        defaultColors: defaultColors,
-        defaultSystemBackgroundsColors: defaultSystemBackgroundsColors,
-        defaultFillColors: defaultFillColors,
-        defaultLabelColors: defaultLabelColors,
-        defaultSeparatorColors: defaultSeparatorColors,
-        systemColoursSeparatorColors: systemColoursSeparatorColors,
-        systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors,
-        systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors,
-        systemMaterialsFillColors: systemMaterialsFillColors,
-        typography: typography,
-      );
+    WeatherDecorations? weatherDecorations,
+  }) => IosDarkThemeData(
+    acessibleColors: acessibleColors,
+    defaultColors: defaultColors,
+    defaultSystemBackgroundsColors: defaultSystemBackgroundsColors,
+    defaultFillColors: defaultFillColors,
+    defaultLabelColors: defaultLabelColors,
+    defaultSeparatorColors: defaultSeparatorColors,
+    systemColoursSeparatorColors: systemColoursSeparatorColors,
+    systemMaterialsBackgroundsColors: systemMaterialsBackgroundsColors,
+    systemMaterialsLabelsTextColors: systemMaterialsLabelsTextColors,
+    systemMaterialsFillColors: systemMaterialsFillColors,
+    typography: typography,
+    weatherDecorations: weatherDecorations,
+  );
 }
