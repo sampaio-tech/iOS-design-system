@@ -96,21 +96,21 @@ final class WeatherBackgroundsColorsLight extends WeatherBackgroundsColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF657688), Color(0xFF4D5E70)],
+        colors: [const Color(0xFF657688), const Color(0xFF4D5E70)],
       ),
     ),
     BoxDecoration night = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF020518), Color(0xFF283555)],
+        colors: [const Color(0xFF020518), const Color(0xFF283555)],
       ),
     ),
     BoxDecoration day = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        colors: [const Color(0xFF1A1A1A), const Color(0xFF0D0D0D)],
       ),
     ),
   }) : super(rain: rain, night: night, day: day);
@@ -132,21 +132,21 @@ final class WeatherBackgroundsColorsDark extends WeatherBackgroundsColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF657688), Color(0xFF4D5E70)],
+        colors: [const Color(0xFF657688), const Color(0xFF4D5E70)],
       ),
     ),
     BoxDecoration night = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF020518), Color(0xFF283555)],
+        colors: [const Color(0xFF020518), const Color(0xFF283555)],
       ),
     ),
     BoxDecoration day = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        colors: [const Color(0xFF1A1A1A), const Color(0xFF0D0D0D)],
       ),
     ),
   }) : super(rain: rain, night: night, day: day);
@@ -205,7 +205,6 @@ sealed class WeatherDefaultColors {
       axisLabel: Color.lerp(axisLabel, b.axisLabel, t),
       separator: Color.lerp(separator, b.separator, t),
       hourlyTime: Color.lerp(hourlyTime, b.hourlyTime, t),
-
       sunYellow: Color.lerp(sunYellow, b.sunYellow, t),
       rainBlue: Color.lerp(rainBlue, b.rainBlue, t),
       barGradient: BoxDecoration.lerp(barGradient, b.barGradient, t),
@@ -221,7 +220,6 @@ sealed class WeatherDefaultColors {
     Color? axisLabel,
     Color? separator,
     Color? hourlyTime,
-
     Color? sunYellow,
     Color? rainBlue,
     BoxDecoration? barGradient,
@@ -245,7 +243,7 @@ final class WeatherDefaultColorsLight extends WeatherDefaultColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        colors: [const Color(0xFF1A1A1A), const Color(0xFF0D0D0D)],
       ),
     ),
   }) : super(
@@ -308,7 +306,7 @@ final class WeatherDefaultColorsDark extends WeatherDefaultColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF1A1A1A), Color(0xFF0D0D0D)],
+        colors: [const Color(0xFF1A1A1A), const Color(0xFF0D0D0D)],
       ),
     ),
   }) : super(
