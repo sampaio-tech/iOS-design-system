@@ -129,6 +129,7 @@ sealed class IosThemeData {
     required this.systemMaterialsFillColors,
     required this.typography,
     required this.weatherDecorations,
+    required this.stocksDecorations,
   });
 
   final AcessibleColors acessibleColors;
@@ -145,6 +146,7 @@ sealed class IosThemeData {
   final SystemMaterialsFillColors systemMaterialsFillColors;
   final IosTypography typography;
   final WeatherDecorations weatherDecorations;
+  final StocksDecorations stocksDecorations;
 
   Brightness get brightness => switch (this) {
     IosLightThemeData() => Brightness.light,
@@ -216,6 +218,7 @@ sealed class IosThemeData {
       ),
       typography: typography.lerp(b.typography, t),
       weatherDecorations: weatherDecorations.lerp(b.weatherDecorations, t),
+      stocksDecorations: stocksDecorations.lerp(b.stocksDecorations, t),
     );
   }
 
@@ -232,6 +235,7 @@ sealed class IosThemeData {
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
     WeatherDecorations? weatherDecorations,
+    StocksDecorations? stocksDecorations,
   });
 }
 
@@ -251,6 +255,7 @@ class IosLightThemeData extends IosThemeData {
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
     WeatherDecorations? weatherDecorations,
+    StocksDecorations? stocksDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsLight(),
          defaultColors: defaultColors ?? const DefaultColorsLight(),
@@ -280,6 +285,7 @@ class IosLightThemeData extends IosThemeData {
          typography: typography ?? const IosTypography(),
          weatherDecorations:
              weatherDecorations ?? const WeatherDecorationsLight(),
+         stocksDecorations: stocksDecorations ?? const StocksDecorationsLight(),
        );
 
   @override
@@ -296,6 +302,7 @@ class IosLightThemeData extends IosThemeData {
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
     WeatherDecorations? weatherDecorations,
+    StocksDecorations? stocksDecorations,
   }) => IosLightThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -309,6 +316,7 @@ class IosLightThemeData extends IosThemeData {
     systemMaterialsFillColors: systemMaterialsFillColors,
     typography: typography,
     weatherDecorations: weatherDecorations,
+    stocksDecorations: stocksDecorations,
   );
 }
 
@@ -328,6 +336,7 @@ class IosDarkThemeData extends IosThemeData {
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
     WeatherDecorations? weatherDecorations,
+    StocksDecorations? stocksDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsDark(),
          defaultColors: defaultColors ?? const DefaultColorsDark(),
@@ -356,6 +365,7 @@ class IosDarkThemeData extends IosThemeData {
          typography: typography ?? const IosTypography(),
          weatherDecorations:
              weatherDecorations ?? const WeatherDecorationsDark(),
+         stocksDecorations: stocksDecorations ?? const StocksDecorationsDark(),
        );
 
   @override
@@ -372,6 +382,7 @@ class IosDarkThemeData extends IosThemeData {
     SystemMaterialsFillColors? systemMaterialsFillColors,
     IosTypography? typography,
     WeatherDecorations? weatherDecorations,
+    StocksDecorations? stocksDecorations,
   }) => IosDarkThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -385,5 +396,6 @@ class IosDarkThemeData extends IosThemeData {
     systemMaterialsFillColors: systemMaterialsFillColors,
     typography: typography,
     weatherDecorations: weatherDecorations,
+    stocksDecorations: stocksDecorations,
   );
 }
