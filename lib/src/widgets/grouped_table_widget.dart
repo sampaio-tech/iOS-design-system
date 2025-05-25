@@ -10,6 +10,13 @@ BoxDecoration defaultDecorationCallback(IosThemeData theme) => BoxDecoration(
   },
 );
 
+BoxDecoration stocksDecorationCallback(IosThemeData theme) => switch (theme) {
+  IosLightThemeData() => BoxDecoration(
+    color: theme.defaultSystemBackgroundsColors.primaryLight,
+  ),
+  IosDarkThemeData() => theme.stocksDecorations.gradients.background,
+};
+
 class GroupedTableWidget extends StatelessWidget {
   const GroupedTableWidget({
     required this.rows,
@@ -26,6 +33,20 @@ class GroupedTableWidget extends StatelessWidget {
     required Widget? description,
     BoxDecoration Function(IosThemeData theme)? decorationCallback =
         defaultDecorationCallback,
+  }) => GroupedTableWidget(
+    rows: rows,
+    title: title,
+    description: description,
+    borderRadius: BorderRadius.circular(14),
+    decorationCallback: decorationCallback,
+  );
+
+  factory GroupedTableWidget.stocks({
+    required List<Widget> rows,
+    required Widget? title,
+    required Widget? description,
+    BoxDecoration Function(IosThemeData theme)? decorationCallback =
+        stocksDecorationCallback,
   }) => GroupedTableWidget(
     rows: rows,
     title: title,
