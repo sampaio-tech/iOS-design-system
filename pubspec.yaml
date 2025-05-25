@@ -12,7 +12,7 @@ dependencies:
   intl: ^0.20.0
   flutter_svg: ^2.0.17
   gpt_markdown: ^1.0.16
-  flutter_math_fork: ^0.7.3
+  flutter_math_fork: 0.7.3
   flutter_hooks: ^0.21.2
 
 dev_dependencies:
