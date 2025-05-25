@@ -7,11 +7,20 @@ Color applePlayDividerColorCallback01(IosThemeData theme) => switch (theme) {
   IosDarkThemeData() => const Color(0xFF545458).withValues(alpha: .65),
 };
 
+Color stocksDividerColorCallback(IosThemeData theme) => switch (theme) {
+  IosLightThemeData() => theme.systemColoursSeparatorColors.nonOpaque,
+  IosDarkThemeData() => theme.stocksDecorations.defaultColors.separator,
+};
+
 class DividerWidget extends StatelessWidget {
   const DividerWidget({super.key, this.height, this.colorCallback});
 
   static const applePay = const DividerWidget(
     colorCallback: applePlayDividerColorCallback01,
+  );
+
+  static const stocks = const DividerWidget(
+    colorCallback: stocksDividerColorCallback,
   );
 
   final double? height;
