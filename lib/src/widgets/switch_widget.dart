@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../ios_design_system.dart';
 
-Color stocksDecorationCallback(IosThemeData theme) =>
+Color _stocksDecorationCallback(IosThemeData theme) =>
     theme.stocksDecorations.defaultColors.positiveTrend;
 
 class SwitchWidget extends StatelessWidget {
@@ -19,7 +19,7 @@ class SwitchWidget extends StatelessWidget {
     required bool value,
     void Function(bool)? onChanged,
     Color Function(IosThemeData)? activeTrackColorCallback =
-        stocksDecorationCallback,
+        _stocksDecorationCallback,
     Color Function(IosThemeData)? inactiveTrackColorCallback,
     Color Function(IosThemeData)? thumbColorCallback,
   }) => SwitchWidget(
