@@ -254,6 +254,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         placeholder: 'Placeholder',
                       ),
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: true,
                         title: 'Lorem Ipsum',
@@ -267,6 +269,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: true,
                         title: 'Birthday',
@@ -284,6 +288,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: false,
                         title: 'Birthday',
@@ -308,6 +314,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   GroupedTableWidget.rounded(
                     rows: [
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: true,
                         title: 'Lorem Ipsum',
@@ -321,6 +329,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: true,
                         title: 'Birthday',
@@ -338,6 +348,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       RowWidget.standard(
+                        onLongPress: null,
+                        decorationCallback: null,
                         onPressed: null,
                         displayDivider: false,
                         title: 'Birthday',
