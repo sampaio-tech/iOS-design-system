@@ -10,6 +10,7 @@ class RowWidget extends StatelessWidget {
     required this.onPressed,
     required this.leftWidget,
     required this.rightWidget,
+    this.divider = const DividerWidget(),
     this.decorationCallback,
     this.onLongPress,
     this.contentPadding,
@@ -57,6 +58,48 @@ class RowWidget extends StatelessWidget {
     contentPadding: contentPadding,
   );
 
+  factory RowWidget.stocks({
+    required String title,
+    required String? description,
+    required Widget? leftWidget,
+    required Widget? rightWidget,
+    required bool displayDivider,
+    required VoidCallback? onPressed,
+    required VoidCallback? onLongPress,
+    required BoxDecoration Function(IosThemeData theme)? decorationCallback,
+    EdgeInsets? contentPadding,
+  }) => RowWidget(
+    decorationCallback: decorationCallback,
+    title:
+        (theme) => Text(
+          title,
+          style: theme.typography.bodyRegular.copyWith(
+            color: theme.stocksDecorations.defaultColors.primary,
+          ),
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.visible,
+        ),
+    description: switch (description) {
+      null => null,
+      final description =>
+        (theme) => Text(
+          description,
+          style: theme.typography.caption1Regular.copyWith(
+            color: theme.stocksDecorations.defaultColors.secondary,
+          ),
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.visible,
+        ),
+    },
+    displayDivider: displayDivider,
+    onPressed: onPressed,
+    onLongPress: onLongPress,
+    leftWidget: leftWidget,
+    rightWidget: rightWidget,
+    contentPadding: contentPadding,
+    divider: DividerWidget.stocks,
+  );
+
   final Widget Function(IosThemeData theme) title;
   final Widget Function(IosThemeData theme)? description;
   final BoxDecoration Function(IosThemeData theme)? decorationCallback;
@@ -66,6 +109,7 @@ class RowWidget extends StatelessWidget {
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final EdgeInsets? contentPadding;
+  final DividerWidget divider;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +179,7 @@ class RowWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (displayDivider) const DividerWidget(),
+                  if (displayDivider) divider,
                 ],
               ),
             ),
