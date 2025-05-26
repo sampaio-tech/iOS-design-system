@@ -22,6 +22,7 @@ class GroupedTableWidget extends StatelessWidget {
     required this.rows,
     required this.title,
     required this.description,
+    this.rowsSpacing = 0,
     this.decorationCallback = defaultDecorationCallback,
     Key? key,
     this.borderRadius,
@@ -33,12 +34,14 @@ class GroupedTableWidget extends StatelessWidget {
     required Widget? description,
     BoxDecoration Function(IosThemeData theme)? decorationCallback =
         defaultDecorationCallback,
+    double rowsSpacing = 0,
   }) => GroupedTableWidget(
     rows: rows,
     title: title,
     description: description,
     borderRadius: BorderRadius.circular(14),
     decorationCallback: decorationCallback,
+    rowsSpacing: rowsSpacing,
   );
 
   factory GroupedTableWidget.stocks({
@@ -47,12 +50,14 @@ class GroupedTableWidget extends StatelessWidget {
     required Widget? description,
     BoxDecoration Function(IosThemeData theme)? decorationCallback =
         stocksDecorationCallback,
+    double rowsSpacing = 0,
   }) => GroupedTableWidget(
     rows: rows,
     title: title,
     description: description,
     borderRadius: BorderRadius.circular(14),
     decorationCallback: decorationCallback,
+    rowsSpacing: rowsSpacing,
   );
 
   final List<Widget> rows;
@@ -60,6 +65,7 @@ class GroupedTableWidget extends StatelessWidget {
   final Widget? description;
   final BorderRadiusGeometry? borderRadius;
   final BoxDecoration Function(IosThemeData theme)? decorationCallback;
+  final double rowsSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +85,7 @@ class GroupedTableWidget extends StatelessWidget {
               final callback => callback(theme),
             },
             child: Column(
+              spacing: rowsSpacing,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
