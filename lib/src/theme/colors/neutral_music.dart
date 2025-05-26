@@ -66,12 +66,14 @@ sealed class NeutralMusicGradients {
     required this.secondaryBackgroundLargeWidget,
     required this.backgroundDefault,
     required this.backgroundPillButton,
+    required this.backgroundCircularButton,
   });
 
   final BoxDecoration primaryBackgroundLargeWidget;
   final BoxDecoration secondaryBackgroundLargeWidget;
   final BoxDecoration backgroundDefault;
   final BoxDecoration backgroundPillButton;
+  final BoxDecoration backgroundCircularButton;
 
   NeutralMusicGradients lerp(NeutralMusicGradients b, double t) {
     if (identical(this, b)) {
@@ -99,6 +101,11 @@ sealed class NeutralMusicGradients {
         b.backgroundPillButton,
         t,
       ),
+      backgroundCircularButton: BoxDecoration.lerp(
+        backgroundCircularButton,
+        b.backgroundCircularButton,
+        t,
+      ),
     );
   }
 
@@ -107,6 +114,7 @@ sealed class NeutralMusicGradients {
     BoxDecoration? secondaryBackgroundLargeWidget,
     BoxDecoration? backgroundDefault,
     BoxDecoration? backgroundPillButton,
+    BoxDecoration? backgroundCircularButton,
   });
 }
 
@@ -130,6 +138,9 @@ final class NeutralMusicGradientsLight extends NeutralMusicGradients {
       ),
     ),
     BoxDecoration backgroundPillButton = const BoxDecoration(
+      color: const Color(0XFF626C75),
+    ),
+    BoxDecoration backgroundCircularButton = const BoxDecoration(
       color: const Color(0XFF58626B),
     ),
   }) : super(
@@ -137,6 +148,7 @@ final class NeutralMusicGradientsLight extends NeutralMusicGradients {
          secondaryBackgroundLargeWidget: secondaryBackgroundLargeWidget,
          backgroundDefault: backgroundDefault,
          backgroundPillButton: backgroundPillButton,
+         backgroundCircularButton: backgroundCircularButton,
        );
 
   @override
@@ -145,6 +157,7 @@ final class NeutralMusicGradientsLight extends NeutralMusicGradients {
     BoxDecoration? secondaryBackgroundLargeWidget,
     BoxDecoration? backgroundDefault,
     BoxDecoration? backgroundPillButton,
+    BoxDecoration? backgroundCircularButton,
   }) => NeutralMusicGradientsLight(
     primaryBackgroundLargeWidget:
         primaryBackgroundLargeWidget ?? this.primaryBackgroundLargeWidget,
@@ -152,6 +165,8 @@ final class NeutralMusicGradientsLight extends NeutralMusicGradients {
         secondaryBackgroundLargeWidget ?? this.secondaryBackgroundLargeWidget,
     backgroundDefault: backgroundDefault ?? this.backgroundDefault,
     backgroundPillButton: backgroundPillButton ?? this.backgroundPillButton,
+    backgroundCircularButton:
+        backgroundCircularButton ?? this.backgroundCircularButton,
   );
 }
 
@@ -175,6 +190,9 @@ final class NeutralMusicGradientsDark extends NeutralMusicGradients {
       ),
     ),
     BoxDecoration backgroundPillButton = const BoxDecoration(
+      color: const Color(0XFF626C75),
+    ),
+    BoxDecoration backgroundCircularButton = const BoxDecoration(
       color: const Color(0XFF58626B),
     ),
   }) : super(
@@ -182,6 +200,7 @@ final class NeutralMusicGradientsDark extends NeutralMusicGradients {
          secondaryBackgroundLargeWidget: secondaryBackgroundLargeWidget,
          backgroundDefault: backgroundDefault,
          backgroundPillButton: backgroundPillButton,
+         backgroundCircularButton: backgroundCircularButton,
        );
 
   @override
@@ -190,6 +209,7 @@ final class NeutralMusicGradientsDark extends NeutralMusicGradients {
     BoxDecoration? secondaryBackgroundLargeWidget,
     BoxDecoration? backgroundDefault,
     BoxDecoration? backgroundPillButton,
+    BoxDecoration? backgroundCircularButton,
   }) => NeutralMusicGradientsDark(
     primaryBackgroundLargeWidget:
         primaryBackgroundLargeWidget ?? this.primaryBackgroundLargeWidget,
@@ -197,6 +217,8 @@ final class NeutralMusicGradientsDark extends NeutralMusicGradients {
         secondaryBackgroundLargeWidget ?? this.secondaryBackgroundLargeWidget,
     backgroundDefault: backgroundDefault ?? this.backgroundDefault,
     backgroundPillButton: backgroundPillButton ?? this.backgroundPillButton,
+    backgroundCircularButton:
+        backgroundCircularButton ?? this.backgroundCircularButton,
   );
 }
 
