@@ -131,6 +131,7 @@ sealed class IosThemeData {
     required this.weatherDecorations,
     required this.stocksDecorations,
     required this.neutralMusicDecorations,
+    required this.appStoreDecorations,
   });
 
   final AcessibleColors acessibleColors;
@@ -149,6 +150,7 @@ sealed class IosThemeData {
   final WeatherDecorations weatherDecorations;
   final StocksDecorations stocksDecorations;
   final NeutralMusicDecorations neutralMusicDecorations;
+  final AppStoreDecorations appStoreDecorations;
 
   Brightness get brightness => switch (this) {
     IosLightThemeData() => Brightness.light,
@@ -225,6 +227,7 @@ sealed class IosThemeData {
         b.neutralMusicDecorations,
         t,
       ),
+      appStoreDecorations: appStoreDecorations.lerp(b.appStoreDecorations, t),
     );
   }
 
@@ -243,6 +246,7 @@ sealed class IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    AppStoreDecorations? appStoreDecorations,
   });
 }
 
@@ -264,6 +268,7 @@ class IosLightThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    AppStoreDecorations? appStoreDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsLight(),
          defaultColors: defaultColors ?? const DefaultColorsLight(),
@@ -296,6 +301,8 @@ class IosLightThemeData extends IosThemeData {
          stocksDecorations: stocksDecorations ?? const StocksDecorationsLight(),
          neutralMusicDecorations:
              neutralMusicDecorations ?? const NeutralMusicDecorationsLight(),
+         appStoreDecorations:
+             appStoreDecorations ?? const AppStoreDecorationsLight(),
        );
 
   @override
@@ -314,6 +321,7 @@ class IosLightThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    AppStoreDecorations? appStoreDecorations,
   }) => IosLightThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -329,6 +337,7 @@ class IosLightThemeData extends IosThemeData {
     weatherDecorations: weatherDecorations,
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
+    appStoreDecorations: appStoreDecorations,
   );
 }
 
@@ -350,6 +359,7 @@ class IosDarkThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    AppStoreDecorations? appStoreDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsDark(),
          defaultColors: defaultColors ?? const DefaultColorsDark(),
@@ -381,6 +391,8 @@ class IosDarkThemeData extends IosThemeData {
          stocksDecorations: stocksDecorations ?? const StocksDecorationsDark(),
          neutralMusicDecorations:
              neutralMusicDecorations ?? const NeutralMusicDecorationsDark(),
+         appStoreDecorations:
+             appStoreDecorations ?? const AppStoreDecorationsDark(),
        );
 
   @override
@@ -399,6 +411,7 @@ class IosDarkThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    AppStoreDecorations? appStoreDecorations,
   }) => IosDarkThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -414,5 +427,6 @@ class IosDarkThemeData extends IosThemeData {
     weatherDecorations: weatherDecorations,
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
+    appStoreDecorations: appStoreDecorations,
   );
 }
