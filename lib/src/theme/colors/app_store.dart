@@ -46,8 +46,8 @@ class AppStoreDecorationsDark extends AppStoreDecorations {
 class AppStoreDecorationsLight extends AppStoreDecorations {
   const AppStoreDecorationsLight({
     AppStoreBackgroundsColors backgroundColors =
-        const AppStoreBackgroundsColorsDark(),
-    AppStoreDefaultColors defaultColors = const AppStoreDefaultColorsDark(),
+        const AppStoreBackgroundsColorsLight(),
+    AppStoreDefaultColors defaultColors = const AppStoreDefaultColorsLight(),
   }) : super(backgroundColors: backgroundColors, defaultColors: defaultColors);
 
   @override
