@@ -176,6 +176,10 @@ class RowWidget extends StatelessWidget {
                         if (rightWidget != null) const SizedBox(width: 16),
                         if (rightWidget != null)
                           rightWidget ?? const SizedBox.shrink(),
+                        switch (Directionality.of(context)) {
+                          TextDirection.rtl => const SizedBox(width: 16),
+                          TextDirection.ltr => const SizedBox.shrink(),
+                        },
                       ],
                     ),
                   ),
