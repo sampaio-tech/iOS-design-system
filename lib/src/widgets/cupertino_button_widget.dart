@@ -7,6 +7,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   const CupertinoButtonWidget({
     required this.child,
     required this.onPressed,
+    this.backgroundGradient,
     this.onLongPress,
     super.key,
     this.padding = exports.kCupertinoButtonPadding,
@@ -25,6 +26,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final Color? color;
   final Color? disabledColor;
+  final Gradient? backgroundGradient;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final double pressedOpacity;
@@ -168,6 +170,7 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
                       backgroundColor != null && !enabled
                           ? widget.disabledColor
                           : backgroundColor,
+                  gradient: widget.backgroundGradient,
                 ),
                 child: AnimatedSwitcher(
                   duration: exports.kAnimationInDuration,
