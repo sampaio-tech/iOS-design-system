@@ -58,6 +58,7 @@ class CupertinoTextFieldWidget extends StatefulWidget {
     this.scribbleEnabled = true,
     this.enableIMEPersonalizedLearning = true,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
+    this.backgroundColor,
   });
   final String? placeholder;
   final TextEditingController? controller;
@@ -107,6 +108,7 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
   final SpellCheckConfiguration? spellCheckConfiguration;
   final TextMagnifierConfiguration? magnifierConfiguration;
+  final Color? backgroundColor;
 
   /// this is always enabled because Flutter don't allow change disabled
   /// color of [CupertinoTextField]
@@ -153,11 +155,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
     const cursorWidth = 1.0;
     const cursorHeight = 24.0;
     const suffixMode = OverlayVisibilityMode.editing;
-    const padding = EdgeInsets.only(
-      left: 16,
-      top: 11,
-      bottom: 11,
-    );
+    const padding = EdgeInsets.only(left: 16, top: 11, bottom: 11);
 
     return Theme(
       data: theme.textFieldThemeData,
@@ -217,10 +215,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
         suffix: GestureDetector(
           onTap: _effectiveController?.clear,
           child: Padding(
-            padding: const EdgeInsets.only(
-              right: 16,
-              left: 8,
-            ),
+            padding: const EdgeInsets.only(right: 16, left: 8),
             child: Icon(
               CupertinoIcons.clear_thick_circled,
               size: textScaler.scale(18),
@@ -239,12 +234,14 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
         cursorColor: theme.defaultColors.systemBlue,
         padding: padding,
         decoration: BoxDecoration(
-          color: switch (theme) {
-            IosLightThemeData() =>
-              theme.defaultSystemBackgroundsColors.primaryLight,
-            IosDarkThemeData() =>
-              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
-          },
+          color:
+              widget.backgroundColor ??
+              switch (theme) {
+                IosLightThemeData() =>
+                  theme.defaultSystemBackgroundsColors.primaryLight,
+                IosDarkThemeData() =>
+                  theme.defaultSystemBackgroundsColors.primaryDarkElevated,
+              },
         ),
       ),
     );
