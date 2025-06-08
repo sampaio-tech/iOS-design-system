@@ -37,24 +37,23 @@ class ButtonWidget extends StatelessWidget {
     BoxShape shape = BoxShape.rectangle,
     bool displayCupertinoActivityIndicator = false,
     Key? key,
-  }) =>
-      ButtonWidget._(
-        labelFontWeight: labelFontWeight,
-        cupertinoActivityIndicator: cupertinoActivityIndicator,
-        size: size,
-        onPressed: onPressed,
-        color: color,
-        leftIcon: leftIcon,
-        rigthIcon: rigthIcon,
-        leftWidget: leftWidget,
-        rigthWidget: rigthWidget,
-        label: label,
-        spacing: spacing,
-        border: border,
-        shape: shape,
-        displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
-        key: key,
-      );
+  }) => ButtonWidget._(
+    labelFontWeight: labelFontWeight,
+    cupertinoActivityIndicator: cupertinoActivityIndicator,
+    size: size,
+    onPressed: onPressed,
+    color: color,
+    leftIcon: leftIcon,
+    rigthIcon: rigthIcon,
+    leftWidget: leftWidget,
+    rigthWidget: rigthWidget,
+    label: label,
+    spacing: spacing,
+    border: border,
+    shape: shape,
+    displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
+    key: key,
+  );
 
   factory ButtonWidget.icon({
     required ButtonSize size,
@@ -67,19 +66,18 @@ class ButtonWidget extends StatelessWidget {
     BoxShape shape = BoxShape.rectangle,
     bool displayCupertinoActivityIndicator = false,
     Key? key,
-  }) =>
-      ButtonWidget._(
-        cupertinoActivityIndicator: cupertinoActivityIndicator,
-        size: size,
-        onPressed: onPressed,
-        color: color,
-        leftIcon: leftIcon,
-        spacing: spacing,
-        border: border,
-        shape: shape,
-        displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
-        key: key,
-      );
+  }) => ButtonWidget._(
+    cupertinoActivityIndicator: cupertinoActivityIndicator,
+    size: size,
+    onPressed: onPressed,
+    color: color,
+    leftIcon: leftIcon,
+    spacing: spacing,
+    border: border,
+    shape: shape,
+    displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
+    key: key,
+  );
   final ButtonSize size;
   final ButtonColor color;
   final LabelFontWeight labelFontWeight;
@@ -114,24 +112,23 @@ class ButtonWidget extends StatelessWidget {
       border: border,
       shape: shape,
       displayCupertinoActivityIndicator: displayCupertinoActivityIndicator,
-      cupertinoActivityIndicator: cupertinoActivityIndicator ??
+      cupertinoActivityIndicator:
+          cupertinoActivityIndicator ??
           CupertinoActivityIndicator(
             radius: switch (labelTextStyle.fontSize) {
               null => 10,
-              final fontSize => (textScale.scale(fontSize)) / 2
+              final fontSize => (textScale.scale(fontSize)) / 2,
             },
           ),
       constraints: size._boxConstraints,
       borderRadius: size.borderRadius(label),
       padding: padding,
-      color: color.background(
+      color: color.background(context: context, enabled: enabled),
+      backgroundGradient: color.backgroundGradient(
         context: context,
         enabled: enabled,
       ),
-      disabledColor: color.background(
-        context: context,
-        enabled: enabled,
-      ),
+      disabledColor: color.background(context: context, enabled: enabled),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         alignment: WrapAlignment.center,
@@ -151,10 +148,7 @@ class ButtonWidget extends StatelessWidget {
           if (leftIcon != null)
             Icon(
               leftIcon,
-              color: color.label(
-                context: context,
-                enabled: enabled,
-              ),
+              color: color.label(context: context, enabled: enabled),
               size: size.iconSize(label),
             ),
           if (label != null)
@@ -167,10 +161,7 @@ class ButtonWidget extends StatelessWidget {
           if (rigthIcon != null)
             Icon(
               rigthIcon,
-              color: color.label(
-                context: context,
-                enabled: enabled,
-              ),
+              color: color.label(context: context, enabled: enabled),
               size: size.iconSize(label),
             ),
           if (rigthWidget != null)
@@ -191,64 +182,58 @@ class ButtonWidget extends StatelessWidget {
 sealed class ButtonColor {
   const ButtonColor();
 
-  Color background({
+  Gradient? backgroundGradient({
     required BuildContext context,
     required bool enabled,
   }) {
+    if (!enabled) {
+      return null;
+    }
+    return backgroundGradientEnabled(context: context);
+  }
+
+  Color? background({required BuildContext context, required bool enabled}) {
     if (!enabled) {
       return backgroundDisabled(context: context);
     }
     return backgroundEnabled(context: context);
   }
 
-  Color label({
-    required BuildContext context,
-    required bool enabled,
-  }) {
+  Color label({required BuildContext context, required bool enabled}) {
     if (!enabled) {
       return labelDisabled(context: context);
     }
     return labelEnabled(context: context);
   }
 
-  Color labelDisabled({
-    required BuildContext context,
-  }) {
+  Color labelDisabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultLabelColors.tertiary;
   }
 
-  Color labelEnabled({
-    required BuildContext context,
-  });
+  Color labelEnabled({required BuildContext context});
 
-  Color backgroundDisabled({
-    required BuildContext context,
-  }) {
+  Color backgroundDisabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultFillColors.secondary;
   }
 
-  Color backgroundEnabled({
-    required BuildContext context,
-  });
+  Color? backgroundEnabled({required BuildContext context});
+
+  Gradient? backgroundGradientEnabled({required BuildContext context}) => null;
 }
 
 class GreyTransparentButtonColor extends ButtonColor {
   const GreyTransparentButtonColor();
 
   @override
-  Color backgroundEnabled({
-    required BuildContext context,
-  }) {
+  Color? backgroundEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultFillColors.secondary;
   }
 
   @override
-  Color labelEnabled({
-    required BuildContext context,
-  }) {
+  Color labelEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultColors.systemBlue;
   }
@@ -258,17 +243,13 @@ class BlueButtonColor extends ButtonColor {
   const BlueButtonColor();
 
   @override
-  Color backgroundEnabled({
-    required BuildContext context,
-  }) {
+  Color? backgroundEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultColors.systemBlue;
   }
 
   @override
-  Color labelEnabled({
-    required BuildContext context,
-  }) {
+  Color labelEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return switch (theme) {
       IosLightThemeData() => const DefaultLabelColorsDark().primary,
@@ -281,17 +262,13 @@ class BlueTransparentButtonColor extends ButtonColor {
   const BlueTransparentButtonColor();
 
   @override
-  Color backgroundEnabled({
-    required BuildContext context,
-  }) {
+  Color? backgroundEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultColors.systemBlue.withValues(alpha: .15);
   }
 
   @override
-  Color labelEnabled({
-    required BuildContext context,
-  }) {
+  Color labelEnabled({required BuildContext context}) {
     final theme = IosTheme.of(context);
     return theme.defaultColors.systemBlue;
   }
@@ -299,42 +276,40 @@ class BlueTransparentButtonColor extends ButtonColor {
 
 class CustomButtonColor extends ButtonColor {
   const CustomButtonColor({
-    required Color backgroundEnabled,
+    required Color? backgroundEnabled,
     required Color? backgroundDisabled,
     required Color labelEnabled,
     required Color? labelDisabled,
-  })  : _backgroundEnabled = backgroundEnabled,
-        _backgroundDisabled = backgroundDisabled,
-        _labelEnabled = labelEnabled,
-        _labelDisabled = labelDisabled;
+    Gradient? backgroundGradientEnabled,
+  }) : _backgroundEnabled = backgroundEnabled,
+       _backgroundDisabled = backgroundDisabled,
+       _labelEnabled = labelEnabled,
+       _labelDisabled = labelDisabled,
+       _backgroundGradientEnabled = backgroundGradientEnabled;
 
-  final Color _backgroundEnabled;
+  final Color? _backgroundEnabled;
   final Color? _backgroundDisabled;
   final Color _labelEnabled;
   final Color? _labelDisabled;
+  final Gradient? _backgroundGradientEnabled;
 
   @override
-  Color backgroundEnabled({
-    required BuildContext context,
-  }) =>
+  Color? backgroundEnabled({required BuildContext context}) =>
       _backgroundEnabled;
 
   @override
-  Color backgroundDisabled({
-    required BuildContext context,
-  }) =>
+  Gradient? backgroundGradientEnabled({required BuildContext context}) =>
+      _backgroundGradientEnabled;
+
+  @override
+  Color backgroundDisabled({required BuildContext context}) =>
       _backgroundDisabled ?? super.backgroundDisabled(context: context);
 
   @override
-  Color labelEnabled({
-    required BuildContext context,
-  }) =>
-      _labelEnabled;
+  Color labelEnabled({required BuildContext context}) => _labelEnabled;
 
   @override
-  Color labelDisabled({
-    required BuildContext context,
-  }) =>
+  Color labelDisabled({required BuildContext context}) =>
       _labelDisabled ?? super.labelDisabled(context: context);
 }
 
@@ -344,10 +319,10 @@ sealed class ButtonSize {
     required EdgeInsets padding,
     required double iconSize,
     required BoxConstraints? boxConstraints,
-  })  : _padding = padding,
-        _borderRadius = borderRadius,
-        _iconSize = iconSize,
-        _boxConstraints = boxConstraints;
+  }) : _padding = padding,
+       _borderRadius = borderRadius,
+       _iconSize = iconSize,
+       _boxConstraints = boxConstraints;
 
   final BorderRadius _borderRadius;
   final EdgeInsets _padding;
@@ -355,68 +330,50 @@ sealed class ButtonSize {
   final BoxConstraints? _boxConstraints;
 
   double iconSize(String? label) => switch (label) {
-        null => 26,
-        _ => _iconSize,
-      };
+    null => 26,
+    _ => _iconSize,
+  };
 
   BorderRadius borderRadius(String? label) => switch ((this, label)) {
-        (_, null) => const BorderRadius.all(Radius.circular(50)),
-        (final size, _) => size._borderRadius,
-      };
+    (_, null) => const BorderRadius.all(Radius.circular(50)),
+    (final size, _) => size._borderRadius,
+  };
 
   EdgeInsets padding(String? label) => switch ((this, label)) {
-        (SmallButtonSize(), null) => const EdgeInsets.all(10),
-        (_, null) => const EdgeInsets.all(12),
-        (final size, _) => size._padding,
-      };
+    (SmallButtonSize(), null) => const EdgeInsets.all(10),
+    (_, null) => const EdgeInsets.all(12),
+    (final size, _) => size._padding,
+  };
 }
 
 class SmallButtonSize extends ButtonSize {
   const SmallButtonSize()
-      : super(
-          borderRadius: const BorderRadius.all(Radius.circular(14)),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
-          iconSize: 18,
-          boxConstraints: const BoxConstraints(
-            minHeight: 28,
-            minWidth: 28,
-          ),
-        );
+    : super(
+        borderRadius: const BorderRadius.all(Radius.circular(14)),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        iconSize: 18,
+        boxConstraints: const BoxConstraints(minHeight: 28, minWidth: 28),
+      );
 }
 
 class MediumButtonSize extends ButtonSize {
   const MediumButtonSize()
-      : super(
-          borderRadius: const BorderRadius.all(Radius.circular(50)),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 7,
-          ),
-          iconSize: 18,
-          boxConstraints: const BoxConstraints(
-            minHeight: 34,
-            minWidth: 34,
-          ),
-        );
+    : super(
+        borderRadius: const BorderRadius.all(Radius.circular(50)),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+        iconSize: 18,
+        boxConstraints: const BoxConstraints(minHeight: 34, minWidth: 34),
+      );
 }
 
 class LargeButtonSize extends ButtonSize {
   const LargeButtonSize()
-      : super(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20.5,
-            vertical: 15,
-          ),
-          iconSize: 18,
-          boxConstraints: const BoxConstraints(
-            minHeight: 50,
-            minWidth: 50,
-          ),
-        );
+    : super(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        padding: const EdgeInsets.symmetric(horizontal: 20.5, vertical: 15),
+        iconSize: 18,
+        boxConstraints: const BoxConstraints(minHeight: 50, minWidth: 50),
+      );
 }
 
 class CustomButtonSize extends ButtonSize {
@@ -426,11 +383,11 @@ class CustomButtonSize extends ButtonSize {
     required double iconSize,
     required BoxConstraints? boxConstraints,
   }) : super(
-          borderRadius: borderRadius,
-          padding: padding,
-          iconSize: iconSize,
-          boxConstraints: boxConstraints,
-        );
+         borderRadius: borderRadius,
+         padding: padding,
+         iconSize: iconSize,
+         boxConstraints: boxConstraints,
+       );
 }
 
 sealed class LabelFontWeight {
@@ -462,8 +419,7 @@ class RegularLabelFontWeight extends LabelFontWeight {
     final textStyle = switch (buttonSize) {
       SmallButtonSize() => theme.typography.subheadlineRegular,
       _ => theme.typography.bodyRegular,
-    }
-        .copyWith(
+    }.copyWith(
       color: buttonColor.label(context: context, enabled: enabled),
       height: height,
       letterSpacing: letterSpacing,
@@ -488,8 +444,7 @@ class BoldLabelFontWeight extends LabelFontWeight {
     final textStyle = switch (buttonSize) {
       SmallButtonSize() => theme.typography.subheadlineBold,
       _ => theme.typography.bodyBold,
-    }
-        .copyWith(
+    }.copyWith(
       color: buttonColor.label(context: context, enabled: enabled),
       height: height,
       letterSpacing: letterSpacing,
