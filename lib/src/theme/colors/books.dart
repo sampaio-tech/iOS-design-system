@@ -158,14 +158,14 @@ final class BooksBackgroundsColorsLight extends BooksBackgroundsColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [const Color(0xFFEFBA32), const Color(0xFFEF8732)],
+        colors: [const Color(0xFF313131), const Color(0xFF141414)],
       ),
     ),
     BoxDecoration accent = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [const Color(0xFF313131), const Color(0xFF141414)],
+        colors: [const Color(0xFFEFBA32), const Color(0xFFEF8732)],
       ),
     ),
   }) : super(
@@ -228,14 +228,14 @@ final class BooksBackgroundsColorsDark extends BooksBackgroundsColors {
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [const Color(0xFFEFBA32), const Color(0xFFEF8732)],
+        colors: [const Color(0xFF313131), const Color(0xFF141414)],
       ),
     ),
     BoxDecoration accent = const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [const Color(0xFF313131), const Color(0xFF141414)],
+        colors: [const Color(0xFFEFBA32), const Color(0xFFEF8732)],
       ),
     ),
   }) : super(
