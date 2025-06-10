@@ -132,6 +132,7 @@ sealed class IosThemeData {
     required this.stocksDecorations,
     required this.neutralMusicDecorations,
     required this.appStoreDecorations,
+    required this.booksDecorations,
   });
 
   final AcessibleColors acessibleColors;
@@ -151,6 +152,7 @@ sealed class IosThemeData {
   final StocksDecorations stocksDecorations;
   final NeutralMusicDecorations neutralMusicDecorations;
   final AppStoreDecorations appStoreDecorations;
+  final BooksDecorations booksDecorations;
 
   Brightness get brightness => switch (this) {
     IosLightThemeData() => Brightness.light,
@@ -178,8 +180,8 @@ sealed class IosThemeData {
         } ??
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
     return switch (brightness) {
-      Brightness.light => const IosLightThemeData(),
-      Brightness.dark => const IosDarkThemeData(),
+      Brightness.light => IosLightThemeData(),
+      Brightness.dark => IosDarkThemeData(),
     };
   }
 
@@ -251,7 +253,7 @@ sealed class IosThemeData {
 }
 
 class IosLightThemeData extends IosThemeData {
-  const IosLightThemeData({
+  IosLightThemeData({
     AcessibleColors? acessibleColors,
     DefaultColors? defaultColors,
     DefaultSystemBackgroundsColors? defaultSystemBackgroundsColors,
@@ -269,6 +271,7 @@ class IosLightThemeData extends IosThemeData {
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
     AppStoreDecorations? appStoreDecorations,
+    BooksDecorations? booksDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsLight(),
          defaultColors: defaultColors ?? const DefaultColorsLight(),
@@ -303,6 +306,7 @@ class IosLightThemeData extends IosThemeData {
              neutralMusicDecorations ?? const NeutralMusicDecorationsLight(),
          appStoreDecorations:
              appStoreDecorations ?? const AppStoreDecorationsLight(),
+         booksDecorations: booksDecorations ?? BooksDecorationsLight(),
        );
 
   @override
@@ -322,6 +326,7 @@ class IosLightThemeData extends IosThemeData {
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
     AppStoreDecorations? appStoreDecorations,
+    BooksDecorations? booksDecorations,
   }) => IosLightThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -338,11 +343,12 @@ class IosLightThemeData extends IosThemeData {
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
     appStoreDecorations: appStoreDecorations,
+    booksDecorations: booksDecorations,
   );
 }
 
 class IosDarkThemeData extends IosThemeData {
-  const IosDarkThemeData({
+  IosDarkThemeData({
     AcessibleColors? acessibleColors,
     DefaultColors? defaultColors,
     DefaultSystemBackgroundsColors? defaultSystemBackgroundsColors,
@@ -360,6 +366,7 @@ class IosDarkThemeData extends IosThemeData {
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
     AppStoreDecorations? appStoreDecorations,
+    BooksDecorations? booksDecorations,
   }) : super(
          acessibleColors: acessibleColors ?? const AcessibleColorsDark(),
          defaultColors: defaultColors ?? const DefaultColorsDark(),
@@ -393,6 +400,7 @@ class IosDarkThemeData extends IosThemeData {
              neutralMusicDecorations ?? const NeutralMusicDecorationsDark(),
          appStoreDecorations:
              appStoreDecorations ?? const AppStoreDecorationsDark(),
+         booksDecorations: booksDecorations ?? BooksDecorationsLight(),
        );
 
   @override
@@ -412,6 +420,7 @@ class IosDarkThemeData extends IosThemeData {
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
     AppStoreDecorations? appStoreDecorations,
+    BooksDecorations? booksDecorations,
   }) => IosDarkThemeData(
     acessibleColors: acessibleColors,
     defaultColors: defaultColors,
@@ -428,5 +437,6 @@ class IosDarkThemeData extends IosThemeData {
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
     appStoreDecorations: appStoreDecorations,
+    booksDecorations: booksDecorations,
   );
 }
