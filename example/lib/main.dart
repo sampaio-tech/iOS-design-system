@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const themeData = IosDarkThemeData();
+    final themeData = IosDarkThemeData();
     return IosAnimatedTheme(
       data: themeData,
       child: CupertinoApp(
