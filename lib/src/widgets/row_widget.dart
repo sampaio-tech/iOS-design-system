@@ -74,7 +74,11 @@ class RowWidget extends StatelessWidget {
         (theme) => Text(
           title,
           style: theme.typography.bodyRegular.copyWith(
-            color: theme.stocksDecorations.defaultColors.primary,
+            color: switch (theme) {
+              IosLightThemeData() => theme.defaultLabelColors.primary,
+              IosDarkThemeData() =>
+                theme.stocksDecorations.defaultColors.primary,
+            },
           ),
           textAlign: TextAlign.start,
           overflow: TextOverflow.visible,
@@ -85,7 +89,11 @@ class RowWidget extends StatelessWidget {
         (theme) => Text(
           description,
           style: theme.typography.caption1Regular.copyWith(
-            color: theme.stocksDecorations.defaultColors.secondary,
+            color: switch (theme) {
+              IosLightThemeData() => theme.defaultLabelColors.secondary,
+              IosDarkThemeData() =>
+                theme.stocksDecorations.defaultColors.secondary,
+            },
           ),
           textAlign: TextAlign.start,
           overflow: TextOverflow.visible,
