@@ -9,6 +9,9 @@ class CupertinoButtonWidget extends StatefulWidget {
     required this.onPressed,
     this.backgroundGradient,
     this.onLongPress,
+    this.onDoubleTap,
+    this.onHorizontalDragUpdate,
+    this.onVerticalDragUpdate,
     super.key,
     this.padding = exports.kCupertinoButtonPadding,
     this.constraints,
@@ -29,6 +32,9 @@ class CupertinoButtonWidget extends StatefulWidget {
   final Gradient? backgroundGradient;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
+  final VoidCallback? onDoubleTap;
+  final void Function(DragUpdateDetails)? onHorizontalDragUpdate;
+  final void Function(DragUpdateDetails)? onVerticalDragUpdate;
   final double pressedOpacity;
   final BorderRadius borderRadius;
   final AlignmentGeometry alignment;
@@ -38,7 +44,12 @@ class CupertinoButtonWidget extends StatefulWidget {
   final bool displayCupertinoActivityIndicator;
   final CupertinoActivityIndicator cupertinoActivityIndicator;
 
-  bool get enabled => onPressed != null || onLongPress != null;
+  bool get enabled =>
+      onPressed != null ||
+      onLongPress != null ||
+      onDoubleTap != null ||
+      onHorizontalDragUpdate != null ||
+      onVerticalDragUpdate != null;
 
   @override
   State<CupertinoButtonWidget> createState() => _CupertinoButtonWidgetState();
@@ -86,6 +97,62 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
   void _handleTapDown(TapDownDetails event) {
     if (!_buttonHeldDown) {
       _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnHorizontalDragStart(DragStartDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnHorizontalDragDown(DragDownDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnHorizontalDragCancel() {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
+      _animate();
+    }
+  }
+
+  void _handleOnHorizontalDragEnd(DragEndDetails event) {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
+      _animate();
+    }
+  }
+
+  void _handleOnVerticalDragStart(DragStartDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnVerticalDragDown(DragDownDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnVerticalDragCancel() {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
+      _animate();
+    }
+  }
+
+  void _handleOnVerticalDragEnd(DragEndDetails event) {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
       _animate();
     }
   }
@@ -141,6 +208,38 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
           onTapDown: enabled ? _handleTapDown : null,
           onTapUp: enabled ? _handleTapUp : null,
           onTapCancel: enabled ? _handleTapCancel : null,
+          onHorizontalDragStart:
+              widget.onHorizontalDragUpdate != null
+                  ? _handleOnHorizontalDragStart
+                  : null,
+          onHorizontalDragDown:
+              widget.onHorizontalDragUpdate != null
+                  ? _handleOnHorizontalDragDown
+                  : null,
+          onHorizontalDragCancel:
+              widget.onHorizontalDragUpdate != null
+                  ? _handleOnHorizontalDragCancel
+                  : null,
+          onHorizontalDragEnd:
+              widget.onHorizontalDragUpdate != null
+                  ? _handleOnHorizontalDragEnd
+                  : null,
+          onVerticalDragStart:
+              widget.onVerticalDragUpdate != null
+                  ? _handleOnVerticalDragStart
+                  : null,
+          onVerticalDragDown:
+              widget.onVerticalDragUpdate != null
+                  ? _handleOnVerticalDragDown
+                  : null,
+          onVerticalDragCancel:
+              widget.onVerticalDragUpdate != null
+                  ? _handleOnVerticalDragCancel
+                  : null,
+          onVerticalDragEnd:
+              widget.onVerticalDragUpdate != null
+                  ? _handleOnVerticalDragEnd
+                  : null,
           onTap: switch (widget.onPressed) {
             null => null,
             final onPressed => () {
@@ -153,6 +252,27 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
             final onLongPress => () {
               FocusManager.instance.primaryFocus?.unfocus();
               onLongPress();
+            },
+          },
+          onDoubleTap: switch (widget.onDoubleTap) {
+            null => null,
+            final onDoubleTap => () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onDoubleTap();
+            },
+          },
+          onHorizontalDragUpdate: switch (widget.onHorizontalDragUpdate) {
+            null => null,
+            final onHorizontalDragUpdate => (DragUpdateDetails details) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onHorizontalDragUpdate(details);
+            },
+          },
+          onVerticalDragUpdate: switch (widget.onVerticalDragUpdate) {
+            null => null,
+            final onVerticalDragUpdate => (DragUpdateDetails details) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onVerticalDragUpdate(details);
             },
           },
           child: Semantics(
