@@ -12,6 +12,7 @@ class CupertinoButtonWidget extends StatefulWidget {
     this.onDoubleTap,
     this.onHorizontalDragUpdate,
     this.onVerticalDragUpdate,
+    this.onPanUpdate,
     super.key,
     this.padding = exports.kCupertinoButtonPadding,
     this.constraints,
@@ -35,6 +36,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   final VoidCallback? onDoubleTap;
   final void Function(DragUpdateDetails)? onHorizontalDragUpdate;
   final void Function(DragUpdateDetails)? onVerticalDragUpdate;
+  final void Function(DragUpdateDetails)? onPanUpdate;
   final double pressedOpacity;
   final BorderRadius borderRadius;
   final AlignmentGeometry alignment;
@@ -49,7 +51,8 @@ class CupertinoButtonWidget extends StatefulWidget {
       onLongPress != null ||
       onDoubleTap != null ||
       onHorizontalDragUpdate != null ||
-      onVerticalDragUpdate != null;
+      onVerticalDragUpdate != null ||
+      onPanUpdate != null;
 
   @override
   State<CupertinoButtonWidget> createState() => _CupertinoButtonWidgetState();
@@ -97,6 +100,34 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
   void _handleTapDown(TapDownDetails event) {
     if (!_buttonHeldDown) {
       _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnPanStart(DragStartDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnPanDown(DragDownDetails event) {
+    if (!_buttonHeldDown) {
+      _buttonHeldDown = true;
+      _animate();
+    }
+  }
+
+  void _handleOnPanCancel() {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
+      _animate();
+    }
+  }
+
+  void _handleOnPanEnd(DragEndDetails event) {
+    if (_buttonHeldDown) {
+      _buttonHeldDown = false;
       _animate();
     }
   }
@@ -240,6 +271,11 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
               widget.onVerticalDragUpdate != null
                   ? _handleOnVerticalDragEnd
                   : null,
+          onPanStart: widget.onPanUpdate != null ? _handleOnPanStart : null,
+          onPanDown: widget.onPanUpdate != null ? _handleOnPanDown : null,
+          onPanCancel: widget.onPanUpdate != null ? _handleOnPanCancel : null,
+          onPanEnd: widget.onPanUpdate != null ? _handleOnPanEnd : null,
+
           onTap: switch (widget.onPressed) {
             null => null,
             final onPressed => () {
@@ -259,6 +295,13 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
             final onDoubleTap => () {
               FocusManager.instance.primaryFocus?.unfocus();
               onDoubleTap();
+            },
+          },
+          onPanUpdate: switch (widget.onPanUpdate) {
+            null => null,
+            final onPanUpdate => (DragUpdateDetails details) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onPanUpdate(details);
             },
           },
           onHorizontalDragUpdate: switch (widget.onHorizontalDragUpdate) {
