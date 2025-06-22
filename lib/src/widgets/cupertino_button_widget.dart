@@ -13,6 +13,7 @@ class CupertinoButtonWidget extends StatefulWidget {
     this.onHorizontalDragUpdate,
     this.onVerticalDragUpdate,
     this.onPanUpdate,
+    this.onPanStart,
     super.key,
     this.padding = exports.kCupertinoButtonPadding,
     this.constraints,
@@ -37,6 +38,7 @@ class CupertinoButtonWidget extends StatefulWidget {
   final void Function(DragUpdateDetails)? onHorizontalDragUpdate;
   final void Function(DragUpdateDetails)? onVerticalDragUpdate;
   final void Function(DragUpdateDetails)? onPanUpdate;
+  final void Function(DragStartDetails event)? onPanStart;
   final double pressedOpacity;
   final BorderRadius borderRadius;
   final AlignmentGeometry alignment;
@@ -105,6 +107,7 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
   }
 
   void _handleOnPanStart(DragStartDetails event) {
+    widget.onPanStart?.call(event);
     if (!_buttonHeldDown) {
       _buttonHeldDown = true;
       _animate();
@@ -275,7 +278,6 @@ class _CupertinoButtonWidgetState extends State<CupertinoButtonWidget>
           onPanDown: widget.onPanUpdate != null ? _handleOnPanDown : null,
           onPanCancel: widget.onPanUpdate != null ? _handleOnPanCancel : null,
           onPanEnd: widget.onPanUpdate != null ? _handleOnPanEnd : null,
-
           onTap: switch (widget.onPressed) {
             null => null,
             final onPressed => () {
