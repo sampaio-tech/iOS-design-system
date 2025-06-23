@@ -39,17 +39,29 @@ class NeutralMusicCircularButtonWidget extends StatelessWidget {
     void Function()? onPressed,
     void Function()? onLongPress,
     BorderRadius? borderRadius,
+    TextScaler? textScaler,
+    BoxConstraints constraints = const BoxConstraints(
+      minHeight: 16,
+      minWidth: 16,
+    ),
   }) => NeutralMusicCircularButtonWidget(
     icon: Builder(
       builder: (context) {
         final theme = IosTheme.of(context);
-        return Text(
-          text,
-          style:
-              textStyle ??
-              theme.typography.subheadlineRegular.copyWith(
-                color: theme.neutralMusicDecorations.defaultColors.title,
-              ),
+        return ConstrainedBox(
+          constraints: constraints,
+          child: Center(
+            child: Text(
+              text,
+              style:
+                  textStyle ??
+                  theme.typography.subheadlineRegular.copyWith(
+                    color: theme.neutralMusicDecorations.defaultColors.title,
+                  ),
+              textScaler: textScaler,
+              textAlign: TextAlign.center,
+            ),
+          ),
         );
       },
     ),
