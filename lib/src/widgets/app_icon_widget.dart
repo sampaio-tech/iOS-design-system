@@ -11,6 +11,21 @@ class AppIconWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  factory AppIconWidget.widget({
+    required Widget child,
+    BoxDecoration Function(IosThemeData theme) boxDecorationCallback =
+        defaultBoxDecorationCallback,
+    BorderRadiusGeometry? borderRadius,
+    EdgeInsetsGeometry? padding,
+    Key? key,
+  }) => AppIconWidget._(
+    iconCallback: (theme) => child,
+    borderRadius: borderRadius ?? BorderRadius.circular(7),
+    boxDecorationCallback: boxDecorationCallback,
+    padding: padding ?? const EdgeInsets.all(5),
+    key: key,
+  );
+
   factory AppIconWidget.icon({
     required IconData iconData,
     double iconSize = 20,
