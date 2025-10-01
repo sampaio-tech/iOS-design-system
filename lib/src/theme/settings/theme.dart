@@ -159,16 +159,29 @@ sealed class IosThemeData {
     IosDarkThemeData() => Brightness.dark,
   };
 
-  ThemeData get textFieldThemeData => ThemeData(
+  ThemeData textFieldThemeData({
+    Color? splashColor,
+    Color? cursorColor,
+    Color? Function(IosThemeData theme)? selectionColor,
+    Color? selectionHandleColor,
+  }) => ThemeData(
     brightness: brightness,
-    splashColor: defaultColors.systemBlue,
+    splashColor: splashColor ?? defaultColors.systemBlue,
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: defaultColors.systemBlue,
-      selectionColor: switch (this) {
-        IosLightThemeData() => defaultColors.systemBlue.withValues(alpha: .2),
-        IosDarkThemeData() => defaultLabelColors.primary.withValues(alpha: .2),
-      },
-      selectionHandleColor: defaultColors.systemBlue.withValues(alpha: .2),
+      cursorColor: cursorColor ?? defaultColors.systemBlue,
+      selectionColor:
+          selectionColor?.call(this) ??
+          switch (this) {
+            IosLightThemeData() => defaultColors.systemBlue.withValues(
+              alpha: .2,
+            ),
+            IosDarkThemeData() => defaultLabelColors.primary.withValues(
+              alpha: .2,
+            ),
+          },
+      selectionHandleColor:
+          selectionHandleColor ??
+          defaultColors.systemBlue.withValues(alpha: .2),
     ),
   );
 

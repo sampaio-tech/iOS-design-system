@@ -59,7 +59,16 @@ class CupertinoTextFieldWidget extends StatefulWidget {
     this.enableIMEPersonalizedLearning = true,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.backgroundColor,
+    this.padding = const EdgeInsets.only(left: 16, top: 11, bottom: 11),
+    this.suffixMode = OverlayVisibilityMode.editing,
+    this.placeholderStyle,
+    this.style,
+    this.splashColor,
+    this.cursorColor,
+    this.selectionColor,
+    this.selectionHandleColor,
   });
+
   final String? placeholder;
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -109,6 +118,14 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final SpellCheckConfiguration? spellCheckConfiguration;
   final TextMagnifierConfiguration? magnifierConfiguration;
   final Color? backgroundColor;
+  final EdgeInsets padding;
+  final OverlayVisibilityMode suffixMode;
+  final TextStyle? placeholderStyle;
+  final TextStyle? style;
+  final Color? splashColor;
+  final Color? cursorColor;
+  final Color? Function(IosThemeData theme)? selectionColor;
+  final Color? selectionHandleColor;
 
   /// this is always enabled because Flutter don't allow change disabled
   /// color of [CupertinoTextField]
@@ -154,11 +171,13 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
     final theme = IosTheme.of(context);
     const cursorWidth = 1.0;
     const cursorHeight = 24.0;
-    const suffixMode = OverlayVisibilityMode.editing;
-    const padding = EdgeInsets.only(left: 16, top: 11, bottom: 11);
-
     return Theme(
-      data: theme.textFieldThemeData,
+      data: theme.textFieldThemeData(
+        splashColor: widget.splashColor,
+        cursorColor: widget.cursorColor,
+        selectionColor: widget.selectionColor,
+        selectionHandleColor: widget.selectionHandleColor,
+      ),
       child: CupertinoTextField(
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
@@ -211,7 +230,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
         keyboardAppearance: theme.brightness,
         placeholder: widget.placeholder,
         clearButtonMode: widget.clearButtonMode,
-        suffixMode: suffixMode,
+        suffixMode: widget.suffixMode,
         suffix: GestureDetector(
           onTap: _effectiveController?.clear,
           child: Padding(
@@ -223,16 +242,20 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
             ),
           ),
         ),
-        placeholderStyle: theme.typography.bodyRegular.copyWith(
-          color: theme.defaultLabelColors.secondary,
-        ),
-        style: theme.typography.bodyRegular.copyWith(
-          color: theme.defaultLabelColors.primary,
-        ),
+        placeholderStyle:
+            widget.placeholderStyle ??
+            theme.typography.bodyRegular.copyWith(
+              color: theme.defaultLabelColors.secondary,
+            ),
+        style:
+            widget.style ??
+            theme.typography.bodyRegular.copyWith(
+              color: theme.defaultLabelColors.primary,
+            ),
         cursorWidth: cursorWidth,
         cursorHeight: cursorHeight,
         cursorColor: theme.defaultColors.systemBlue,
-        padding: padding,
+        padding: widget.padding,
         decoration: BoxDecoration(
           color:
               widget.backgroundColor ??

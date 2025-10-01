@@ -18,6 +18,14 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
     this.smartQuotesType,
     this.smartDashesType,
     this.suffixMode = OverlayVisibilityMode.editing,
+    this.padding = const EdgeInsets.only(top: 7, bottom: 7),
+    this.placeholderStyle,
+    this.style,
+    this.splashColor,
+    this.cursorColor,
+    this.selectionColor,
+    this.selectionHandleColor,
+    this.backgroundColor,
   });
 
   final TextEditingController? controller;
@@ -36,34 +44,33 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
   final bool autofocus = false;
   final bool autocorrect = true;
   final OverlayVisibilityMode suffixMode;
+  final EdgeInsets padding;
+  final TextStyle? placeholderStyle;
+  final TextStyle? style;
+  final Color? splashColor;
+  final Color? cursorColor;
+  final Color? Function(IosThemeData theme)? selectionColor;
+  final Color? selectionHandleColor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     final textScaler = MediaQuery.textScalerOf(context);
     final theme = IosTheme.of(context);
     const _borderRadius = BorderRadius.all(Radius.circular(10));
-    const padding = EdgeInsets.only(
-      top: 7,
-      bottom: 7,
-    );
-    const prefixInsets = EdgeInsets.only(
-      left: 8,
-      top: 3,
-      bottom: 3,
-      right: 6,
-    );
-    const suffixInsets = EdgeInsets.only(
-      left: 8,
-      top: 3,
-      bottom: 3,
-      right: 8,
-    );
+    const prefixInsets = EdgeInsets.only(left: 8, top: 3, bottom: 3, right: 6);
+    const suffixInsets = EdgeInsets.only(left: 8, top: 3, bottom: 3, right: 8);
 
     /// this is always enabled because Flutter don't allow change disabled
     /// color of [CupertinoSearchTextField]
     const enabled = true;
     return Theme(
-      data: theme.textFieldThemeData,
+      data: theme.textFieldThemeData(
+        splashColor: splashColor,
+        cursorColor: cursorColor,
+        selectionColor: selectionColor,
+        selectionHandleColor: selectionHandleColor,
+      ),
       child: CupertinoSearchTextField(
         autocorrect: autocorrect,
         autofocus: autofocus,
@@ -96,13 +103,17 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
           color: theme.defaultColors.systemGray01,
         ),
         placeholder: placeholder,
-        style: theme.typography.bodyRegular.copyWith(
-          color: theme.defaultLabelColors.primary,
-        ),
-        placeholderStyle: theme.typography.bodyRegular.copyWith(
-          color: theme.defaultLabelColors.secondary,
-        ),
-        backgroundColor: theme.defaultFillColors.tertiary,
+        style:
+            style ??
+            theme.typography.bodyRegular.copyWith(
+              color: theme.defaultLabelColors.primary,
+            ),
+        placeholderStyle:
+            placeholderStyle ??
+            theme.typography.bodyRegular.copyWith(
+              color: theme.defaultLabelColors.secondary,
+            ),
+        backgroundColor: backgroundColor ?? theme.defaultFillColors.tertiary,
       ),
     );
   }
