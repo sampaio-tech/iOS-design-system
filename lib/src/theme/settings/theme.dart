@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -165,6 +166,7 @@ sealed class IosThemeData {
     Color? Function(IosThemeData theme)? selectionColor,
     Color? selectionHandleColor,
   }) => ThemeData(
+    useMaterial3: false,
     brightness: brightness,
     splashColor: splashColor ?? defaultColors.systemBlue,
     textSelectionTheme: TextSelectionThemeData(
@@ -183,6 +185,16 @@ sealed class IosThemeData {
           selectionHandleColor ??
           defaultColors.systemBlue.withValues(alpha: .2),
     ),
+  );
+
+  CupertinoThemeData textFieldCupertinoThemeData({
+    Color? selectionHandleColor,
+  }) => CupertinoThemeData(
+    brightness: brightness,
+    primaryColor:
+        selectionHandleColor ?? defaultColors.systemBlue.withValues(alpha: .2),
+    selectionHandleColor:
+        selectionHandleColor ?? defaultColors.systemBlue.withValues(alpha: .2),
   );
 
   static IosThemeData fallback(BuildContext? context) {

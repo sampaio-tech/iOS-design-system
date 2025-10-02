@@ -67,6 +67,8 @@ class CupertinoTextFieldWidget extends StatefulWidget {
     this.cursorColor,
     this.selectionColor,
     this.selectionHandleColor,
+    this.cursorWidth = 1,
+    this.cursorHeight = 24,
   });
 
   final String? placeholder;
@@ -126,6 +128,8 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final Color? cursorColor;
   final Color? Function(IosThemeData theme)? selectionColor;
   final Color? selectionHandleColor;
+  final double cursorWidth;
+  final double cursorHeight;
 
   /// this is always enabled because Flutter don't allow change disabled
   /// color of [CupertinoTextField]
@@ -169,102 +173,105 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
   Widget build(BuildContext context) {
     final textScaler = MediaQuery.textScalerOf(context);
     final theme = IosTheme.of(context);
-    const cursorWidth = 1.0;
-    const cursorHeight = 24.0;
-    return Theme(
-      data: theme.textFieldThemeData(
-        splashColor: widget.splashColor,
-        cursorColor: widget.cursorColor,
-        selectionColor: widget.selectionColor,
+    return CupertinoTheme(
+      data: theme.textFieldCupertinoThemeData(
         selectionHandleColor: widget.selectionHandleColor,
       ),
-      child: CupertinoTextField(
-        keyboardType: widget.keyboardType,
-        textInputAction: widget.textInputAction,
-        textCapitalization: widget.textCapitalization,
-        textAlign: widget.textAlign,
-        textAlignVertical: widget.textAlignVertical,
-        textDirection: widget.textDirection,
-        readOnly: widget.readOnly,
-        showCursor: widget.showCursor,
-        autofocus: widget.autofocus,
-        obscuringCharacter: widget.obscuringCharacter,
-        obscureText: widget.obscureText,
-        autocorrect: widget.autocorrect,
-        smartDashesType: widget.smartDashesType,
-        smartQuotesType: widget.smartQuotesType,
-        enableSuggestions: widget.enableSuggestions,
-        maxLines: widget.maxLines,
-        minLines: widget.minLines,
-        expands: widget.expands,
-        maxLength: widget.maxLength,
-        maxLengthEnforcement: widget.maxLengthEnforcement,
-        onChanged: widget.onChanged,
-        onEditingComplete: widget.onEditingComplete,
-        onSubmitted: widget.onSubmitted,
-        onTapOutside: widget.onTapOutside,
-        inputFormatters: widget.inputFormatters,
-        cursorOpacityAnimates: widget.cursorOpacityAnimates,
-        selectionHeightStyle: widget.selectionHeightStyle,
-        selectionWidthStyle: widget.selectionWidthStyle,
-        scrollPadding: widget.scrollPadding,
-        dragStartBehavior: widget.dragStartBehavior,
-        enableInteractiveSelection: widget.enableInteractiveSelection,
-        selectionControls: widget.selectionControls,
-        onTap: widget.onTap,
-        scrollController: widget.scrollController,
-        scrollPhysics: widget.scrollPhysics,
-        autofillHints: widget.autofillHints,
-        contentInsertionConfiguration: widget.contentInsertionConfiguration,
-        clipBehavior: widget.clipBehavior,
-        restorationId: widget.restorationId,
-        contextMenuBuilder: widget.contextMenuBuilder,
-        spellCheckConfiguration: widget.spellCheckConfiguration,
-        magnifierConfiguration: widget.magnifierConfiguration,
-        stylusHandwritingEnabled: widget.scribbleEnabled,
-        enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-        controller: _effectiveController,
-        focusNode: widget.focusNode,
-        undoController: widget.undoController,
-        enabled: widget.enabled,
-        keyboardAppearance: theme.brightness,
-        placeholder: widget.placeholder,
-        clearButtonMode: widget.clearButtonMode,
-        suffixMode: widget.suffixMode,
-        suffix: GestureDetector(
-          onTap: _effectiveController?.clear,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 16, left: 8),
-            child: Icon(
-              CupertinoIcons.clear_thick_circled,
-              size: textScaler.scale(18),
-              color: theme.defaultColors.systemGray01,
+      child: Theme(
+        data: theme.textFieldThemeData(
+          splashColor: widget.splashColor,
+          cursorColor: widget.cursorColor,
+          selectionColor: widget.selectionColor,
+          selectionHandleColor: widget.selectionHandleColor,
+        ),
+        child: CupertinoTextField(
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          textCapitalization: widget.textCapitalization,
+          textAlign: widget.textAlign,
+          textAlignVertical: widget.textAlignVertical,
+          textDirection: widget.textDirection,
+          readOnly: widget.readOnly,
+          showCursor: widget.showCursor,
+          autofocus: widget.autofocus,
+          obscuringCharacter: widget.obscuringCharacter,
+          obscureText: widget.obscureText,
+          autocorrect: widget.autocorrect,
+          smartDashesType: widget.smartDashesType,
+          smartQuotesType: widget.smartQuotesType,
+          enableSuggestions: widget.enableSuggestions,
+          maxLines: widget.maxLines,
+          minLines: widget.minLines,
+          expands: widget.expands,
+          maxLength: widget.maxLength,
+          maxLengthEnforcement: widget.maxLengthEnforcement,
+          onChanged: widget.onChanged,
+          onEditingComplete: widget.onEditingComplete,
+          onSubmitted: widget.onSubmitted,
+          onTapOutside: widget.onTapOutside,
+          inputFormatters: widget.inputFormatters,
+          cursorOpacityAnimates: widget.cursorOpacityAnimates,
+          selectionHeightStyle: widget.selectionHeightStyle,
+          selectionWidthStyle: widget.selectionWidthStyle,
+          scrollPadding: widget.scrollPadding,
+          dragStartBehavior: widget.dragStartBehavior,
+          enableInteractiveSelection: widget.enableInteractiveSelection,
+          selectionControls: widget.selectionControls,
+          onTap: widget.onTap,
+          scrollController: widget.scrollController,
+          scrollPhysics: widget.scrollPhysics,
+          autofillHints: widget.autofillHints,
+          contentInsertionConfiguration: widget.contentInsertionConfiguration,
+          clipBehavior: widget.clipBehavior,
+          restorationId: widget.restorationId,
+          contextMenuBuilder: widget.contextMenuBuilder,
+          spellCheckConfiguration: widget.spellCheckConfiguration,
+          magnifierConfiguration: widget.magnifierConfiguration,
+          stylusHandwritingEnabled: widget.scribbleEnabled,
+          enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+          controller: _effectiveController,
+          focusNode: widget.focusNode,
+          undoController: widget.undoController,
+          enabled: widget.enabled,
+          keyboardAppearance: theme.brightness,
+          placeholder: widget.placeholder,
+          clearButtonMode: widget.clearButtonMode,
+          suffixMode: widget.suffixMode,
+          suffix: GestureDetector(
+            onTap: _effectiveController?.clear,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16, left: 8),
+              child: Icon(
+                CupertinoIcons.clear_thick_circled,
+                size: textScaler.scale(18),
+                color: theme.defaultColors.systemGray01,
+              ),
             ),
           ),
-        ),
-        placeholderStyle:
-            widget.placeholderStyle ??
-            theme.typography.bodyRegular.copyWith(
-              color: theme.defaultLabelColors.secondary,
-            ),
-        style:
-            widget.style ??
-            theme.typography.bodyRegular.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        cursorWidth: cursorWidth,
-        cursorHeight: cursorHeight,
-        cursorColor: theme.defaultColors.systemBlue,
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          color:
-              widget.backgroundColor ??
-              switch (theme) {
-                IosLightThemeData() =>
-                  theme.defaultSystemBackgroundsColors.primaryLight,
-                IosDarkThemeData() =>
-                  theme.defaultSystemBackgroundsColors.primaryDarkElevated,
-              },
+          placeholderStyle:
+              widget.placeholderStyle ??
+              theme.typography.bodyRegular.copyWith(
+                color: theme.defaultLabelColors.secondary,
+              ),
+          style:
+              widget.style ??
+              theme.typography.bodyRegular.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          cursorWidth: widget.cursorWidth,
+          cursorHeight: widget.cursorHeight,
+          cursorColor: widget.cursorColor ?? theme.defaultColors.systemBlue,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            color:
+                widget.backgroundColor ??
+                switch (theme) {
+                  IosLightThemeData() =>
+                    theme.defaultSystemBackgroundsColors.primaryLight,
+                  IosDarkThemeData() =>
+                    theme.defaultSystemBackgroundsColors.primaryDarkElevated,
+                },
+          ),
         ),
       ),
     );

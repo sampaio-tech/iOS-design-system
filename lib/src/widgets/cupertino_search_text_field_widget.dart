@@ -64,56 +64,61 @@ class CupertinoSearchTextFieldWidget extends StatelessWidget {
     /// this is always enabled because Flutter don't allow change disabled
     /// color of [CupertinoSearchTextField]
     const enabled = true;
-    return Theme(
-      data: theme.textFieldThemeData(
-        splashColor: splashColor,
-        cursorColor: cursorColor,
-        selectionColor: selectionColor,
+    return CupertinoTheme(
+      data: theme.textFieldCupertinoThemeData(
         selectionHandleColor: selectionHandleColor,
       ),
-      child: CupertinoSearchTextField(
-        autocorrect: autocorrect,
-        autofocus: autofocus,
-        enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
-        keyboardType: keyboardType,
-        onSuffixTap: onSuffixTap,
-        suffixMode: suffixMode,
-        restorationId: restorationId,
-        smartQuotesType: smartQuotesType,
-        smartDashesType: smartDashesType,
-        focusNode: focusNode,
-        enabled: enabled,
-        controller: controller,
-        onChanged: onChanged,
-        onSubmitted: onSubmitted,
-        onTap: onTap,
-        borderRadius: borderRadius ?? _borderRadius,
-        padding: padding,
-        prefixInsets: prefixInsets,
-        itemColor: theme.defaultLabelColors.secondary,
-        prefixIcon: Icon(
-          CupertinoIcons.search,
-          color: theme.defaultLabelColors.secondary,
-          size: textScaler.scale(20),
+      child: Theme(
+        data: theme.textFieldThemeData(
+          splashColor: splashColor,
+          cursorColor: cursorColor,
+          selectionColor: selectionColor,
+          selectionHandleColor: selectionHandleColor,
         ),
-        suffixInsets: suffixInsets,
-        suffixIcon: Icon(
-          CupertinoIcons.xmark_circle_fill,
-          size: textScaler.scale(18),
-          color: theme.defaultColors.systemGray01,
+        child: CupertinoSearchTextField(
+          autocorrect: autocorrect,
+          autofocus: autofocus,
+          enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
+          keyboardType: keyboardType,
+          onSuffixTap: onSuffixTap,
+          suffixMode: suffixMode,
+          restorationId: restorationId,
+          smartQuotesType: smartQuotesType,
+          smartDashesType: smartDashesType,
+          focusNode: focusNode,
+          enabled: enabled,
+          controller: controller,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          onTap: onTap,
+          borderRadius: borderRadius ?? _borderRadius,
+          padding: padding,
+          prefixInsets: prefixInsets,
+          itemColor: theme.defaultLabelColors.secondary,
+          prefixIcon: Icon(
+            CupertinoIcons.search,
+            color: theme.defaultLabelColors.secondary,
+            size: textScaler.scale(20),
+          ),
+          suffixInsets: suffixInsets,
+          suffixIcon: Icon(
+            CupertinoIcons.xmark_circle_fill,
+            size: textScaler.scale(18),
+            color: theme.defaultColors.systemGray01,
+          ),
+          placeholder: placeholder,
+          style:
+              style ??
+              theme.typography.bodyRegular.copyWith(
+                color: theme.defaultLabelColors.primary,
+              ),
+          placeholderStyle:
+              placeholderStyle ??
+              theme.typography.bodyRegular.copyWith(
+                color: theme.defaultLabelColors.secondary,
+              ),
+          backgroundColor: backgroundColor ?? theme.defaultFillColors.tertiary,
         ),
-        placeholder: placeholder,
-        style:
-            style ??
-            theme.typography.bodyRegular.copyWith(
-              color: theme.defaultLabelColors.primary,
-            ),
-        placeholderStyle:
-            placeholderStyle ??
-            theme.typography.bodyRegular.copyWith(
-              color: theme.defaultLabelColors.secondary,
-            ),
-        backgroundColor: backgroundColor ?? theme.defaultFillColors.tertiary,
       ),
     );
   }
