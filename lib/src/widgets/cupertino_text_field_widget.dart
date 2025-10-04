@@ -59,6 +59,7 @@ class CupertinoTextFieldWidget extends StatefulWidget {
     this.enableIMEPersonalizedLearning = true,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.backgroundColor,
+    this.decorationBuilder,
     this.padding = const EdgeInsets.only(left: 16, top: 11, bottom: 11),
     this.suffixMode = OverlayVisibilityMode.editing,
     this.placeholderStyle,
@@ -120,6 +121,7 @@ class CupertinoTextFieldWidget extends StatefulWidget {
   final SpellCheckConfiguration? spellCheckConfiguration;
   final TextMagnifierConfiguration? magnifierConfiguration;
   final Color? backgroundColor;
+  final BoxDecoration? Function(BoxDecoration? decoration)? decorationBuilder;
   final EdgeInsets padding;
   final OverlayVisibilityMode suffixMode;
   final TextStyle? placeholderStyle;
@@ -173,6 +175,16 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
   Widget build(BuildContext context) {
     final textScaler = MediaQuery.textScalerOf(context);
     final theme = IosTheme.of(context);
+    final decoration = BoxDecoration(
+      color:
+          widget.backgroundColor ??
+          switch (theme) {
+            IosLightThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryLight,
+            IosDarkThemeData() =>
+              theme.defaultSystemBackgroundsColors.primaryDarkElevated,
+          },
+    );
     return CupertinoTheme(
       data: theme.textFieldCupertinoThemeData(
         selectionHandleColor: widget.selectionHandleColor,
@@ -262,16 +274,7 @@ class _CupertinoTextFieldWidgetState extends State<CupertinoTextFieldWidget> {
           cursorHeight: widget.cursorHeight,
           cursorColor: widget.cursorColor ?? theme.defaultColors.systemBlue,
           padding: widget.padding,
-          decoration: BoxDecoration(
-            color:
-                widget.backgroundColor ??
-                switch (theme) {
-                  IosLightThemeData() =>
-                    theme.defaultSystemBackgroundsColors.primaryLight,
-                  IosDarkThemeData() =>
-                    theme.defaultSystemBackgroundsColors.primaryDarkElevated,
-                },
-          ),
+          decoration: widget.decorationBuilder?.call(decoration) ?? decoration,
         ),
       ),
     );
