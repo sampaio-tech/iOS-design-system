@@ -35,7 +35,7 @@ class CupertinoSheetWidget extends StatelessWidget {
     bool useNestedNavigation = false,
   }) => showCupertinoSheet<T>(
     context: context,
-    pageBuilder:
+    builder:
         (context) => CupertinoSheetWidget(
           title: title,
           children: children,
