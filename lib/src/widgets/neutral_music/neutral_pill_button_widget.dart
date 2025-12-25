@@ -1,41 +1,47 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../ios_design_system.dart';
+import 'neutral_decorations_style.dart';
 
-class NeutralMusicPillButtonWidget extends StatelessWidget {
-  const NeutralMusicPillButtonWidget({
+class NeutralPillButtonWidget extends StatelessWidget {
+  const NeutralPillButtonWidget({
     super.key,
     this.label,
     this.icon,
     this.onLongPress,
     this.onPressed,
     this.displayCupertinoActivityIndicator = false,
+    this.style = const NeutralMusicDecorationsStyle(),
   });
 
-  factory NeutralMusicPillButtonWidget.icon({
+  factory NeutralPillButtonWidget.icon({
     required IconData icon,
     required String? label,
     double iconSize = 16,
     void Function()? onPressed,
     void Function()? onLongPress,
     bool displayCupertinoActivityIndicator = false,
-  }) => NeutralMusicPillButtonWidget(
+    NeutralDecorationsStyle? style,
+  }) => NeutralPillButtonWidget(
     label: label,
     icon: Builder(
       builder: (context) {
         final theme = IosTheme.of(context);
+        final decorationsStyle =
+            style ?? const NeutralMusicDecorationsStyle();
         if (displayCupertinoActivityIndicator) {
           return CupertinoActivityIndicator(radius: iconSize / 2);
         }
         return Icon(
           icon,
           size: iconSize,
-          color: theme.neutralMusicDecorations.defaultColors.title,
+          color: decorationsStyle.titleColor(theme),
         );
       },
     ),
     onPressed: onPressed,
     onLongPress: onLongPress,
+    style: style ?? const NeutralMusicDecorationsStyle(),
   );
 
   final String? label;
@@ -43,6 +49,7 @@ class NeutralMusicPillButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
   final void Function()? onLongPress;
   final bool displayCupertinoActivityIndicator;
+  final NeutralDecorationsStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +69,7 @@ class NeutralMusicPillButtonWidget extends StatelessWidget {
               true => null,
             },
             child: Container(
-              decoration:
-                  theme.neutralMusicDecorations.gradients.backgroundPillButton,
+              decoration: style.backgroundPillButton(theme),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 spacing: switch (label != null && icon != null) {
@@ -81,8 +87,7 @@ class NeutralMusicPillButtonWidget extends StatelessWidget {
                     final label => Text(
                       label,
                       style: theme.typography.subheadlineBold.copyWith(
-                        color:
-                            theme.neutralMusicDecorations.defaultColors.title,
+                        color: style.titleColor(theme),
                       ),
                     ),
                   },
@@ -95,3 +100,4 @@ class NeutralMusicPillButtonWidget extends StatelessWidget {
     );
   }
 }
+

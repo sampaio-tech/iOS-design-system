@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../ios_design_system.dart';
 
-class NeutralMusicCardWidget extends StatelessWidget {
-  const NeutralMusicCardWidget({
+class NeutralCardWidget extends StatelessWidget {
+  const NeutralCardWidget({
     required this.primaryChildren,
     required this.secondaryChildren,
     required this.onPressed,
     required this.onLongPress,
-    this.primaryChildrenDecoration,
-    this.secondaryChildrenDecoration,
+    this.style = const NeutralMusicDecorationsStyle(),
     super.key,
   });
 
   final List<Widget> primaryChildren;
   final List<Widget> secondaryChildren;
-  final BoxDecoration? primaryChildrenDecoration;
-  final BoxDecoration? secondaryChildrenDecoration;
   final void Function()? onPressed;
   final void Function()? onLongPress;
+  final NeutralDecorationsStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +29,7 @@ class NeutralMusicCardWidget extends StatelessWidget {
         onLongPress: onLongPress,
         child: Container(
           padding: const EdgeInsets.only(top: 16),
-          decoration:
-              primaryChildrenDecoration ??
-              theme
-                  .neutralMusicDecorations
-                  .gradients
-                  .primaryBackgroundLargeWidget,
+          decoration: style.primaryBackgroundLargeWidget(theme),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,12 +40,7 @@ class NeutralMusicCardWidget extends StatelessWidget {
               if (secondaryChildren.isNotEmpty)
                 Container(
                   padding: const EdgeInsets.only(top: 15, bottom: 17),
-                  decoration:
-                      secondaryChildrenDecoration ??
-                      theme
-                          .neutralMusicDecorations
-                          .gradients
-                          .secondaryBackgroundLargeWidget,
+                  decoration: style.secondaryBackgroundLargeWidget(theme),
                   child: Column(children: secondaryChildren),
                 ),
             ],
