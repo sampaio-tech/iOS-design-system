@@ -132,6 +132,7 @@ sealed class IosThemeData {
     required this.weatherDecorations,
     required this.stocksDecorations,
     required this.neutralMusicDecorations,
+    required this.neutralPodcastDecorations,
     required this.appStoreDecorations,
     required this.booksDecorations,
   });
@@ -152,6 +153,7 @@ sealed class IosThemeData {
   final WeatherDecorations weatherDecorations;
   final StocksDecorations stocksDecorations;
   final NeutralMusicDecorations neutralMusicDecorations;
+  final NeutralPodcastDecorations neutralPodcastDecorations;
   final AppStoreDecorations appStoreDecorations;
   final BooksDecorations booksDecorations;
 
@@ -254,6 +256,10 @@ sealed class IosThemeData {
         b.neutralMusicDecorations,
         t,
       ),
+      neutralPodcastDecorations: neutralPodcastDecorations.lerp(
+        b.neutralPodcastDecorations,
+        t,
+      ),
       appStoreDecorations: appStoreDecorations.lerp(b.appStoreDecorations, t),
     );
   }
@@ -273,6 +279,7 @@ sealed class IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    NeutralPodcastDecorations? neutralPodcastDecorations,
     AppStoreDecorations? appStoreDecorations,
   });
 }
@@ -295,6 +302,7 @@ class IosLightThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    NeutralPodcastDecorations? neutralPodcastDecorations,
     AppStoreDecorations? appStoreDecorations,
     BooksDecorations? booksDecorations,
   }) : super(
@@ -329,6 +337,9 @@ class IosLightThemeData extends IosThemeData {
          stocksDecorations: stocksDecorations ?? const StocksDecorationsLight(),
          neutralMusicDecorations:
              neutralMusicDecorations ?? const NeutralMusicDecorationsLight(),
+         neutralPodcastDecorations:
+             neutralPodcastDecorations ??
+             const NeutralPodcastDecorationsLight(),
          appStoreDecorations:
              appStoreDecorations ?? const AppStoreDecorationsLight(),
          booksDecorations: booksDecorations ?? BooksDecorationsLight(),
@@ -350,6 +361,7 @@ class IosLightThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    NeutralPodcastDecorations? neutralPodcastDecorations,
     AppStoreDecorations? appStoreDecorations,
     BooksDecorations? booksDecorations,
   }) => IosLightThemeData(
@@ -367,6 +379,7 @@ class IosLightThemeData extends IosThemeData {
     weatherDecorations: weatherDecorations,
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
+    neutralPodcastDecorations: neutralPodcastDecorations,
     appStoreDecorations: appStoreDecorations,
     booksDecorations: booksDecorations,
   );
@@ -390,6 +403,7 @@ class IosDarkThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    NeutralPodcastDecorations? neutralPodcastDecorations,
     AppStoreDecorations? appStoreDecorations,
     BooksDecorations? booksDecorations,
   }) : super(
@@ -423,6 +437,8 @@ class IosDarkThemeData extends IosThemeData {
          stocksDecorations: stocksDecorations ?? const StocksDecorationsDark(),
          neutralMusicDecorations:
              neutralMusicDecorations ?? const NeutralMusicDecorationsDark(),
+         neutralPodcastDecorations:
+             neutralPodcastDecorations ?? const NeutralPodcastDecorationsDark(),
          appStoreDecorations:
              appStoreDecorations ?? const AppStoreDecorationsDark(),
          booksDecorations: booksDecorations ?? BooksDecorationsLight(),
@@ -444,6 +460,7 @@ class IosDarkThemeData extends IosThemeData {
     WeatherDecorations? weatherDecorations,
     StocksDecorations? stocksDecorations,
     NeutralMusicDecorations? neutralMusicDecorations,
+    NeutralPodcastDecorations? neutralPodcastDecorations,
     AppStoreDecorations? appStoreDecorations,
     BooksDecorations? booksDecorations,
   }) => IosDarkThemeData(
@@ -461,6 +478,7 @@ class IosDarkThemeData extends IosThemeData {
     weatherDecorations: weatherDecorations,
     stocksDecorations: stocksDecorations,
     neutralMusicDecorations: neutralMusicDecorations,
+    neutralPodcastDecorations: neutralPodcastDecorations,
     appStoreDecorations: appStoreDecorations,
     booksDecorations: booksDecorations,
   );
