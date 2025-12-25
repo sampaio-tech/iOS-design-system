@@ -8,11 +8,15 @@ class NeutralMusicCardWidget extends StatelessWidget {
     required this.secondaryChildren,
     required this.onPressed,
     required this.onLongPress,
+    this.primaryChildrenDecoration,
+    this.secondaryChildrenDecoration,
     super.key,
   });
 
   final List<Widget> primaryChildren;
   final List<Widget> secondaryChildren;
+  final BoxDecoration? primaryChildrenDecoration;
+  final BoxDecoration? secondaryChildrenDecoration;
   final void Function()? onPressed;
   final void Function()? onLongPress;
 
@@ -28,6 +32,7 @@ class NeutralMusicCardWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.only(top: 16),
           decoration:
+              primaryChildrenDecoration ??
               theme
                   .neutralMusicDecorations
                   .gradients
@@ -43,6 +48,7 @@ class NeutralMusicCardWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(top: 15, bottom: 17),
                   decoration:
+                      secondaryChildrenDecoration ??
                       theme
                           .neutralMusicDecorations
                           .gradients
