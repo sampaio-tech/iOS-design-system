@@ -36,3 +36,6 @@ build/
 # Cursor config
 
 .cursor/mcp.json
+
+# Ralph Orchestrator config
+ralph.yml
