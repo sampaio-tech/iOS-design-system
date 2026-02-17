@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ios_design_system/ios_design_system.dart';
+import '../components/button_preview_demo.dart';
 
 /// Home page for the documentation website
 class HomePage extends StatelessWidget {
@@ -55,9 +56,13 @@ class HomePage extends StatelessWidget {
                     size: const LargeButtonSize(),
                     color: const GreyTransparentButtonColor(),
                     onPressed: () {
-                      // TODO: Navigate to components
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (_) => const ButtonPreviewDemo(),
+                        ),
+                      );
                     },
-                    label: 'View Components',
+                    label: 'Preview Demo',
                   ),
                 ],
               ),
