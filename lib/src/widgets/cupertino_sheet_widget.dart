@@ -33,6 +33,7 @@ class CupertinoSheetWidget extends StatelessWidget {
     required List<Widget> Function(BuildContext context)? children,
     Color? Function(IosThemeData theme)? colorCallback,
     bool useNestedNavigation = false,
+    bool enableDrag = true,
   }) => showCupertinoSheet<T>(
     context: context,
     builder:
@@ -42,6 +43,7 @@ class CupertinoSheetWidget extends StatelessWidget {
           colorCallback: colorCallback,
         ),
     useNestedNavigation: useNestedNavigation,
+    enableDrag: enableDrag,
   );
 
   static Future<T?> showCupertinoModalSheet<T>({
