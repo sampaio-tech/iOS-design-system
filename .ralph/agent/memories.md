@@ -1,0 +1,17 @@
+# Memories
+
+## Patterns
+
+### mem-1771340106-87f1
+> Documentation app uses organized directory structure: lib/core/ for theme/routing/services, lib/shared/ for reusable components, lib/pages/ for page components, lib/data/ for models and content. This pattern separates concerns clearly.
+<!-- tags: architecture, documentation | created: 2026-02-17 -->
+
+## Decisions
+
+## Fixes
+
+### mem-1771340100-e425
+> Flutter create generates code with experimental dot-shorthand syntax that fails to compile in Flutter 3.11.0. Fix by replacing .fromSeed() with ColorScheme.fromSeed() and .center with MainAxisAlignment.center
+<!-- tags: flutter, tooling | created: 2026-02-17 -->
+
+## Context

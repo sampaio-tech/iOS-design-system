@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = IosDarkThemeData();
+    final themeData = IosLightThemeData();
     return IosAnimatedTheme(
       data: themeData,
       child: CupertinoApp(
@@ -213,7 +213,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(height: 8),
                   ModalSheetWidget(
                     cupertinoSearchTextFieldWidget:
-                        const CupertinoSearchTextFieldWidget(),
+                        CupertinoSearchTextFieldWidget(
+                      cursorColor:
+                          IosTheme.of(context).acessibleColors.systemOrange,
+                      splashColor:
+                          IosTheme.of(context).acessibleColors.systemOrange,
+                      selectionColor: (theme) =>
+                          theme.acessibleColors.systemOrange.withAlpha(50),
+                    ),
                     title: ModalTitleWidget(
                       title: 'Title',
                       leftLabelButton: LabelButtonWidget.label(
@@ -246,7 +253,41 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: 'Label',
                   ),
                   const SizedBox(height: 8),
-                  const CupertinoSearchTextFieldWidget(),
+                  CupertinoSearchTextFieldWidget(
+                    cursorColor:
+                        IosTheme.of(context).acessibleColors.systemOrange,
+                    splashColor:
+                        IosTheme.of(context).acessibleColors.systemOrange,
+                    selectionColor: (theme) =>
+                        theme.acessibleColors.systemOrange.withAlpha(50),
+                    selectionHandleColor:
+                        IosTheme.of(context).acessibleColors.systemOrange,
+                  ),
+                  const SizedBox(height: 8),
+                  CupertinoTextFieldWidget(
+                      cursorColor:
+                          IosTheme.of(context).defaultColors.systemGreen,
+                      splashColor:
+                          IosTheme.of(context).defaultColors.systemGreen,
+                      selectionHandleColor:
+                          IosTheme.of(context).defaultColors.systemGreen,
+                      selectionColor: switch (IosTheme.of(context)) {
+                        IosLightThemeData() => (theme) => IosTheme.of(context)
+                            .defaultColors
+                            .systemGreen
+                            .withValues(
+                              alpha: .2,
+                            ),
+                        IosDarkThemeData() => (theme) => IosTheme.of(context)
+                            .defaultLabelColors
+                            .primary
+                            .withValues(
+                              alpha: .2,
+                            ),
+                      }
+                      // selectionColor: (theme) =>
+                      //     theme.acessibleColors.systemOrange.withAlpha(50),
+                      ),
                   const SizedBox(height: 8),
                   GroupedTableWidget(
                     rows: [
