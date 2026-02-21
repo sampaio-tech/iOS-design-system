@@ -41,7 +41,7 @@ Add to your `pubspec.yaml`:
 dependencies:
   ios_design_system:
     git:
-      url: https://github.com/yourusername/ios_design_system.git
+      url: https://github.com/sampaio-tech/iOS-design-system.git
       # Or use path for local development:
       # path: ../ios_design_system
 ```
