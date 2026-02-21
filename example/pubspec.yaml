@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   intl: ^0.20.0
+  flutter_hooks: ^0.21.2
   ios_design_system:
     path: ../
 
