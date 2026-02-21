@@ -151,3 +151,118 @@ Task: Step 3 - Core Component Preview System
 - Create ComponentPreview widget for interactive examples
 - Build variation and state controls
 - Implement preview canvas with theme support
+
+---
+
+## Iteration 3 - Step 3: Core Component Preview System
+
+### Understanding
+
+**Objective**: Build the reusable ComponentPreview widget that will be used across all component documentation pages.
+
+**Key Components**:
+1. ComponentPreview widget with variation/state controls
+2. PreviewConfig model
+3. ComponentVariation and ComponentState models
+4. Variation and state selector widgets
+5. Preview canvas with isolated theme
+
+**Approach**:
+1. Create data models first (PreviewConfig, ComponentVariation, ComponentState)
+2. Build ComponentPreview widget with controls and canvas
+3. Create selector widgets for variations and states
+4. Test with a simple example
+
+**Confidence**: 90% - Clear specification, building on existing theme system
+
+### Implementation Starting
+
+
+### Implementation Completed
+
+**Actions Taken**:
+1. Created data models:
+   - `PreviewConfig` - Configuration for component preview (theme, variation, state)
+   - `ComponentVariation` - Represents variations (size, color, style)
+   - `ComponentState` - Represents states (enabled, disabled, selected, etc.)
+2. Created `ComponentPreview` widget with:
+   - Controls panel (variation selector, state selector, theme toggle)
+   - Preview canvas with isolated theme
+   - Animated theme toggle
+   - Responsive layout with Wrap
+3. Created `ButtonPreviewDemo` page to showcase ComponentPreview
+4. Updated HomePage with navigation to demo page
+5. Fixed all API compatibility issues:
+   - Used correct ButtonSize classes: SmallButtonSize, MediumButtonSize, LargeButtonSize
+   - Used correct color properties: defaultLabelColors, defaultSystemGroupedBackgroundsColors, defaultSeparatorColors
+   - Fixed const issues by using String properties instead of ButtonSize in ComponentVariation
+6. Verified build: `flutter build web --release` ✅
+
+**Key Learnings**:
+- ComponentVariation properties should use primitive types (String, int, etc.) for const constructors
+- ButtonSize has concrete classes: SmallButtonSize, MediumButtonSize, LargeButtonSize
+- Theme API structure:
+  - `theme.defaultColors.*` for system colors (systemBlue, systemGreen, systemGray05, etc.)
+  - `theme.defaultLabelColors.*` for label colors (primary, secondary, tertiary)
+  - `theme.defaultSystemGroupedBackgroundsColors.*` for backgrounds
+  - `theme.defaultSeparatorColors.*` for separators
+- Use `withValues(alpha:)` instead of `withOpacity()` for newer Flutter API
+
+**Files Created**:
+- `lib/data/models/preview_config.dart`
+- `lib/data/models/component_variation.dart`
+- `lib/data/models/component_state.dart`
+- `lib/shared/widgets/component_preview.dart`
+- `lib/pages/components/button_preview_demo.dart`
+
+**Files Modified**:
+- `lib/pages/home/home_page.dart` (added navigation to demo)
+
+**Test Results**:
+- Flutter analyze: No issues found ✅
+- Build successful in 36.3 seconds ✅
+
+**Commit**: Ready to commit
+
+
+**Commit**: `03eba59` - "feat(docs): implement Core Component Preview System (Step 3)"
+
+**Task Closed**: ✅ task-1771339875-6eba
+
+**Memories Saved**:
+- ButtonSize concrete classes pattern
+- Theme API structure pattern
+- ComponentVariation const constructor pattern
+
+### Next Iteration
+
+Task: Step 4 - Theme Provider and Switching
+- Enhance DocumentationThemeProvider with persistence
+- Create theme toggle button component
+- Integrate theme switching in header and preview
+
+
+---
+
+## Iteration 4 - Step 4: Theme Provider and Switching
+
+### Understanding
+
+**Objective**: Enhance DocumentationThemeProvider with persistence using SharedPreferences.
+
+**Current State**:
+- DocumentationThemeProvider exists from Step 2 but lacks persistence
+- Theme toggle in header works but doesn't persist across sessions
+- ComponentPreview has independent theme state
+
+**What Needs to Be Done**:
+1. Enhance DocumentationThemeProvider to persist theme using SharedPreferences
+2. Add system theme detection support
+3. Create ThemeToggleButton component with icons
+4. Integrate into existing header
+5. Write tests for persistence and system detection
+
+**Confidence**: 95% - Clear specification, building on existing provider
+
+### Implementation Starting
+

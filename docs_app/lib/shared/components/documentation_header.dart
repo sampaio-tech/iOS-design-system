@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ios_design_system/ios_design_system.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../core/theme/documentation_theme_provider.dart';
+import 'theme_toggle_button.dart';
 
 /// Header component for the documentation website
 class DocumentationHeader extends StatelessWidget {
@@ -12,7 +11,6 @@ class DocumentationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = IosTheme.of(context);
-    final themeProvider = context.watch<DocumentationThemeProvider>();
 
     return Container(
       height: 60,
@@ -50,17 +48,7 @@ class DocumentationHeader extends StatelessWidget {
             const Spacer(),
 
             // Theme toggle button
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: themeProvider.toggleTheme,
-              child: Icon(
-                themeProvider.isDark
-                    ? CupertinoIcons.sun_max_fill
-                    : CupertinoIcons.moon_fill,
-                size: 22,
-                color: theme.defaultLabelColors.primary,
-              ),
-            ),
+            const ThemeToggleButton(),
 
             const SizedBox(width: 8),
 
