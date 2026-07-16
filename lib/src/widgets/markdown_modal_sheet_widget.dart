@@ -26,7 +26,7 @@ class MarkdownModalSheetWidget extends HookWidget {
     this.imageBuilder,
     this.sourceTagBuilder,
     this.highlightBuilder,
-    this.onLinkTab,
+    this.onLinkTap,
     this.latexWorkaround,
     this.latexBuilder,
     super.key,
@@ -48,8 +48,8 @@ class MarkdownModalSheetWidget extends HookWidget {
   final Color? linkColor;
   final Color? linkHoverColor;
   final TextStyle? style;
-  final Widget Function(BuildContext, String, String, TextStyle)? linkBuilder;
-  final Widget Function(BuildContext, String)? imageBuilder;
+  final Widget Function(BuildContext, InlineSpan, String, TextStyle)? linkBuilder;
+  final Widget Function(BuildContext, String, double?, double?)? imageBuilder;
   final Widget Function(BuildContext, String, TextStyle)? sourceTagBuilder;
   final Widget Function(BuildContext, String, TextStyle)? highlightBuilder;
   final void Function({
@@ -57,7 +57,7 @@ class MarkdownModalSheetWidget extends HookWidget {
     required String title,
     required BuildContext context,
   })?
-  onLinkTab;
+  onLinkTap;
   final String Function(String)? latexWorkaround;
   final Widget Function(BuildContext, String, TextStyle, bool)? latexBuilder;
 
@@ -110,9 +110,9 @@ class MarkdownModalSheetWidget extends HookWidget {
             imageBuilder: imageBuilder,
             sourceTagBuilder: sourceTagBuilder,
             highlightBuilder: highlightBuilder,
-            onLinkTab:
+            onLinkTap:
                 (url, title) =>
-                    onLinkTab?.call(url: url, title: title, context: context),
+                    onLinkTap?.call(url: url, title: title, context: context),
             latexWorkaround: latexWorkaround,
             latexBuilder: latexBuilder,
           ),

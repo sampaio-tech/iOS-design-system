@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
+      sha256: "41e005c33bd814be4d3096aff55b1908d419fde52ca656c8c47719ec745873cd"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.9"
   fake_async:
     dependency: transitive
     description:
@@ -74,18 +74,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_hooks
-      sha256: b772e710d16d7a20c0740c4f855095026b31c7eb5ba3ab67d2bd52021cd9461d
+      sha256: "8ae1f090e5f4ef5cfa6670ce1ab5dddadd33f3533a7f9ba19d9f958aa2a89f42"
       url: "https://pub.dev"
     source: hosted
-    version: "0.21.2"
+    version: "0.21.3+1"
   flutter_lints:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"
+      sha256: "3105dc8492f6183fb076ccf1f351ac3d60564bff92e20bfc4af9cc1651f4e7e1"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.0"
   flutter_math_fork:
     dependency: transitive
     description:
@@ -98,10 +98,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_svg
-      sha256: c200fd79c918a40c5cd50ea0877fa13f81bdaf6f0a5d3dbcc2a13e3285d6aa1b
+      sha256: "35882981abcbfb8c15b286f0cd690ff25bac12d95eff3e25ee207f37d4c42e7f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.17"
+    version: "2.3.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -111,10 +111,10 @@ packages:
     dependency: transitive
     description:
       name: gpt_markdown
-      sha256: "80f45e45c4c5636c040a64910aa543a4697442f7224391f0aeced3d2ed3a8c06"
+      sha256: c14c2a4599a67df5b6a984808cbb7631b8d15c91984ffdd7998597b93a6ff136
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.19"
+    version: "1.1.7"
   http:
     dependency: transitive
     description:
@@ -135,10 +135,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
+      sha256: "1ca20c894b1717686a2319b8548763d812bc0aabdac580420a44c5178c57a867"
       url: "https://pub.dev"
     source: hosted
-    version: "0.20.2"
+    version: "0.20.3"
   ios_design_system:
     dependency: "direct main"
     description:
@@ -174,18 +174,18 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: c35bb79562d980e9a453fc715854e1ed39e24e7d0297a880ef54e17f9874a9d7
+      sha256: "12f842a479589fea194fe5c5a3095abc7be0c1f2ddfa9a0e76aed1dbd26a87df"
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.1"
+    version: "6.1.0"
   matcher:
     dependency: transitive
     description:
       name: matcher
-      sha256: "12956d0ad8390bbcc63ca2e1469c0619946ccb52809807067a7020d57e647aa6"
+      sha256: dc0b7dc7651697ea4ff3e69ef44b0407ea32c487a39fff6a4004fa585e901861
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.18"
+    version: "0.12.19"
   material_color_utilities:
     dependency: transitive
     description:
@@ -198,10 +198,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
+      sha256: "1741988757a65eb6b36abe716829688cf01910bbf91c34354ff7ec1c3de2b349"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
+    version: "1.18.0"
   nested:
     dependency: transitive
     description:
@@ -291,10 +291,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "93167629bfc610f71560ab9312acdda4959de4df6fac7492c89ff0d3886f6636"
+      sha256: "949a932224383300f01be9221c39180316445ecb8e7547f70a41a35bf421fb9e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.9"
+    version: "0.7.11"
   tuple:
     dependency: transitive
     description:
@@ -315,10 +315,10 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics
-      sha256: "44cc7104ff32563122a929e4620cf3efd584194eec6d1d913eb5ba593dbcf6de"
+      sha256: "2306c03da2ba81724afeb589c351ebbc0aa7d86005925be8f8735856dbe5e42d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.18"
+    version: "1.2.2"
   vector_graphics_codec:
     dependency: transitive
     description:
@@ -368,5 +368,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: ">=3.9.0-0 <4.0.0"
-  flutter: ">=3.29.0"
+  dart: ">=3.10.0-0 <4.0.0"
+  flutter: ">=3.35.0"

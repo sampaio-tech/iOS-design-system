@@ -30,7 +30,7 @@ class MarkdownWidget extends StatelessWidget {
     this.imageBuilder,
     this.sourceTagBuilder,
     this.highlightBuilder,
-    this.onLinkTab,
+    this.onLinkTap,
     this.latexWorkaround,
     this.latexBuilder,
   });
@@ -51,11 +51,11 @@ class MarkdownWidget extends StatelessWidget {
   final Color? linkColor;
   final Color? linkHoverColor;
   final TextStyle? style;
-  final Widget Function(BuildContext, String, String, TextStyle)? linkBuilder;
-  final Widget Function(BuildContext, String)? imageBuilder;
+  final Widget Function(BuildContext, InlineSpan, String, TextStyle)? linkBuilder;
+  final Widget Function(BuildContext, String, double?, double?)? imageBuilder;
   final Widget Function(BuildContext, String, TextStyle)? sourceTagBuilder;
   final Widget Function(BuildContext, String, TextStyle)? highlightBuilder;
-  final void Function(String, String)? onLinkTab;
+  final void Function(String, String)? onLinkTap;
   final String Function(String)? latexWorkaround;
   final Widget Function(BuildContext, String, TextStyle, bool)? latexBuilder;
 
@@ -120,7 +120,7 @@ class MarkdownWidget extends StatelessWidget {
                 color: theme.defaultLabelColors.primary,
               ),
           textDirection: this.textDirection ?? textDirection,
-          onLinkTab: onLinkTab,
+          onLinkTap: onLinkTap,
           highlightBuilder:
               highlightBuilder ??
               (context, text, style) {
@@ -184,16 +184,16 @@ class MarkdownWidget extends StatelessWidget {
               },
           imageBuilder:
               imageBuilder ??
-              (context, url) {
+              (context, url, width, height) {
                 final uri = Uri.tryParse(url);
                 if (uri == null) {
                   return const SizedBox.shrink();
                 }
                 if (uri.scheme == 'file' || uri.scheme.isEmpty) {
-                  return Image.asset(url);
+                  return Image.asset(url, width: width, height: height);
                 }
                 if (uri.scheme == 'http' || uri.scheme == 'https') {
-                  return Image.network(url);
+                  return Image.network(url, width: width, height: height);
                 }
                 return const SizedBox.shrink();
               },
@@ -221,10 +221,12 @@ class MarkdownWidget extends StatelessWidget {
               },
           linkBuilder:
               linkBuilder ??
-              (context, label, path, style) => Text(
-                label,
-                style: theme.typography.bodyRegular.copyWith(
-                  color: theme.defaultColors.systemBlue,
+              (context, label, path, style) => RichText(
+                text: TextSpan(
+                  children: [label],
+                  style: theme.typography.bodyRegular.copyWith(
+                    color: theme.defaultColors.systemBlue,
+                  ),
                 ),
               ),
           components: [
